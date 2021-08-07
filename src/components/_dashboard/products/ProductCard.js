@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { Box, Card, Link, Typography, Stack } from '@material-ui/core';
+import { Box, Card, Link, Typography, Stack, Button } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
 //
 import Label from '../../Label';
-import ColorPreview from '../../ColorPreview';
 
 // ----------------------------------------------------------------------
 
@@ -56,22 +54,12 @@ export default function ShopProductCard({ product }) {
           </Typography>
         </Link>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+        <Stack alignItems="center" justifyContent="space-between">
+          {/* <ColorPreview colors={colors} /> */}
           <Typography variant="subtitle1">
-            <Typography
-              component="span"
-              variant="body1"
-              sx={{
-                color: 'text.disabled',
-                textDecoration: 'line-through'
-              }}
-            >
-              {priceSale && fCurrency(priceSale)}
-            </Typography>
-            &nbsp;
-            {fCurrency(price)}
+            <Button variant='outlined'>Request</Button> 
           </Typography>
+          
         </Stack>
       </Stack>
     </Card>

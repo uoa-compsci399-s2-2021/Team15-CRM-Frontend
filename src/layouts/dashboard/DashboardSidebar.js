@@ -102,20 +102,20 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
           <Box sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h6">
-              Get more?
+              Find a bug?
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              From only $69
+              Report to Melo Guan
             </Typography>
           </Box>
 
           <Button
             fullWidth
-            href="https://material-ui.com/store/items/minimal-dashboard/"
+            href="https://meloguan.info"
             target="_blank"
             variant="contained"
           >
-            Upgrade to Pro
+            Report Bug
           </Button>
         </Stack>
       </Box>
