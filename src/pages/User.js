@@ -32,9 +32,9 @@ import USERLIST from '../_mocks_/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
+  { id: 'title', label: 'Job Title', alignRight: false },
   { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
+  { id: 'type', label: 'Type', alignRight: false },
   { id: 'isVerified', label: 'Verified', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   { id: '' }
@@ -136,7 +136,7 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Job Vacancy
           </Typography>
           <Button
             variant="contained"
@@ -144,7 +144,7 @@ export default function User() {
             to="#"
             startIcon={<Icon icon={plusFill} />}
           >
-            New User
+            New Job
           </Button>
         </Stack>
 
@@ -189,13 +189,18 @@ export default function User() {
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
+                          {/* <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
                               <Avatar alt={name} src={avatarUrl} />
                               <Typography variant="subtitle2" noWrap>
                                 {name}
                               </Typography>
                             </Stack>
+                          </TableCell> */}
+                          <TableCell align="left">
+                            <Typography variant="subtitle2" noWrap>
+                              {name}
+                            </Typography>
                           </TableCell>
                           <TableCell align="left">{company}</TableCell>
                           <TableCell align="left">{role}</TableCell>
