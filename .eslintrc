@@ -56,6 +56,9 @@
     "react/jsx-key": 1,
     "react-hooks/rules-of-hooks": 2,
     "prettier/prettier": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "prefer-arrow-callback": "off",
+    "func-names": "off",
+    "no-nested-ternary": "off"
   }
 }
