@@ -8,22 +8,17 @@ import { mockImgAvatar } from '../utils/mockImages';
 const users = [...Array(24)].map((_, index) => ({
   id: faker.datatype.uuid(),
   avatarUrl: mockImgAvatar(index + 1),
-  name: faker.name.findName(),
+  name: sample([
+    'UI/UX Designer',
+    'Backend Developer',
+    'Software Engineer',
+    'Front End Developer',
+    'Full Stack Developer'
+  ]),
   company: faker.company.companyName(),
   isVerified: faker.datatype.boolean(),
   status: sample(['active', 'banned']),
-  role: sample([
-    'Leader',
-    'Hr Manager',
-    'UI Designer',
-    'UX Designer',
-    'UI/UX Designer',
-    'Project Manager',
-    'Backend Developer',
-    'Full Stack Designer',
-    'Front End Developer',
-    'Full Stack Developer'
-  ])
+  role: sample(['Internship', 'Graduate']),
 }));
 
 export default users;

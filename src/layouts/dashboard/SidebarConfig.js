@@ -6,6 +6,7 @@ import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
+import cubeFill from '@iconify/icons-eva/cube-fill';
 
 // ----------------------------------------------------------------------
 
@@ -17,11 +18,11 @@ const sidebarConfig = [
     path: '/app/home',
     icon: getIcon(pieChart2Fill)
   },
-  // {
-  //   title: 'user',
-  //   path: '/app/user',
-  //   icon: getIcon(peopleFill)
-  // },
+  {
+    title: 'Job List',
+    path: '/app/job-list',
+    icon: getIcon(cubeFill)
+  },
   // {
   //   title: 'company',
   //   path: '/app/company',

@@ -57,7 +57,7 @@ export default function AppWebsiteVisits() {
                     setTimeout(function () {
                         setSuccess(false);
                         setLoading(false);
-                    }, 2000);
+                    }, 3000);
                     setHasErrors(false);
                 }
                 // console.log(response);
@@ -66,7 +66,7 @@ export default function AppWebsiteVisits() {
                 setError(e.response.data.error);
                 setTimeout(function () {
                     setError("")
-                }, 2000);
+                }, 3000);
             }
         }
     }
