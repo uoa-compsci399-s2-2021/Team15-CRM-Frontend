@@ -1,6 +1,6 @@
 // material
-import { makeStyles } from "@material-ui/styles";
-import React, { useState, useEffect } from "react";
+import { makeStyles } from '@material-ui/styles';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, Container, Typography, Button, TextField } from '@material-ui/core';
 // components
 import Page from '../components/Page';
@@ -23,7 +23,6 @@ import {
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
-
   return (
     <Page title="Dashboard | Atech+">
       <Container maxWidth="xl">
@@ -44,7 +43,7 @@ export default function DashboardApp() {
           <Grid item xs={12} sm={6} md={3}>
             <AppItemOrders />
           </Grid>
-          
+
           <Grid item xs={12} sm={6} md={3}>
             <AppBugReports />
           </Grid>

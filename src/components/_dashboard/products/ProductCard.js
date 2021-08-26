@@ -57,9 +57,9 @@ export default function ShopProductCard({ product }) {
         <Stack alignItems="center" justifyContent="space-between">
           {/* <ColorPreview colors={colors} /> */}
           <Typography variant="subtitle1">
-            <Button variant='outlined'>Request</Button> 
+            <Button variant="outlined">Request</Button>
           </Typography>
-          
+
         </Stack>
       </Stack>
     </Card>

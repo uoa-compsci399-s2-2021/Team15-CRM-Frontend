@@ -86,7 +86,9 @@ function renderContent(notification) {
     <Typography variant="subtitle2">
       {notification.title}
       <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-        &nbsp; {noCase(notification.description)}
+        &nbsp;
+        {' '}
+        {noCase(notification.description)}
       </Typography>
     </Typography>
   );
@@ -217,7 +219,11 @@ export default function NotificationsPopover() {
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="subtitle1">Notifications</Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              You have {totalUnRead} unread messages
+              You have
+              {' '}
+              {totalUnRead}
+              {' '}
+              unread messages
             </Typography>
           </Box>
 
