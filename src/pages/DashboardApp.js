@@ -24,22 +24,28 @@ import { getJobInfo } from '../apis/index';
 
 // ----------------------------------------------------------------------
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+}));
+
 export default function DashboardApp() {
+  const classes = useStyles();
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sendEmail, setSendEmail] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       const response = await getJobInfo();
       try {
         setData((response.data).reverse());
-        setLoading(false);
       } catch (e) {
         setError(e);
-        setLoading(false);
       }
     };
     fetchData();
@@ -56,8 +62,13 @@ export default function DashboardApp() {
             <RequestEmail sendEmail={sendEmail} setSendEmail={setSendEmail} />
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
-            {data !== null && (<RequestTable data={data} />)}
-
+            {data === null ? (
+              <div className={classes.root}>
+                <img src="/images/waiting.gif" alt="loading" />
+              </div>
+            ) : (
+              <RequestTable data={data} />
+            )}
           </Grid>
           { /*
           <Grid item xs={12} sm={6} md={3}>
