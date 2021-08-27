@@ -44,7 +44,7 @@ export default function Router() {
       path: '/form',
       element: <FormLayout />,
       children: [
-        { path: '/', element: <Form /> },
+        { path: '/:token', element: <Form /> },
       ]
     },
 

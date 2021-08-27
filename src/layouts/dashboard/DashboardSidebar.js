@@ -14,7 +14,6 @@ import { MHidden } from '../../components/@material-extend';
 import sidebarConfig from './SidebarConfig';
 import account from '../../_mocks_/account';
 
-
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -44,18 +43,10 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
 
-  const getInfo = () => {
-    axios.get('http://localhost:5000/api/auth/test', {
-    }).then((response) => {
-      alert(response.data.info);
-    })
-  }
-
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderContent = (
