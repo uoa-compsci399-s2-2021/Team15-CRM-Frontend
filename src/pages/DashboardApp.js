@@ -17,12 +17,34 @@ import {
   AppTrafficBySite,
   AppCurrentSubject,
   AppConversionRates,
-  RequestEmail
+  RequestEmail,
+  RequestTable
 } from '../components/_dashboard/app';
+import { getJobInfo } from '../apis/index';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [sendEmail, setSendEmail] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const response = await getJobInfo();
+      try {
+        setData((response.data).reverse());
+        setLoading(false);
+      } catch (e) {
+        setError(e);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [sendEmail]);
+
   return (
     <Page title="Dashboard | Atech+">
       <Container maxWidth="xl">
@@ -31,7 +53,11 @@ export default function DashboardApp() {
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12} lg={12}>
-            <RequestEmail />
+            <RequestEmail sendEmail={sendEmail} setSendEmail={setSendEmail} />
+          </Grid>
+          <Grid item xs={12} md={12} lg={12}>
+            {data !== null && (<RequestTable data={data} />)}
+
           </Grid>
           { /*
           <Grid item xs={12} sm={6} md={3}>

@@ -8,7 +8,7 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 // material
 //
-import sendEmailRequestToEmployer from '../../../apis/index';
+import { sendEmailRequestToEmployer } from '../../../apis/index';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function AppWebsiteVisits() {
+export default function AppWebsiteVisits({ sendEmail, setSendEmail }) {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [hasErrors, setHasErrors] = useState(false);
@@ -49,15 +49,14 @@ export default function AppWebsiteVisits() {
         const response = await sendEmailRequestToEmployer(info);
         if (response.status === 200) {
           setEmail('');
-
           setSuccess(true);
           setTimeout(() => {
             setSuccess(false);
             setLoading(false);
           }, 3000);
           setHasErrors(false);
+          setSendEmail(!sendEmail);
         }
-        // console.log(response);
       } catch (e) {
         setLoading(false);
         setError(e.response.data.error);
@@ -69,46 +68,48 @@ export default function AppWebsiteVisits() {
   }
 
   return (
-    <Card>
-      <CardHeader title="Send a email to employer" subheader="Enter email below" />
-      <Box sx={{ p: 3, pb: 3, }} dir="ltr">
-        <div className={classes.root}>
-          {error !== '' ? <Alert color="error" severity="error">{error}</Alert> : null}
-          <TextField
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="xxx@gmail.com"
-            label="Email"
-            error={isError(email.length === 0)}
-            helperText={isError(email.length === 0) && 'Please enter the email'}
-          />
+    <Container maxWidth={false}>
+      <Card>
+        <CardHeader title="Send a email to employer" subheader="Enter email below" />
+        <Box sx={{ p: 3, pb: 3, }} dir="ltr">
+          <div className={classes.root}>
+            {error !== '' ? <Alert color="error" severity="error">{error}</Alert> : null}
+            <TextField
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="xxx@gmail.com"
+              label="Email"
+              error={isError(email.length === 0)}
+              helperText={isError(email.length === 0) && 'Please enter the email'}
+            />
 
-          <Grid item xs={3}>
-            <Box mt={2} pt={2}>
-              <Button
-                fullWidth
-                size="large"
-                variant="contained"
-                type="submit"
-                onClick={() => handleSendRequest()}
-                className={classes.button}
-              >
-                {loading ? (
-                  success ? (
-                    <DoneAllIcon color="inherit" size="2rem" />
+            <Grid item xs={3}>
+              <Box mt={2} pt={2}>
+                <Button
+                  fullWidth
+                  size="large"
+                  variant="contained"
+                  type="submit"
+                  onClick={() => handleSendRequest()}
+                  className={classes.button}
+                >
+                  {loading ? (
+                    success ? (
+                      <DoneAllIcon color="inherit" size="2rem" />
+                    ) : (
+                      <CircularProgress color="inherit" size="2rem" />
+                    )
                   ) : (
-                    <CircularProgress color="inherit" size="2rem" />
-                  )
-                ) : (
-                  <>Send</>
-                )}
-              </Button>
-            </Box>
-          </Grid>
+                    <>Send</>
+                  )}
+                </Button>
+              </Box>
+            </Grid>
 
-        </div>
-      </Box>
-    </Card>
+          </div>
+        </Box>
+      </Card>
+    </Container>
   );
 }
