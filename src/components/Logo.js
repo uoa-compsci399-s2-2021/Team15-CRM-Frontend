@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // material
 import { Box } from '@material-ui/core';
-import logo from './Alogo.png'
+import logo from './Alogo.png';
 // ----------------------------------------------------------------------
 
 Logo.propTypes = {

@@ -32,7 +32,7 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
   }),
   '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
   '& fieldset': {
-    borderWidth: `1px !important`,
+    borderWidth: '1px !important',
     borderColor: `${theme.palette.grey[500_32]} !important`
   }
 }));
@@ -57,7 +57,9 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
     >
       {numSelected > 0 ? (
         <Typography component="div" variant="subtitle1">
-          {numSelected} selected
+          {numSelected}
+          {' '}
+          selected
         </Typography>
       ) : (
         <SearchStyle
