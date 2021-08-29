@@ -52,6 +52,8 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'off',
     'import/prefer-default-export': 'off',
     'no-nested-ternary': 'off',
-    'react/no-array-index-key': 'off'
+    'react/no-array-index-key': 'off',
+    'react/jsx-equals-spacing': 'off',
+    'no-restricted-globals': 'off'
   },
 };

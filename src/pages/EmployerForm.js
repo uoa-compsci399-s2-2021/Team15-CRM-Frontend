@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Container, Grid, Typography, Button } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
+// import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Checkbox from '@material-ui/core/Checkbox';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import { makeStyles } from '@material-ui/styles';
@@ -35,68 +40,117 @@ const SectionStyle = styled(Card)(({ theme }) => ({
 
 const useStyles = makeStyles((theme) => ({
   field: {
-    marginLeft: 50,
-    marginRight: 50,
-    marginBottom: 30,
+    marginRight: theme.spacing(1),
+    marginBottom: 10
+  },
+  text: {
+    marginTop: 10,
+    marginBottom: 10
+  },
+  text2: {
+    marginTop: 40,
+    marginLeft: theme.spacing(1)
   },
   formControl: {
-    minWidth: 200,
-    marginLeft: 50,
-    marginRight: 50,
-    marginTop: 10
+    width: 200,
+    marginRight: theme.spacing(1),
+    marginTop: 10,
   },
   button: {
     marginTop: 20,
-    width: 50,
-    marginLeft: 50
+    marginLeft: theme.spacing(1)
   },
   textfield: {
-    marginLeft: 50
+    marginTop: 10,
   },
   root: {
     marginTop: theme.spacing(2),
     paddingBottom: theme.spacing(5),
+    overflow: 'auto',
+    flexDirection: 'column'
   },
-  heading: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(10),
+  startD: {
+    display: 'flex',
+    overflow: 'auto'
+  },
+  image: {
+    backgroundImage: 'url(https://www.linkpicture.com/q/imageedit_3_5937630419.png)',
+    backgroundSize: 'contain',
+  },
+  image2: {
+    backgroundImage: 'url(https://www.linkpicture.com/q/imageedit_3_5937630419_1.png',
+    backgroundSize: 'contain',
   },
 }));
 const values = {
-  someDate: new Date().toISOString().substring(0, 10)
+  currentDate: new Date().toISOString().substring(0, 10)
 };
 
 export default function EmployerForm() {
   const classes = useStyles();
   const [category, setCategory] = useState('');
-  const [value, setValue] = useState('');
+  const [company, setCompany] = useState('');
+  const [position, setPosition] = useState('');
+  const [location, setLocation] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [closingDate, setClosingDate] = useState('');
+  const [startTBC, setStartTBC] = useState(false);
+  const [closeTBC, setCloseTBC] = useState(false);
+  const [hours, setHours] = useState('');
   const [contract, setContract] = useState('');
-  const [salary, setSalary] = useState('');
+  const [rate, setRate] = useState('');
+  const [salary, setSalary] = useState('Annual');
+  const [ATC, setATC] = useState('');
+  const [ATR, setATR] = useState('');
+  const [keySkills, setKeySkills] = useState('');
+  const [contact, setContact] = useState('');
+  const [application, setApplication] = useState('');
+  const [showErrors, setShowErrors] = useState(false);
+
+  const handleCheckStart = (event) => {
+    setStartTBC(event.target.checked);
+    if (event.target.checked) {
+      setStartDate('TBC');
+    }
+  };
+
+  const handleCheckClose = (event) => {
+    setCloseTBC(event.target.checked);
+    if (event.target.checked) {
+      setClosingDate('TBC');
+    }
+  };
+  async function handleSubmit() {
+    setShowErrors(true);
+  }
+
+  const isError = (condition) => showErrors && condition;
 
   return (
     <RootStyle title="Login | Atech+">
-      <AuthLayout>
+      {/* <AuthLayout>
                 &nbsp;
 
-      </AuthLayout>
+      </AuthLayout> */}
 
-      <MHidden width="mdDown">
+      {/* <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Employer Form
           </Typography>
           <img src="/static/illustrations/illustration_register.png" alt="login" />
         </SectionStyle>
-      </MHidden>
-
-      <Container fixed>
-        <form noValidate autoComplete="off">
-          <Typography variant="h3" className={classes.heading}>
-            Please fill in this form
-          </Typography>
-          <Grid container spacing={1} justify="center" className={classes.root}>
-            <Grid item xs={12}>
-              <Grid item xs={12} md={6}>
+      </MHidden> */}
+      <Grid container className={classes.image}>
+        <Container fixed>
+          <div noValidate autoComplete="off">
+            <Grid container spacing={1} justify="center" className={classes.root}>
+              <Grid item xs={12}>
+                <Typography variant="h3" className={classes.text}>
+                  Please fill in this form
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={10} md={7}>
                 <TextField
                   variant="outlined"
                   label="Company"
@@ -105,173 +159,301 @@ export default function EmployerForm() {
                   required
                   className={classes.textfield}
                   margin="normal"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
                   InputLabelProps={{
                     shrink: true
                   }}
+                  error={isError(company.length === 0)}
+                  helperText={isError(company.length === 0) && "Please enter the employer's name"}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} sm={10} md={7}>
                 <TextField
                   variant="outlined"
                   label="Position"
                   placeholder="Job title/role"
                   fullWidth
                   required
+                  value={position}
+                  onChange={(e) => setPosition(e.target.value)}
                   className={classes.textfield}
                   margin="normal"
                   InputLabelProps={{
                     shrink: true
                   }}
+                  error={isError(position.length === 0)}
+                  helperText={isError(position.length === 0) && 'Please enter the position'}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} sm={10} md={7}>
                 <TextField
                   variant="outlined"
                   label="Location"
                   placeholder="Company Location"
                   fullWidth
                   required
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
                   className={classes.textfield}
                   margin="normal"
                   InputLabelProps={{
                     shrink: true
                   }}
+                  error={isError(position.length === 0)}
+                  helperText={isError(position.length === 0) && 'Please enter the location'}
                 />
               </Grid>
-              <Grid item xs={12} md={5}>
-                <FormControl component="fieldset" className={classes.field}>
-                  <RadioGroup aria-label="gender" name="gender1" value={category} onChange={(e) => setCategory(e.target.value)}>
-                    <FormControlLabel value="Start from" control={<Radio />} label="Start from" />
-                    <FormControlLabel value="TBC" control={<Radio />} label="TBC" />
-                  </RadioGroup>
-                </FormControl>
+              {/* <Grid item xs={12} md={5}>
+                  <FormControl component="fieldset" className={classes.field}>
+                    <RadioGroup aria-label="gender" name="gender1" value={category} onChange={(e) => setCategory(e.target.value)}>
+                      <FormControlLabel value="Start from" control={<Radio />} label="Start from" />
+                      <FormControlLabel value="TBC" control={<Radio />} label="TBC" />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid> */}
+              <Grid item xs={12}>
+                <Typography className={classes.text}>
+                  When will the candidate start their role? Approx date or TBC if unsure
+                </Typography>
               </Grid>
-              <Grid item xs={12} sm={8} md={5}>
+              <Grid item xs={12} className={classes.startD}>
                 <TextField
                   label="Start Date"
                   type="date"
-                  fullWidth
+                  disabled={startTBC}
                   className={classes.field}
-                  defaultValue={values.someDate}
-                  helperText="When will the candidate start their role? Approx date or TBC if unsure"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  //   helperText="When will the candidate start their role? Approx date or TBC if unsure"
                   InputLabelProps={{
                     shrink: true
                   }}
+                  error={isError(startDate.length === 0)}
+                  helperText={isError(startDate.length === 0) && 'Please either select a date of checked TBC if unsure'}
                 />
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox color="default" checked={startTBC} onChange={handleCheckStart} />
+                    }
+                    label="TBC"
+                  />
+                </FormGroup>
               </Grid>
-              <Grid item xs={12} sm={8} md={5}>
+              <Grid item xs={12}>
+                <Typography className={classes.text}>
+                  When do applications need to be submitted by? Approx date or TBC if unsure
+                </Typography>
+              </Grid>
+              <Grid item xs={12} className={classes.startD}>
                 <TextField
                   label="Closing Date"
                   type="date"
-                  fullWidth
+                  // fullWidth
                   className={classes.field}
-                  defaultValue={values.someDate}
-                  helperText="When do applications need to be submitted by?"
+                  disabled={closeTBC}
+                  value={closingDate}
+                  onChange={(e) => setClosingDate(e.target.value)}
+                  // helperText="When do applications need to be submitted by?"
                   InputLabelProps={{
                     shrink: true
                   }}
+                  error={isError(closingDate.length === 0)}
+                  helperText={isError(closingDate.length === 0) && 'Please either select a date of checked TBC if unsure'}
                 />
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox color="default" checked={closeTBC} onChange={handleCheckClose} />
+                    }
+                    label="TBC"
+                  />
+                </FormGroup>
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset" className={classes.field}>
+                <FormControl
+                  component="fieldset"
+                  className={classes.field}
+                  required
+                  error={isError(hours.length === 0)}
+                >
                   <FormLabel component="legend">Hours</FormLabel>
-                  <RadioGroup aria-label="hour" name="hour" value={value} onChange={(e) => setValue(e.target.value)}>
+                  <RadioGroup
+                    row
+                    aria-label="hour"
+                    name="hour"
+                    value={hours}
+                    onChange={(e) => setHours(e.target.value)}
+                  >
                     <FormControlLabel value="Full Time" control={<Radio />} label="Full Time" />
                     <FormControlLabel value="Part Time" control={<Radio />} label="Part Time" />
                   </RadioGroup>
                 </FormControl>
               </Grid>
-              <FormControl className={classes.formControl}>
-                <InputLabel>Contract</InputLabel>
-                <Select value={contract} onChange={(e) => setContract(e.target.value)}>
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="Permanent">Permanent</MenuItem>
-                  <MenuItem value="Fix Term">Fix Term</MenuItem>
-                  <MenuItem value="Casual">Casual</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl className={classes.formControl}>
-                <InputLabel>Salary</InputLabel>
-                <Select value={salary} onChange={(e) => setSalary(e.target.value)}>
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="Hourly">Hourly</MenuItem>
-                  <MenuItem value="Annual">Annual</MenuItem>
-                  <MenuItem value="Market rate">'Market rate'</MenuItem>
-                </Select>
-              </FormControl>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12}>
+                <FormControl className={classes.formControl} error={isError(contract.length === 0)}>
+                  <InputLabel>Contract</InputLabel>
+                  <Select value={contract} onChange={(e) => setContract(e.target.value)}>
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="Permanent">Permanent</MenuItem>
+                    <MenuItem value="Fix Term">Fix Term</MenuItem>
+                    <MenuItem value="Casual">Casual</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography className={classes.text}>
+                  Salary
+                </Typography>
+                <FormControl
+                  fullWidth
+                  className={classes.formControl}
+                  variant="outlined"
+                  required
+                  disabled = {salary == 'None' || salary == 'Market rate'}
+                >
+                  <InputLabel htmlFor="outlined-adornment-amount">Rate</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-amount"
+                    value={rate}
+                    onChange={(e) => setRate(e.target.value)}
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    error={isError(rate.length === 0) || isError(isNaN(rate))}
+                  />
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                  {/* <InputLabel>Salary</InputLabel> */}
+                  <Select value={salary} onChange={(e) => setSalary(e.target.value)}>
+                    <MenuItem value="None">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="Hourly">Hourly</MenuItem>
+                    <MenuItem value="Annual">Annual</MenuItem>
+                    <MenuItem value="Market rate">"Market rate"</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={10} md={8}>
+                <Typography className={classes.text2}>
+                  Please provide key details about your company, and any information that would give
+                  students a feel for the organisation they might be working for. A link to your
+                  website is also very useful.
+                </Typography>
                 <TextField
                   variant="outlined"
                   label="About the company"
                   margin="normal"
                   className={classes.textfield}
-                  placeholder="Please provide key details about your company, and any information that would give students a feel for the organisation they might be working for."
+                  value={ATC}
+                  onChange={(e) => setATC(e.target.value)}
+                  // placeholder="Please provide key details about your company, and any information that would give students a feel for the organisation they might be working for."
                   multiline
-                  helperText="A link to your website is also very useful."
+                  rows={4}
+                  // helperText="A link to your website is also very useful."
                   fullWidth
                   required
+                  error={isError(ATC.length === 0)}
+                  helperText={isError(ATC.length === 0) && 'Please tell us about your company'}
                 />
+                <Typography className={classes.text2}>
+                  Please provide details about what the student will be doing. If it is a broad role
+                  please try and provide an idea of the range of potential tasks.
+                </Typography>
                 <TextField
                   variant="outlined"
                   label="About the role"
                   margin="normal"
-                  placeholder="Please provide details about what the student will be doing. If it is a broad role please try and provide an idea of the range of potential tasks."
+                  value={ATR}
+                  onChange={(e) => setATR(e.target.value)}
+                  // placeholder="Please provide details about what the student will be doing. If it is a broad role please try and provide an idea of the range of potential tasks."
                   multiline
+                  rows={4}
                   className={classes.textfield}
                   fullWidth
                   required
+                  error={isError(ATR.length === 0)}
+                  helperText={isError(ATR.length === 0) && 'Please tell us about the role'}
                 />
+                <Typography className={classes.text2}>
+                  The more specific you are about the skills that are required for the role, the
+                  more likely it is you will receive applications from high quality candidates who
+                  have the technical skills and qualities that you are looking for. Please consider
+                  personal qualities and experience as well as technical skills.
+                </Typography>
                 <TextField
                   variant="outlined"
                   label="Key Skills"
                   margin="normal"
-                  placeholder="The more specific you are about the skills that are required for the role, the more likely it is you will receive applications from high quality candidates who have the technical skills and qualities that you are looking for."
+                  value={keySkills}
+                  onChange={(e) => setKeySkills(e.target.value)}
+                  // placeholder="The more specific you are about the skills that are required for the role, the more likely it is you will receive applications from high quality candidates who have the technical skills and qualities that you are looking for."
                   multiline
+                  rows={4}
                   className={classes.textfield}
-                  helperText="Please consider personal qualities and experience as well as technical skills."
+                  // helperText="Please consider personal qualities and experience as well as technical skills."
                   fullWidth
                   required
+                  error={isError(keySkills.length === 0)}
+                  helperText={isError(keySkills.length === 0) && 'Please tell us the key skills required for the position'}
                 />
+                <Typography className={classes.text2}>
+                  Please provide a contact name, contact position title, email address and/or
+                  telephone number should students have any questions about the role.
+                </Typography>
                 <TextField
                   variant="outlined"
                   label="Contact Details"
                   margin="normal"
-                  placeholder="Please provide a contact name, contact position title, email address and/or telephone number should students have any questions about the role."
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  // placeholder="Please provide a contact name, contact position title, email address and/or telephone number should students have any questions about the role."
                   multiline
+                  rows={4}
                   className={classes.textfield}
                   fullWidth
                   required
+                  error={isError(contact.length === 0)}
+                  helperText={isError(contact.length === 0) && 'Please provide the contact detail'}
                 />
+                <Typography className={classes.text2}>
+                  Please provide a contact name and email address to which CVs and cover letters
+                  should be sent.
+                </Typography>
                 <TextField
                   variant="outlined"
                   label="Application"
                   margin="normal"
-                  placeholder="Please provide a contact name and email address to which CVs and cover letters should be sent."
+                  value={application}
+                  onChange={(e) => setApplication(e.target.value)}
+                  // placeholder="Please provide a contact name and email address to which CVs and cover letters should be sent."
                   multiline
+                  rows={4}
                   className={classes.textfield}
                   fullWidth
                   required
+                  error={isError(application.length === 0)}
+                  helperText={isError(application.length === 0) && 'Please provide the application details'}
                 />
               </Grid>
-              <Button
-                style={{ 'minHeight': '30px', 'minWidth': '200px' }}
-                onClick={() => console.log('submmited!')}
-                type="submit"
-                color="primary"
-                variant="contained"
-                className={classes.button}
-              >
-                Submit
-              </Button>
+              <Grid item>
+                <Button
+                  style={{ minHeight: '30px', minWidth: '200px' }}
+                  onClick={() => handleSubmit()}
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  className={classes.button}
+                >
+                  Submit
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </Container>
+          </div>
+        </Container>
+      </Grid>
     </RootStyle>
-
   );
 }
