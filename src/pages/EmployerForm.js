@@ -40,19 +40,22 @@ const SectionStyle = styled(Card)(({ theme }) => ({
 
 const useStyles = makeStyles((theme) => ({
   field: {
+    // marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     marginBottom: 10
   },
   text: {
     marginTop: 10,
+    // marginLeft: theme.spacing(1),
     marginBottom: 10
   },
   text2: {
     marginTop: 40,
-    marginLeft: theme.spacing(1)
+    // marginLeft: theme.spacing(1)
   },
   formControl: {
     width: 200,
+    // marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     marginTop: 10,
   },
@@ -74,11 +77,11 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto'
   },
   image: {
-    backgroundImage: 'url(https://www.linkpicture.com/q/imageedit_3_5937630419.png)',
+    backgroundImage: 'url(/images/formBackground/bg1.png)',
     backgroundSize: 'contain',
   },
   image2: {
-    backgroundImage: 'url(https://www.linkpicture.com/q/imageedit_3_5937630419_1.png',
+    backgroundImage: 'url(/images/formBackground/bg1.png)',
     backgroundSize: 'contain',
   },
 }));
@@ -313,15 +316,15 @@ export default function EmployerForm() {
                   className={classes.formControl}
                   variant="outlined"
                   required
-                  disabled = {salary == 'None' || salary == 'Market rate'}
+                  disabled={salary == 'None' || salary == 'Market rate'}
                 >
-                  <InputLabel htmlFor="outlined-adornment-amount">Rate</InputLabel>
+                  {/* <InputLabel htmlFor="outlined-adornment-amount">Rate</InputLabel> */}
                   <OutlinedInput
                     id="outlined-adornment-amount"
                     value={rate}
                     onChange={(e) => setRate(e.target.value)}
                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                    error={isError(rate.length === 0) || isError(isNaN(rate))}
+                    error={isError(rate.length === 0) || isError(rate.isNaN)}
                   />
                 </FormControl>
                 <FormControl className={classes.formControl}>
