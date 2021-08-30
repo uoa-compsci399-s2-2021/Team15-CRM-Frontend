@@ -1,20 +1,30 @@
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles, styled } from '@material-ui/styles';
 // material
-import { Box, Card, Link, Typography, Stack, Button } from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
+import { Box, Card, Link, Typography, Stack, Button, CardContent, CardActions } from '@material-ui/core';
 // utils
+import { fDate } from '../../../utils/formatTime';
 //
 import Label from '../../Label';
 
 // ----------------------------------------------------------------------
 
-const ProductImgStyle = styled('img')({
-  top: 0,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  position: 'absolute'
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
 });
 
 // ----------------------------------------------------------------------
@@ -24,44 +34,30 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+  const { positionName, companyName, jobHours, jobStartTime, jobLocation, priceSale } = product;
+  const classes = useStyles();
 
   return (
-    <Card>
-      <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
-          <Label
-            variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase'
-            }}
-          >
-            {status}
-          </Label>
-        )}
-        <ProductImgStyle alt={name} src={cover} />
-      </Box>
-
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
-          <Typography variant="subtitle2" noWrap>
-            {name}
-          </Typography>
-        </Link>
-
-        <Stack alignItems="center" justifyContent="space-between">
-          {/* <ColorPreview colors={colors} /> */}
-          <Typography variant="subtitle1">
-            <Button variant="outlined">Request</Button>
-          </Typography>
-
-        </Stack>
-      </Stack>
+    <Card className={classes.root}>
+      <CardContent>
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
+          {companyName}
+        </Typography>
+        <Typography variant="h5" component="h2">
+          {positionName}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          {jobHours}
+        </Typography>
+        <Typography variant="body2" component="p">
+          {fDate(jobStartTime)}
+          <br />
+          {jobLocation}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Learn More</Button>
+      </CardActions>
     </Card>
   );
 }
