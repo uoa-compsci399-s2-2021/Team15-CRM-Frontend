@@ -12,7 +12,6 @@ import {
 } from '../components/_dashboard/products';
 import { getJobInfo } from '../apis/index';
 //
-import PRODUCTS from '../_mocks_/products';
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +65,7 @@ export default function EcommerceShop() {
     <Page title="Dashboard: Products | Atech+">
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
+          Response
         </Typography>
 
         <Stack

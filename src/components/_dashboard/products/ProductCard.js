@@ -39,26 +39,36 @@ export default function ShopProductCard({ product }) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {convertFirstCharacterAllWordsToUppercase(companyName)}
-        </Typography>
-        <Typography variant="h5" component="h2">
-          {convertFirstCharacterAllWordsToUppercase(positionName)}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          {convertFirstCharacterAllWordsToUppercase(jobHours)}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {fDate(jobStartTime)}
-          <br />
-          {jobLocation}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
+    <Card>
+
+      <Stack spacing={2} sx={{ p: 3 }}>
+
+        <div>
+          <Typography color="textSecondary" gutterBottom>
+            {convertFirstCharacterAllWordsToUppercase(companyName)}
+          </Typography>
+          <Typography variant="h5" component="h2">
+            {convertFirstCharacterAllWordsToUppercase(positionName)}
+          </Typography>
+          <Typography color="textSecondary">
+            {convertFirstCharacterAllWordsToUppercase(jobHours)}
+          </Typography>
+          <Typography variant="body2" component="p">
+            {fDate(jobStartTime)}
+            <br />
+            {jobLocation}
+          </Typography>
+        </div>
+
+        <Stack alignItems="center" justifyContent="space-between">
+          {/* <ColorPreview colors={colors} /> */}
+          <Typography variant="subtitle1">
+            <Button variant="outlined">Learn more</Button>
+          </Typography>
+
+        </Stack>
+      </Stack>
     </Card>
+
   );
 }
