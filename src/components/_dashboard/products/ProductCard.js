@@ -5,6 +5,7 @@ import { makeStyles, styled } from '@material-ui/styles';
 import { Box, Card, Link, Typography, Stack, Button, CardContent, CardActions } from '@material-ui/core';
 // utils
 import { fDate } from '../../../utils/formatTime';
+import { convertFirstCharacterAllWordsToUppercase } from '../../../utils/formatString';
 //
 import Label from '../../Label';
 
@@ -41,13 +42,13 @@ export default function ShopProductCard({ product }) {
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {companyName}
+          {convertFirstCharacterAllWordsToUppercase(companyName)}
         </Typography>
         <Typography variant="h5" component="h2">
-          {positionName}
+          {convertFirstCharacterAllWordsToUppercase(positionName)}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          {jobHours}
+          {convertFirstCharacterAllWordsToUppercase(jobHours)}
         </Typography>
         <Typography variant="body2" component="p">
           {fDate(jobStartTime)}
