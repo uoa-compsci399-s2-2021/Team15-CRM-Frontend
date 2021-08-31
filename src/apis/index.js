@@ -5,7 +5,7 @@ import useFetch from './useFetch';
 
 async function sendEmailRequestToEmployer(info) {
   const response = await axios(
-    'http://localhost:5000/api/admin/send-request-email',
+    'https://cs399-team15.herokuapp.com/api/admin/send-request-email',
     {
       headers: {
         'Content-type': 'application/json',
@@ -19,7 +19,7 @@ async function sendEmailRequestToEmployer(info) {
 
 async function getJobInfo() {
   const response = await axios(
-    'http://localhost:5000/api/admin/get-job-info',
+    'https://cs399-team15.herokuapp.com/api/admin/get-job-info',
     {
       headers: {
         'Content-type': 'application/json',

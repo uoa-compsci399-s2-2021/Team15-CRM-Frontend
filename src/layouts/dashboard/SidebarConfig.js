@@ -19,15 +19,16 @@ const sidebarConfig = [
     icon: getIcon(pieChart2Fill)
   },
   {
+    title: 'Response',
+    path: '/app/response',
+    icon: getIcon(shoppingBagFill)
+  },
+  {
     title: 'Job List',
     path: '/app/job-list',
     icon: getIcon(cubeFill)
   },
-  // {
-  //   title: 'company',
-  //   path: '/app/company',
-  //   icon: getIcon(shoppingBagFill)
-  // },
+
   // {
   //   title: 'blog',
   //   path: '/app/blog',
