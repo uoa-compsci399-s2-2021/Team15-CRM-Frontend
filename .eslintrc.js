@@ -7,7 +7,11 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb',
   ],
+<<<<<<< HEAD
   parser: "babel-eslint",
+=======
+  parser: 'babel-eslint',
+>>>>>>> 5fd0332df483cfdfaf17c46dd241ed600d186638
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
