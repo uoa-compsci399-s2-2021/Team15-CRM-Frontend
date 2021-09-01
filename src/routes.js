@@ -36,7 +36,7 @@ export default function Router() {
       children: [
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
-        { path: 'form', element: <Form /> },
+        { path: 'form', element: <EmployerForm /> },
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/app" /> },
         { path: '*', element: <Navigate to="/404" /> }
