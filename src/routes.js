@@ -9,8 +9,9 @@ import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Products from './pages/Products';
 import Blog from './pages/Blog';
-import Form from './pages/EmployerForm';
+import EmployerForm from './pages/EmployerForm';
 import User from './pages/User';
+import Response from './pages/Response';
 import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -24,6 +25,7 @@ export default function Router() {
         { path: '/', element: <Navigate to="/app/home" replace /> },
         { path: 'home', element: <DashboardApp /> },
         { path: 'job-list', element: <User /> },
+        { path: 'response', element: <Response /> },
         { path: 'company', element: <Products /> },
         { path: 'blog', element: <Blog /> }
       ]
@@ -44,7 +46,7 @@ export default function Router() {
       path: '/form',
       element: <FormLayout />,
       children: [
-        { path: '/:token', element: <Form /> },
+        { path: '/:token', element: <EmployerForm /> },
       ]
     },
 
