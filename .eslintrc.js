@@ -54,6 +54,8 @@ module.exports = {
     'no-nested-ternary': 'off',
     'react/no-array-index-key': 'off',
     'react/jsx-equals-spacing': 'off',
-    'no-restricted-globals': 'off'
+    'no-restricted-globals': 'off',
+    'import/no-named-as-default': 'off',
+    'prefer-destructuring': 'off',
   },
 };
