@@ -35,16 +35,28 @@ const useStyles = makeStyles({
   },
   accept: {
     backgroundColor: 'green',
+    fontSize: 20,
+    marginRight: 180,
+    width: 300,
     '&:hover': {
       backgroundColor: '#66bb6a'
-    }
+    },
   },
   decline: {
     backgroundColor: 'red',
+    marginLeft: 100,
+    fontSize: 20,
+    width: 300,
     '&:hover': {
       backgroundColor: '#ef5350'
     }
-  }
+  },
+  dialogPaper: {
+    minHeight: '600px',
+    maxHeight: '600px',
+    position: 'absolute',
+    top: 150,
+  },
 });
 
 // ----------------------------------------------------------------------
@@ -98,10 +110,12 @@ export default function ShopProductCard({ product }) {
           <Typography variant="subtitle1">
             <Button variant="outlined" onClick={handleClickOpen}>Learn more</Button>
             <Dialog
+              className = {classes.dialogPaper}
               open={open}
               onClose={handleClose}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
+              fullWidth
             >
               <DialogTitle id="alert-dialog-title">Company Information</DialogTitle>
               <DialogContent>
