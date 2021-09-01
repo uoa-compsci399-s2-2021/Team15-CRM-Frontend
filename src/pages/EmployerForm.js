@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { styled } from '@material-ui/core/styles';
 // import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-google';
-import Card from '@material-ui/core/Card';
-import Page from '../components/Page';
 import FirstPage from '../components/form/FirstPage';
 import SecondPage from '../components/form/SecondPage';
 import Review from '../components/form/Review';
