@@ -43,6 +43,7 @@ export class FirstPage extends Component {
     }
   }
 
+
   render() {
     const { values, handleChange, handleStartChecked, handleCloseChecked } = this.props;
     const isError = (condition) => this.state.showErrors && condition;
