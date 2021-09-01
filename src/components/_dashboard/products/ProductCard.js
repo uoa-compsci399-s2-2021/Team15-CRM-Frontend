@@ -35,7 +35,7 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { positionName, companyName, jobHours, jobStartTime, jobLocation, priceSale } = product;
+  const { positionName, companyName, jobHours, jobSalary, jobLocation, jobContract } = product;
   const classes = useStyles();
 
   return (
@@ -53,10 +53,16 @@ export default function ShopProductCard({ product }) {
           <Typography color="textSecondary">
             {convertFirstCharacterAllWordsToUppercase(jobHours)}
           </Typography>
+          <Typography color="textSecondary">
+            {convertFirstCharacterAllWordsToUppercase(jobContract)}
+          </Typography>
           <Typography variant="body2" component="p">
-            {fDate(jobStartTime)}
+            NZD$
+            {' '}
+            {' '}
+            {jobSalary}
             <br />
-            {jobLocation}
+            {convertFirstCharacterAllWordsToUppercase(jobLocation)}
           </Typography>
         </div>
 

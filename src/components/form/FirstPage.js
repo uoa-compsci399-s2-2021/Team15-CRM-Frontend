@@ -41,7 +41,7 @@ export class FirstPage extends Component {
       this.setState({ 'showErrors': true });
       window.scrollTo(0, 0);
     }
-  };
+  }
 
   render() {
     const { values, handleChange, handleStartChecked, handleCloseChecked } = this.props;
