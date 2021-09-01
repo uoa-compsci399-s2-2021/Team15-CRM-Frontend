@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Typography, Container, Grid, Snackbar } from '@material-ui/core';
+import { Button, Typography, Container, Grid, Snackbar, Alert } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Alert } from '@material-ui/lab';
 import { submitForm } from '../../apis/index';
 
 export class Review extends Component {
@@ -10,7 +9,7 @@ export class Review extends Component {
     this.state = {
       notifyIsOpen: false,
       notifyMessage: '',
-      notifyType: '',
+      notifyType: 'error',
       loading: false,
     };
   }
@@ -52,7 +51,6 @@ export class Review extends Component {
       // console.log(e.response.data.error);
       this.setState({ 'notifyIsOpen': true });
       this.setState({ 'notifyMessage': e.response.data.error });
-      this.setState({ 'notifyType': 'error' });
     }
   };
 
