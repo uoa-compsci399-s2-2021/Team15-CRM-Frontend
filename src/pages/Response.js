@@ -38,6 +38,7 @@ export default function EcommerceShop() {
       try {
         let dataList = [];
         (response.data).forEach((element) => {
+          // get completed form
           if (element.isCompleted) {
             dataList.push(element);
           }
