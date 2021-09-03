@@ -87,9 +87,7 @@ export default function ShopProductCard({ product }) {
 
   return (
     <Card>
-
       <Stack spacing={2} sx={{ p: 3 }}>
-
         <div>
           <Box justifyContent="center" alignItems="center" display="flex" sx={{ p: 1 }}>
             <img
