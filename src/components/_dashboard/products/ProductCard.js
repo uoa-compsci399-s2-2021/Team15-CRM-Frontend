@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles, styled } from '@material-ui/styles';
 // material
 import { Box, Card, Link, Typography, Stack, Button, CardContent, CardActions } from '@material-ui/core';
-import React from 'react';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -15,6 +15,7 @@ import { fDate } from '../../../utils/formatTime';
 import { convertFirstCharacterAllWordsToUppercase } from '../../../utils/formatString';
 //
 import Label from '../../Label';
+import useFetch from '../../../apis/useFetch';
 
 // ----------------------------------------------------------------------
 
@@ -68,7 +69,8 @@ ShopProductCard.propTypes = {
 export default function ShopProductCard({ product }) {
   const { positionName, companyName, jobHours, jobSalary, jobLocation, jobContract, jobStartTime, jobClosingDate, companyDescription, jobDescription, jobSkill, questionContactDetail, applicationContactDetail } = product;
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  let logoUrl = (`https://logo.clearbit.com/${companyName}.com`);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -77,12 +79,24 @@ export default function ShopProductCard({ product }) {
     setOpen(false);
   };
 
+  const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);
+  // console.log(error);
+  if (error) {
+    logoUrl = ('https://logo.clearbit.com/hello.com');
+  }
+
   return (
     <Card>
 
       <Stack spacing={2} sx={{ p: 3 }}>
 
         <div>
+          <Box justifyContent="center" alignItems="center" display="flex" sx={{ p: 1 }}>
+            <img
+              src={logoUrl}
+              alt={companyName}
+            />
+          </Box>
           <Typography color="textSecondary" gutterBottom>
             {convertFirstCharacterAllWordsToUppercase(companyName)}
           </Typography>

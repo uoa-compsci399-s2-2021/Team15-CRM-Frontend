@@ -44,4 +44,5 @@ async function getJobInfo() {
   );
   return response;
 }
+
 export { sendEmailRequestToEmployer, getJobInfo, submitForm };
