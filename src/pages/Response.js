@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import React, { useState, useEffect } from 'react';
 // material
 import { Container, Stack, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 // components
 import Page from '../components/Page';
 import {
@@ -15,7 +16,17 @@ import { getJobInfo } from '../apis/index';
 
 // ----------------------------------------------------------------------
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+}));
+
 export default function EcommerceShop() {
+  const classes = useStyles();
   const [openFilter, setOpenFilter] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -25,7 +36,13 @@ export default function EcommerceShop() {
     const fetchData = async () => {
       const response = await getJobInfo();
       try {
-        setData((response.data).reverse());
+        let dataList = [];
+        (response.data).forEach((element) => {
+          if (element.isCompleted) {
+            dataList.push(element);
+          }
+        });
+        setData((dataList).reverse());
       } catch (e) {
         setError(e);
       }
@@ -88,7 +105,7 @@ export default function EcommerceShop() {
         </Stack>
 
         {data === null ? (
-          <div>
+          <div className={classes.root}>
             <img src="/images/waiting.gif" alt="loading" />
           </div>
         ) : (
