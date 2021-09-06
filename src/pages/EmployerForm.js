@@ -13,7 +13,7 @@ export default class EmployerForm extends Component {
       step: 1,
       company: '',
       position: '',
-      location: '',
+      location: 'Other',
       startDate: '',
       closingDate: '',
       startTBC: false,
@@ -47,6 +47,10 @@ export default class EmployerForm extends Component {
   // handle field change
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
+  };
+
+  handleOtherLocation = () => {
+    this.setState({ [location]: '' });
   };
 
   handleStartChecked = (input) => (e) => {
@@ -112,6 +116,7 @@ export default class EmployerForm extends Component {
             handleChange={this.handleChange}
             handleStartChecked={this.handleStartChecked}
             handleCloseChecked={this.handleCloseChecked}
+            handleOtherLocation={this.handleOtherLocation}
             handleShowError={this.handleShowError}
             values={values}
           />

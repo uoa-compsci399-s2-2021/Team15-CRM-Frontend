@@ -58,5 +58,6 @@ module.exports = {
     'no-restricted-globals': 'off',
     'import/no-named-as-default': 'off',
     'prefer-destructuring': 'off',
+    'react/jsx-boolean-value': 'off',
   },
 };

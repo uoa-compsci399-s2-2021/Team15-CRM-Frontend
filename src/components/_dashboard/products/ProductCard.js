@@ -3,12 +3,27 @@ import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles, styled } from '@material-ui/styles';
 // material
-import { Box, Card, Link, Typography, Stack, Button, CardContent, CardActions } from '@material-ui/core';
+import {
+  Box,
+  Card,
+  Link,
+  Typography,
+  Stack,
+  Button,
+  CardContent,
+  CardActions,
+  TextField,
+  Snackbar,
+  Alert
+} from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { green, red } from '@material-ui/core/colors';
 // utils
 import { fDate } from '../../../utils/formatTime';
@@ -16,23 +31,24 @@ import { convertFirstCharacterAllWordsToUppercase } from '../../../utils/formatS
 //
 import Label from '../../Label';
 import useFetch from '../../../apis/useFetch';
+import Information from './Information';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    minWidth: 275
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
-    transform: 'scale(0.8)',
+    transform: 'scale(0.8)'
   },
   title: {
-    fontSize: 14,
+    fontSize: 14
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 12
   },
   accept: {
     backgroundColor: 'green',
@@ -41,7 +57,7 @@ const useStyles = makeStyles({
     width: 300,
     '&:hover': {
       backgroundColor: '#66bb6a'
-    },
+    }
   },
   decline: {
     backgroundColor: 'red',
@@ -52,12 +68,36 @@ const useStyles = makeStyles({
       backgroundColor: '#ef5350'
     }
   },
+  submit: {
+    marginRight: 18,
+    fontSize: 15,
+    width: 100,
+    '&:hover': {
+      backgroundColor: '#45b2e6'
+    }
+  },
   dialogPaper: {
     minHeight: '600px',
     maxHeight: '600px',
     position: 'fixed',
-    top: 150,
+    top: 50
   },
+  subtitle: {
+    color: 'black',
+    marginRight: 5
+  },
+  confirmButton: {
+    backgroundColor: '#058714',
+    '&:hover': {
+      backgroundColor: '#66bb6a'
+    }
+  },
+  no: {
+    backgroundColor: '#de3521',
+    '&:hover': {
+      backgroundColor: '#ef5350'
+    }
+  }
 });
 
 // ----------------------------------------------------------------------
@@ -66,11 +106,36 @@ ShopProductCard.propTypes = {
   product: PropTypes.object
 };
 
-export default function ShopProductCard({ product }) {
-  const { positionName, companyName, jobHours, jobSalary, jobLocation, jobContract, jobStartTime, jobClosingDate, companyDescription, jobDescription, jobSkill, questionContactDetail, applicationContactDetail } = product;
+export default function ShopProductCard({ product, isActive }) {
+  const {
+    positionName,
+    companyName,
+    jobHours,
+    jobSalary,
+    jobLocation,
+    jobContract,
+    jobStartTime,
+    jobClosingDate,
+    companyDescription,
+    jobDescription,
+    jobSkill,
+    questionContactDetail,
+    applicationContactDetail
+  } = product;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  let logoUrl = (`https://logo.clearbit.com/${companyName}.com`);
+  const [decline, setDecline] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [notifyIsOpen, setNotifyIsOpen] = useState(false);
+  const [notifyType, setNotifyType] = useState('');
+  const [notifyMessage, setNotifyMessage] = useState('');
+  const [declineReason, setDeclineReason] = useState('');
+  const [showErrors, setShowErrors] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  let logoUrl = `https://logo.clearbit.com/${companyName}.com`;
+
+  const isError = (condition) => showErrors && condition;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -78,22 +143,70 @@ export default function ShopProductCard({ product }) {
   const handleClose = () => {
     setOpen(false);
   };
+  const openConfirm = () => {
+    setConfirm(true);
+  };
+  const handleAccept = () => {
+    console.log(product);
+    try {
+      setLoading(true);
+    } catch (e) {
+      setLoading(false);
+    }
+    setConfirm(false);
+    setOpen(false);
+    setNotifyType('success');
+    setNotifyMessage('Successfully accepted');
+    setNotifyIsOpen(true);
+  };
+  const closeConfirm = () => {
+    setConfirm(false);
+  };
+  const handleDecline = () => {
+    setDecline(true);
+  };
+  const closeDecline = () => {
+    setDecline(false);
+  };
+  const handleSubmitDecline = () => {
+    if (declineReason.length != 0 && declineReason.length <= 1200) {
+      setDecline(false);
+      setOpen(false);
+      setNotifyType('success');
+      setNotifyMessage('Successfully declined');
+      setNotifyIsOpen(true);
+    } else {
+      setShowErrors(true);
+    }
+  };
+  const closeNotification = () => {
+    setNotifyIsOpen(false);
+  };
 
   const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);
   // console.log(error);
   if (error) {
-    logoUrl = ('https://logo.clearbit.com/hello.com');
+    logoUrl = 'https://logo.clearbit.com/hello.com';
   }
 
   return (
     <Card>
       <Stack spacing={2} sx={{ p: 3 }}>
         <div>
+          <Snackbar
+            style={{ marginTop: 50, position: 'fixed' }}
+            open={notifyIsOpen}
+            autoHideDuration={3000}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            onClose={closeNotification}
+            outlined
+          >
+            <Alert severity={notifyType} onClose={closeNotification}>
+              {notifyMessage}
+            </Alert>
+          </Snackbar>
           <Box justifyContent="center" alignItems="center" display="flex" sx={{ p: 1 }}>
-            <img
-              src={logoUrl}
-              alt={companyName}
-            />
+            <img src={logoUrl} alt={companyName} />
           </Box>
           <Typography color="textSecondary" gutterBottom>
             {convertFirstCharacterAllWordsToUppercase(companyName)}
@@ -108,9 +221,7 @@ export default function ShopProductCard({ product }) {
             {convertFirstCharacterAllWordsToUppercase(jobContract)}
           </Typography>
           <Typography variant="body2" component="p">
-            NZD$
-            {' '}
-            {' '}
+            NZD $
             {jobSalary}
             <br />
             {convertFirstCharacterAllWordsToUppercase(jobLocation)}
@@ -120,96 +231,100 @@ export default function ShopProductCard({ product }) {
         <Stack alignItems="center" justifyContent="space-between">
           {/* <ColorPreview colors={colors} /> */}
           <Typography variant="subtitle1">
-            <Button variant="outlined" onClick={handleClickOpen}>Learn more</Button>
-            <Dialog
-              className = {classes.dialogPaper}
+            <Button variant="outlined" onClick={handleClickOpen}>
+              Learn more
+            </Button>
+            <Information
+              product={product}
               open={open}
-              onClose={handleClose}
+              decline={handleDecline}
+              accept={openConfirm}
+              close={handleClose}
+              isActive={isActive}
+            />
+            <Dialog
+              className={classes.dialogPaper}
+              open={decline}
+              onClose={closeDecline}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
               fullWidth
             >
-              <DialogTitle id="alert-dialog-title">Company Information</DialogTitle>
+              <DialogTitle disableTypography justify="center" justifyContent="center">
+                <Typography variant="h5" display="inline">
+                  Reasons for declining
+                </Typography>
+                <IconButton onClick={closeDecline} style={{ float: 'right' }}>
+                  <CloseIcon />
+                </IconButton>
+              </DialogTitle>
+              <DialogContent>
+                <TextField
+                  value={declineReason}
+                  onChange={(e) => setDeclineReason(e.target.value)}
+                  multiline
+                  rows={8}
+                  fullWidth
+                  error={isError(declineReason.length === 0) || isError(declineReason.length > 1200)}
+                  helperText={
+                    (isError(declineReason.length === 0) && 'Please enter the reasons for declining this request') ||
+                    (isError(declineReason.length > 1200) &&
+                      'The description connot exceed 1200 characters')
+                  }
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  className={classes.submit}
+                  onClick={handleSubmitDecline}
+                  variant="contained"
+                  autoFocus
+                >
+                  {loading ? (
+                    <CircularProgress color="inherit" size="1.5rem" />
+                  ) : (
+                    <>Submit</>
+                  )}
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              className={classes.dialogPaper}
+              open={confirm}
+              onClose={closeConfirm}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              fullWidth
+            >
+              <DialogTitle disableTypography justify="center" justifyContent="center">
+                Are you sure you want to accept?
+              </DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  {'Name: '}
-                  {convertFirstCharacterAllWordsToUppercase(companyName)}
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  {'Position: '}
-                  {convertFirstCharacterAllWordsToUppercase(positionName)}
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  {'Location: '}
-                  {convertFirstCharacterAllWordsToUppercase(jobLocation)}
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  {'Start date: '}
-                  {convertFirstCharacterAllWordsToUppercase(jobStartTime)}
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  {'Closing date: '}
-                  {convertFirstCharacterAllWordsToUppercase(jobClosingDate)}
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  {'Hours: '}
-                  {convertFirstCharacterAllWordsToUppercase(jobHours)}
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  {'Contract: '}
-                  {convertFirstCharacterAllWordsToUppercase(jobContract)}
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  <Typography color="textSecondary" gutterBottom>
-                    {'Salary(NZD): $  '}
-                    {jobSalary}
-                  </Typography>
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  <Typography color="textSecondary" gutterBottom>
-                    {'About the company: '}
-                    {companyDescription}
-                  </Typography>
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  <Typography color="textSecondary" gutterBottom>
-                    {'About the role: '}
-                    {jobDescription}
-                  </Typography>
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  <Typography color="textSecondary" gutterBottom>
-                    {'Key skills: '}
-                    {jobSkill}
-                  </Typography>
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  <Typography color="textSecondary" gutterBottom>
-                    {'Contact Details: '}
-                    {questionContactDetail}
-                  </Typography>
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description">
-                  <Typography color="textSecondary" gutterBottom>
-                    {'Application: '}
-                    {applicationContactDetail}
-                  </Typography>
+                  This action cannot be undo after proceed.
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClose} color="primary" className = {classes.accept} disableElevation variant = "contained">
-                  Accept
+                <Button onClick={closeConfirm} variant="contained" className={classes.no} autoFocus>
+                  Back
                 </Button>
-                <Button className = {classes.decline} onClick={handleClose} variant = "contained" autoFocus>
-                  Decline
+                <Button
+                  onClick={handleAccept}
+                  variant="contained"
+                  className={classes.confirmButton}
+                  autoFocus
+                >
+                  {loading ? (
+                    <CircularProgress color="inherit" size="1.5rem" />
+                  ) : (
+                    <>Confirm</>
+                  )}
                 </Button>
               </DialogActions>
             </Dialog>
           </Typography>
-
         </Stack>
       </Stack>
     </Card>
-
   );
 }
