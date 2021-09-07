@@ -10,16 +10,16 @@ export class SecondPage extends Component {
   handleContinue = (e) => {
     e.preventDefault();
     if (
-      this.props.values.ATC.length != 0 &&
-      this.props.values.ATR.length != 0 &&
-      this.props.values.keySkills.length != 0 &&
-      this.props.values.contact.length != 0 &&
-      this.props.values.application.length != 0
+      (this.props.values.ATC.length != 0 && this.props.values.ATC.length <= 1200) &&
+      (this.props.values.ATR.length != 0 && this.props.values.ATC.length <= 1200) &&
+      (this.props.values.keySkills.length != 0 && this.props.values.ATC.length <= 1200) &&
+      (this.props.values.contact.length != 0 && this.props.values.ATC.length <= 1200) &&
+      (this.props.values.application.length != 0 && this.props.values.ATC.length <= 1200)
     ) {
       this.props.nextStep();
       window.scrollTo(0, 0);
     } else {
-      this.setState({ 'showErrors': true });
+      this.setState({ showErrors: true });
     }
   };
 
@@ -37,7 +37,7 @@ export class SecondPage extends Component {
         container
         style={{
           backgroundImage: 'url(https://i.ibb.co/XFj5fnQ/73121630274494-pic-hd.png)',
-          backgroundSize: 'cover',
+          backgroundSize: 'cover'
         }}
       >
         <Container fixed>
@@ -61,9 +61,11 @@ export class SecondPage extends Component {
                   // helperText="A link to your website is also very useful."
                   fullWidth
                   required
-                  error={isError(values.ATC.length === 0)}
+                  error={isError(values.ATC.length === 0) || isError(values.ATC.length > 1200)}
                   helperText={
-                    isError(values.ATC.length === 0) && 'Please tell us about your company'
+                    (isError(values.ATC.length === 0) && 'Please tell us about your company') ||
+                    (isError(values.ATC.length > 1200) &&
+                      'The description connot exceed 1200 characters')
                   }
                 />
                 <Typography style={{ marginTop: 40 }}>
@@ -81,8 +83,12 @@ export class SecondPage extends Component {
                   rows={4}
                   fullWidth
                   required
-                  error={isError(values.ATR.length === 0)}
-                  helperText={isError(values.ATR.length === 0) && 'Please tell us about the role'}
+                  error={isError(values.ATR.length === 0) || isError(values.ATR.length > 1200)}
+                  helperText={
+                    (isError(values.ATR.length === 0) && 'Please tell us about the role') ||
+                    (isError(values.ATR.length > 1200) &&
+                      'The description connot exceed 1200 characters')
+                  }
                 />
                 <Typography style={{ marginTop: 40 }}>
                   The more specific you are about the skills that are required for the role, the
@@ -102,10 +108,15 @@ export class SecondPage extends Component {
                   // helperText="Please consider personal qualities and experience as well as technical skills."
                   fullWidth
                   required
-                  error={isError(values.keySkills.length === 0)}
+                  error={
+                    isError(values.keySkills.length === 0) ||
+                    isError(values.keySkills.length > 1200)
+                  }
                   helperText={
-                    isError(values.keySkills.length === 0) &&
-                    'Please tell us the key skills required for the position'
+                    (isError(values.keySkills.length === 0) &&
+                      'Please tell us the key skills required for the position') ||
+                    (isError(values.keySkills.length > 1200) &&
+                      'The description connot exceed 1200 characters')
                   }
                 />
                 <Typography style={{ marginTop: 40 }}>
@@ -123,9 +134,13 @@ export class SecondPage extends Component {
                   rows={4}
                   fullWidth
                   required
-                  error={isError(values.contact.length === 0)}
+                  error={
+                    isError(values.contact.length === 0) || isError(values.contact.length > 1200)
+                  }
                   helperText={
-                    isError(values.contact.length === 0) && 'Please provide the contact detail'
+                    (isError(values.contact.length === 0) && 'Please provide the contact detail') ||
+                    (isError(values.contact.length > 1200) &&
+                      'The description connot exceed 1200 characters')
                   }
                 />
                 <Typography style={{ marginTop: 40 }}>
@@ -143,10 +158,15 @@ export class SecondPage extends Component {
                   rows={4}
                   fullWidth
                   required
-                  error={isError(values.application.length === 0)}
+                  error={
+                    isError(values.application.length === 0) ||
+                    isError(values.application.length > 1200)
+                  }
                   helperText={
-                    isError(values.application.length === 0) &&
-                    'Please provide the application details'
+                    (isError(values.application.length === 0) &&
+                      'Please provide the application details') ||
+                    (isError(values.application.length > 1200) &&
+                      'The description connot exceed 1200 characters')
                   }
                 />
                 <Button
@@ -169,7 +189,7 @@ export class SecondPage extends Component {
                     color: '#FFFFFF',
                     marginTop: 25,
                     marginRight: 5,
-                    marginBottom: 50,
+                    marginBottom: 50
                   }}
                   label="Back"
                   onClick={this.back}

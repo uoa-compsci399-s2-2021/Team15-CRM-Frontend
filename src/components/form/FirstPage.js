@@ -16,7 +16,7 @@ import Select from '@material-ui/core/Select';
 export class FirstPage extends Component {
   constructor() {
     super();
-    this.state = { showErrors: false };
+    this.state = { showErrors: false, selectOtherLocation: false, locationWidth: 200 };
   }
 
   handleContinue = (e) => {
@@ -38,10 +38,20 @@ export class FirstPage extends Component {
         window.scrollTo(0, 0);
       }
     } else {
-      this.setState({ 'showErrors': true });
+      this.setState({ showErrors: true });
       window.scrollTo(0, 0);
     }
-  }
+  };
+
+  selectOther = () => {
+    this.setState({ selectOtherLocation: true });
+    this.setState({ locationWidth: 15 });
+  };
+
+  deselectOther = () => {
+    this.setState({ selectOtherLocation: false });
+    this.setState({ locationWidth: 200 });
+  };
 
   render() {
     const { values, handleChange, handleStartChecked, handleCloseChecked } = this.props;
@@ -76,9 +86,13 @@ export class FirstPage extends Component {
                   InputLabelProps={{
                     shrink: true
                   }}
-                  error={isError(values.company.length === 0)}
+                  error={
+                    isError(values.company.length === 0) || isError(values.company.length > 30)
+                  }
                   helperText={
-                    isError(values.company.length === 0) && "Please enter the employer's name"
+                    (isError(values.company.length === 0) && 'Please enter the company name') ||
+                    (isError(values.company.length > 30) &&
+                      'The name of the company cannot be over 30 characters')
                   }
                 />
               </Grid>
@@ -95,11 +109,15 @@ export class FirstPage extends Component {
                     shrink: true
                   }}
                   error={isError(values.position.length === 0)}
-                  helperText={isError(values.position.length === 0) && 'Please enter the position'}
+                  helperText={
+                    (isError(values.position.length === 0) && 'Please enter the position') ||
+                    (isError(values.position.length > 30) &&
+                      'The job title cannot be over 30 characters')
+                  }
                 />
               </Grid>
               <Grid item xs={12} sm={10} md={7}>
-                <TextField
+                {/* <TextField
                   variant="outlined"
                   label="Location"
                   placeholder="Company Location"
@@ -112,7 +130,45 @@ export class FirstPage extends Component {
                   }}
                   error={isError(values.position.length === 0)}
                   helperText={isError(values.position.length === 0) && 'Please enter the location'}
-                />
+                /> */}
+                <Typography style={{ marginTop: 20, marginBottom: 5 }}>
+                  Location
+                </Typography>
+                <FormControl
+                  error={isError(values.location == 'Other') || isError(values.location.length === 0)}
+                  style={{ minWidth: this.state.locationWidth, marginRight: 15 }}
+                >
+                  <Select value={values.location} onChange={handleChange('location')}>
+                    <MenuItem value="Auckland" onClick={() => this.deselectOther()}>
+                      Auckland
+                    </MenuItem>
+                    <MenuItem value="Wellington" onClick={() => this.deselectOther()}>
+                      Wellington
+                    </MenuItem>
+                    <MenuItem value="Chrischurch" onClick={() => this.deselectOther()}>
+                      Chrischurch
+                    </MenuItem>
+                    <MenuItem value="Remote" onClick={() => this.deselectOther()}>
+                      Remote
+                    </MenuItem>
+                    <MenuItem label="Other" value="" onClick={() => this.selectOther()}>
+                      Other
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+                {this.state.selectOtherLocation ? (
+                  <TextField
+                    label="Other location"
+                    style={{ marginRight: 20 }}
+                    value={values.location}
+                    onChange={handleChange('location')}
+                    error={isError(values.location.length > 20) || isError(values.location.length === 0)}
+                    helperText={(isError(values.location.length == 0) &&
+                            'Please enter the other location') ||
+                          (isError(values.location.length > 20) &&
+                            'The location cannot be over 20 characters')}
+                  />
+                ) : null}
               </Grid>
               <Grid item xs={12} sm={10} md={7}>
                 <Typography style={{ marginTop: 20, marginBottom: 10 }}>
@@ -155,7 +211,8 @@ export class FirstPage extends Component {
               </Grid>
               <Grid item xs={12} sm={10} md={7}>
                 <Typography style={{ marginTop: 25, marginBottom: 10 }}>
-                  When do applications need to be submitted by? Approx date or TBC if unsure. The default will be 30 days after the role is published
+                  When do applications need to be submitted by? Approx date or TBC if unsure. The
+                  default will be 30 days after the role is published
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={10} md={7} style={{ display: 'flex', overflow: 'auto' }}>
@@ -213,7 +270,7 @@ export class FirstPage extends Component {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={10} md={7}>
-                <Typography style={{ marginTop: 20 }}>Contract</Typography>
+                <Typography style={{ marginTop: 20, marginBottom: 5 }}>Contract</Typography>
                 <FormControl
                   error={isError(values.contract.length === 0)}
                   style={{ minWidth: 200 }}
@@ -229,7 +286,7 @@ export class FirstPage extends Component {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={10} md={7}>
-                <Typography style={{ marginTop: 25 }}>Salary</Typography>
+                <Typography style={{ marginTop: 25, marginBottom: 5 }}>Salary  -  the range must be between $20.00 to $200,000</Typography>
                 <FormControl
                   variant="outlined"
                   disabled={values.salary == 'Market rate'}
@@ -240,9 +297,9 @@ export class FirstPage extends Component {
                     id="outlined-adornment-amount"
                     value={values.rate}
                     onChange={handleChange('rate')}
-                    style={{ marginBlockEnd: 20, marginRight: 10, }}
+                    style={{ marginBlockEnd: 20, marginRight: 10 }}
                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                    error={isError(values.rate.length === 0) || isError(isNaN(values.rate))}
+                    error={isError(values.rate.length === 0) || isError(isNaN(values.rate)) || isError(values.rate < 20) || isError(values.rate > 200000)}
                   />
                 </FormControl>
                 <FormControl>
