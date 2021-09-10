@@ -181,7 +181,6 @@ export default function ShopProductCard({ product, isActive }) {
       console.log(e);
     }
   }
-
   const closeConfirm = () => {
     setConfirm(false);
   };
@@ -191,7 +190,6 @@ export default function ShopProductCard({ product, isActive }) {
   const closeDecline = () => {
     setDecline(false);
   };
-
   async function handleSubmitDecline() {
     if (declineReason.length != 0 && declineReason.length <= 1200) {
       const data = { '_id': product._id, 'letter': declineReason };
