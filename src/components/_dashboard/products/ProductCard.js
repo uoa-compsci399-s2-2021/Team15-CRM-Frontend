@@ -107,7 +107,7 @@ ShopProductCard.propTypes = {
   product: PropTypes.object
 };
 
-export default function ShopProductCard({ product, isActive }) {
+export default function ShopProductCard({ product, isActive, setHandleEvent, handleEvent }) {
   const {
     positionName,
     companyName,
@@ -163,12 +163,13 @@ export default function ShopProductCard({ product, isActive }) {
         setLoading(false);
         setConfirm(false);
         setOpen(false);
-        setNotifyType('success');
         console.log(response);
+        setHandleEvent(!handleEvent);
+        setNotifyType('success');
         setNotifyMessage('Successfully accepted');
         setNotifyIsOpen(true);
         await timeout(5000);
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.log(response);
         setLoading(false);
@@ -200,13 +201,14 @@ export default function ShopProductCard({ product, isActive }) {
         if (response.status === 200) {
           setLoading(false);
           setOpen(false);
+          setHandleEvent(!handleEvent);
           setNotifyType('success');
           setNotifyMessage('Successfully declined');
           setNotifyIsOpen(true);
           setDecline(false);
           console.log(response);
           await timeout(5000);
-          window.location.reload();
+          // window.location.reload();
         } else {
           console.log(response);
           setLoading(false);
