@@ -197,6 +197,7 @@ export default function ShopProductCard({ product, isActive }) {
       const data = { '_id': product._id, 'letter': declineReason };
       try {
         setLoading(true);
+        // call api
         const response = await declineJob(data);
         if (response.status === 200) {
           setLoading(false);
