@@ -45,4 +45,33 @@ async function getJobInfo() {
   return response;
 }
 
-export { sendEmailRequestToEmployer, getJobInfo, submitForm };
+async function approveJob(id) {
+  const response = await axios(
+    'https://cs399-team15.herokuapp.com/api/admin/approve-job',
+    {
+      headers: {
+        'Content-type': 'application/json',
+        'Access-Control-Allow-Credentials': true
+      },
+      data: { '_id': id },
+      method: 'POST',
+    }
+  );
+  return response;
+}
+
+async function declineJob(info) {
+  const response = await axios(
+    'https://cs399-team15.herokuapp.com/api/admin/decline-job',
+    {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: info,
+      method: 'DELETE',
+    }
+  );
+  return response;
+}
+
+export { sendEmailRequestToEmployer, getJobInfo, submitForm, approveJob, declineJob };

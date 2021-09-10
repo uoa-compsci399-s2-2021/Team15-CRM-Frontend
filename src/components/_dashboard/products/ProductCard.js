@@ -30,6 +30,7 @@ import { fDate } from '../../../utils/formatTime';
 import { convertFirstCharacterAllWordsToUppercase } from '../../../utils/formatString';
 //
 import Label from '../../Label';
+import { approveJob, declineJob } from '../../../apis/index';
 import useFetch from '../../../apis/useFetch';
 import Information from './Information';
 
@@ -138,6 +139,7 @@ export default function ShopProductCard({ product, isActive }) {
   const isError = (condition) => showErrors && condition;
 
   const handleClickOpen = () => {
+    console.log(product);
     setOpen(true);
   };
   const handleClose = () => {
@@ -146,19 +148,39 @@ export default function ShopProductCard({ product, isActive }) {
   const openConfirm = () => {
     setConfirm(true);
   };
-  const handleAccept = () => {
+
+  function timeout(delay) {
+    return new Promise((res) => setTimeout(res, delay));
+  }
+
+  async function handleAccept() {
     console.log(product);
+    console.log(product._id);
     try {
       setLoading(true);
+      const response = await approveJob(product._id);
+      if (response.status === 200) {
+        setLoading(false);
+        setConfirm(false);
+        setOpen(false);
+        setNotifyType('success');
+        console.log(response);
+        setNotifyMessage('Successfully accepted');
+        setNotifyIsOpen(true);
+        await timeout(5000);
+        window.location.reload();
+      } else {
+        console.log(response);
+        setLoading(false);
+        setNotifyType('error');
+        setNotifyMessage(response.data.info);
+        setNotifyIsOpen(true);
+      }
     } catch (e) {
       setLoading(false);
+      console.log(e);
     }
-    setConfirm(false);
-    setOpen(false);
-    setNotifyType('success');
-    setNotifyMessage('Successfully accepted');
-    setNotifyIsOpen(true);
-  };
+  }
   const closeConfirm = () => {
     setConfirm(false);
   };
@@ -168,17 +190,38 @@ export default function ShopProductCard({ product, isActive }) {
   const closeDecline = () => {
     setDecline(false);
   };
-  const handleSubmitDecline = () => {
+  async function handleSubmitDecline() {
     if (declineReason.length != 0 && declineReason.length <= 1200) {
-      setDecline(false);
-      setOpen(false);
-      setNotifyType('success');
-      setNotifyMessage('Successfully declined');
-      setNotifyIsOpen(true);
+      const data = { '_id': product._id, 'letter': declineReason };
+      try {
+        setLoading(true);
+        // call api
+        const response = await declineJob(data);
+        if (response.status === 200) {
+          setLoading(false);
+          setOpen(false);
+          setNotifyType('success');
+          setNotifyMessage('Successfully declined');
+          setNotifyIsOpen(true);
+          setDecline(false);
+          console.log(response);
+          await timeout(5000);
+          window.location.reload();
+        } else {
+          console.log(response);
+          setLoading(false);
+          setNotifyType('error');
+          setNotifyMessage(response.data.info);
+          setNotifyIsOpen(true);
+        }
+      } catch (e) {
+        setLoading(false);
+        console.log(e);
+      }
     } else {
       setShowErrors(true);
     }
-  };
+  }
   const closeNotification = () => {
     setNotifyIsOpen(false);
   };
@@ -196,7 +239,7 @@ export default function ShopProductCard({ product, isActive }) {
           <Snackbar
             style={{ marginTop: 50, position: 'fixed' }}
             open={notifyIsOpen}
-            autoHideDuration={3000}
+            autoHideDuration={5000}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             onClose={closeNotification}
             outlined
