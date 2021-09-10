@@ -35,8 +35,6 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../user';
 const TABLE_HEAD = [
   { id: 'email', label: 'Email Address', alignRight: false },
   { id: 'time', label: 'Sent Time', alignRight: false },
-  { id: 'type', label: 'Type', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   { id: '' }
 ];
@@ -157,57 +155,55 @@ export default function RequestTable({ data }) {
                 />
                 <TableBody>
                   {data != null && (
-                  <>
-                    {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((job, idx) => (
-                      <TableRow
-                        hover
-                        key={job._id}
-                        tabIndex={-1}
-                        role="checkbox"
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox />
-                        </TableCell>
-                        <TableCell align="left">
-                          <Typography variant="subtitle2" noWrap>
-                            {job.requestedEmail}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="left">{ moment(job.requestedEmailTime).format('LLLL')}</TableCell>
-                        <TableCell align="left">{job.jobLocation}</TableCell>
-                        <TableCell align="left">{job.jobLocation}</TableCell>
+                    <>
+                      {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((job, idx) => (
+                        <TableRow
+                          hover
+                          key={job._id}
+                          tabIndex={-1}
+                          role="checkbox"
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox />
+                          </TableCell>
+                          <TableCell align="left">
+                            <Typography variant="subtitle2" noWrap>
+                              {job.requestedEmail}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="left">{moment(job.requestedEmailTime).format('LLLL')}</TableCell>
 
-                        <TableCell align="left">
-                          <Label
-                            variant="ghost"
-                            color={(job.positionName !== '' && 'error') || 'success'}
-                          >
-                            {sentenceCase(job.jobLocation)}
-                          </Label>
-                        </TableCell>
+                          <TableCell align="left">
+                            <Label
+                              variant="ghost"
+                              color={(job.isCompleted !== true && 'error') || 'success'}
+                            >
+                              {job.isCompleted ? 'Completed' : 'Not yet'}
+                            </Label>
+                          </TableCell>
 
-                        <TableCell align="right">
-                          <UserMoreMenu />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </>
+                          <TableCell align="right">
+                            <UserMoreMenu />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </>
                   )}
 
                   {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
                   )}
                 </TableBody>
                 {isUserNotFound && (
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                      <SearchNotFound searchQuery={filterName} />
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                        <SearchNotFound searchQuery={filterName} />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
                 )}
               </Table>
             </TableContainer>
