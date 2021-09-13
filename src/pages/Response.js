@@ -104,7 +104,7 @@ export default function EcommerceShop() {
               textColor="primary"
               centered
             >
-              <Tab label="In progress" />
+              <Tab label="New Response" />
               <Tab label="Accepted" />
             </Tabs>
           </Paper>

@@ -135,6 +135,7 @@ export default function ShopProductCard({ product, isActive }) {
   const [loading, setLoading] = useState(false);
 
   let logoUrl = `https://logo.clearbit.com/${companyName}.com`;
+  const defaultLogo = 'https://benti-energies.com/asset/images/clients/logo-default.svg';
 
   const isError = (condition) => showErrors && condition;
 
@@ -249,7 +250,7 @@ export default function ShopProductCard({ product, isActive }) {
             </Alert>
           </Snackbar>
           <Box justifyContent="center" alignItems="center" display="flex" sx={{ p: 1 }}>
-            <img src={logoUrl} alt={companyName} />
+            <img src={logoUrl} alt={defaultLogo} />
           </Box>
           <Typography color="textSecondary" gutterBottom>
             {convertFirstCharacterAllWordsToUppercase(companyName)}
@@ -284,6 +285,7 @@ export default function ShopProductCard({ product, isActive }) {
               accept={openConfirm}
               close={handleClose}
               isActive={isActive}
+              logo={logoUrl}
             />
             <Dialog
               className={classes.dialogPaper}

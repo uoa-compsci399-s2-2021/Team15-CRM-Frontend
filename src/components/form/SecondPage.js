@@ -168,7 +168,9 @@ export class SecondPage extends Component {
                     (isError(values.application.length > 1200) &&
                       'The description connot exceed 1200 characters')
                   }
+                  // style={{ displayLinebreakAndTab: { whiteSpace: 'pre-wrap' } }}
                 />
+                <hr style={{ marginBottom: 40, opacity: 0 }} />
                 <Button
                   style={{
                     background: '#2E3B55',

@@ -69,7 +69,12 @@ const useStyles = makeStyles({
   },
   subtitle: {
     color: 'black',
-    marginRight: 5
+    marginRight: 5,
+    marginLeft: 5
+  },
+  body: {
+    marginLeft: 5,
+    whiteSpace: 'pre-line'
   }
 });
 
@@ -109,84 +114,106 @@ export default function Information(props) {
       aria-describedby="alert-dialog-description"
       fullWidth
     >
-      <DialogTitle variant="h5">Request Information</DialogTitle>
+      <DialogTitle variant="h5">
+        Request Information
+        <img
+          style={{ float: 'right', maxWidth: 50 }}
+          src={props.logo}
+          alt="https://benti-energies.com/asset/images/clients/logo-default.svg"
+        />
+      </DialogTitle>
       <DialogContent>
-        <DialogContentText variant="h6" className={classes.subtitle} display="inline">
-          Name:
+        <Typography variant="h6" style={{ marginLeft: 5 }}>Job overview</Typography>
+        <hr style={{ marginBottom: 5 }} />
+        <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+          Company
         </DialogContentText>
-        <DialogContentText display="inline">
+        <DialogContentText display="inline" style={{ marginLeft: 90 }}>
           {convertFirstCharacterAllWordsToUppercase(companyName)}
         </DialogContentText>
         <br />
-        <DialogContentText variant="h6" className={classes.subtitle} display="inline">
-          Position:
+        <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+          Position
         </DialogContentText>
-        <DialogContentText display="inline">
+        <DialogContentText display="inline" style={{ marginLeft: 100 }}>
           {convertFirstCharacterAllWordsToUppercase(positionName)}
         </DialogContentText>
         <br />
-        <DialogContentText variant="h6" className={classes.subtitle} display="inline">
-          Location:
+        <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+          Location
         </DialogContentText>
-        <DialogContentText display="inline">
+        <DialogContentText display="inline" style={{ marginLeft: 96 }}>
           {convertFirstCharacterAllWordsToUppercase(jobLocation)}
         </DialogContentText>
         <br />
-        <DialogContentText variant="h6" className={classes.subtitle} display="inline">
-          Start date:
+        <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+          Start date
         </DialogContentText>
-        <DialogContentText display="inline">
+        <DialogContentText display="inline" style={{ marginLeft: 83 }}>
           {convertFirstCharacterAllWordsToUppercase(jobStartTime)}
         </DialogContentText>
         <br />
-        <DialogContentText variant="h6" className={classes.subtitle} display="inline">
-          Closing date:
+        <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+          Closing date
         </DialogContentText>
-        <DialogContentText display="inline">
+        <DialogContentText display="inline" style={{ marginLeft: 65 }}>
           {convertFirstCharacterAllWordsToUppercase(jobClosingDate)}
         </DialogContentText>
         <br />
-        <DialogContentText variant="h6" className={classes.subtitle} display="inline">
-          Hours:
+        <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+          Hours
         </DialogContentText>
-        <DialogContentText display="inline">
+        <DialogContentText display="inline" style={{ marginLeft: 114 }}>
           {convertFirstCharacterAllWordsToUppercase(jobHours)}
         </DialogContentText>
         <br />
-        <DialogContentText variant="h6" className={classes.subtitle} display="inline">
-          Contract:
+        <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+          Contract
         </DialogContentText>
-        <DialogContentText display="inline">
+        <DialogContentText display="inline" style={{ marginLeft: 93 }}>
           {convertFirstCharacterAllWordsToUppercase(jobContract)}
         </DialogContentText>
         <br />
-        <DialogContentText variant="h6" className={classes.subtitle} display="inline">
-          Salary(NZD):
+        <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+          Salary(NZD)
         </DialogContentText>
-        <DialogContentText display="inline">
-          $
-          {jobSalary}
+        {jobSalary == 'Market rate' ? (
+          <DialogContentText style={{ marginLeft: 64 }} display="inline">
+            "Market Rate"
+          </DialogContentText>
+        ) : (
+          <DialogContentText style={{ marginLeft: 64 }} display="inline">
+            $
+            {jobSalary}
+          </DialogContentText>
+        )}
+        <DialogContentText variant="h6" className={classes.subtitle} style={{ marginTop: 25 }}>
+          About the company
         </DialogContentText>
-        <DialogContentText variant="h6" className={classes.subtitle}>
-          About the company:
+        <hr style={{ marginBottom: 5 }} />
+        <DialogContentText className={classes.body}>{companyDescription}</DialogContentText>
+        <DialogContentText variant="h6" className={classes.subtitle} style={{ marginTop: 25 }}>
+          About the role
         </DialogContentText>
-        <DialogContentText>{companyDescription}</DialogContentText>
-        <DialogContentText variant="h6" className={classes.subtitle}>
-          About the role:
+        <hr style={{ marginBottom: 5 }} />
+        <DialogContentText className={classes.body}>{jobDescription}</DialogContentText>
+        <DialogContentText variant="h6" className={classes.subtitle} style={{ marginTop: 25 }}>
+          Key skills
         </DialogContentText>
-        <DialogContentText>{jobDescription}</DialogContentText>
-        <DialogContentText variant="h6" className={classes.subtitle}>
-          Key skills:
-        </DialogContentText>
+        <hr style={{ marginBottom: 5 }} />
         <DialogContentText>{jobSkill}</DialogContentText>
-        <DialogContentText variant="h6" className={classes.subtitle}>
-          Contact Details:
+        <DialogContentText variant="h6" className={classes.subtitle} style={{ marginTop: 25 }}>
+          Contact Details
         </DialogContentText>
-        <DialogContentText>{questionContactDetail}</DialogContentText>
-        <DialogContentText variant="h6" className={classes.subtitle}>
-          Application:
+        <hr style={{ marginBottom: 5 }} />
+        <DialogContentText className={classes.body}>{questionContactDetail}</DialogContentText>
+        <DialogContentText variant="h6" className={classes.subtitle} style={{ marginTop: 25 }}>
+          Application
         </DialogContentText>
-        <DialogContentText>{applicationContactDetail}</DialogContentText>
+        <hr style={{ marginBottom: 5 }} />
+        <DialogContentText className={classes.body}>
+          {applicationContactDetail}
+        </DialogContentText>
       </DialogContent>
       {!props.isActive ? (
         <DialogActions>
