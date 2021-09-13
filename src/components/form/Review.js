@@ -81,96 +81,114 @@ export class Review extends Component {
                 </Alert>
               </Snackbar>
               <Grid item xs={12} sm={12} md={9}>
-                <Typography variant="h2" style={{ marginTop: 30 }}>
+                <Typography variant="h2" style={{ marginTop: 30, color: '#595b75' }}>
                   Review
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 30 }}>
-                  Company:
+                <Typography variant="h4" style={{ marginTop: 30, marginLeft: 15 }}>
+                  Job overview
                 </Typography>
-                <Typography variant="h5" style={{ marginLeft: 10 }}>
+                <hr style={{ marginBottom: 20 }} />
+                <Typography variant="h6" style={{ marginTop: 30, marginLeft: 15 }} display="inline">
+                  Company
+                </Typography>
+                <Typography style={{ marginLeft: 150 }} display="inline">
                   {values.company}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Position:
+                <hr style={{ opacity: 0 }} />
+                <Typography variant="h6" style={{ marginTop: 20, marginLeft: 15 }} display="inline">
+                  Position
                 </Typography>
-                <Typography variant="h4" style={{ marginLeft: 10 }}>
+                <Typography style={{ marginLeft: 161 }} display="inline">
                   {values.position}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Location:
+                <hr style={{ opacity: 0 }} />
+                <Typography variant="h6" style={{ marginTop: 30, marginLeft: 15 }} display="inline">
+                  Location
                 </Typography>
-                <Typography variant="h4" style={{ marginLeft: 10 }}>
+                <Typography style={{ marginLeft: 158 }} display="inline">
                   {values.location}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Start Date:
+                <hr style={{ opacity: 0 }} />
+                <Typography variant="h6" style={{ marginTop: 30, marginLeft: 15 }} display="inline">
+                  Start Date
                 </Typography>
-                <Typography variant="h4" style={{ marginLeft: 10 }}>
+                <Typography style={{ marginLeft: 142 }} display="inline">
                   {values.startDate}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Closing Date:
+                <hr style={{ opacity: 0 }} />
+                <Typography variant="h6" style={{ marginTop: 30, marginLeft: 15 }} display="inline">
+                  Closing Date
                 </Typography>
-                <Typography variant="h4" style={{ marginLeft: 10 }}>
+                <Typography style={{ marginLeft: 122 }} display="inline">
                   {values.closingDate}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Hours:
+                <hr style={{ opacity: 0 }} />
+                <Typography variant="h6" style={{ marginTop: 30, marginLeft: 15 }} display="inline">
+                  Hours
                 </Typography>
-                <Typography variant="h4" style={{ marginLeft: 10 }}>
+                <Typography style={{ marginLeft: 180 }} display="inline">
                   {values.hours}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Contract:
+                <hr style={{ opacity: 0 }} />
+                <Typography variant="h6" style={{ marginTop: 30, marginLeft: 15 }} display="inline">
+                  Contract
                 </Typography>
-                <Typography variant="h4" style={{ marginLeft: 10 }}>
+                <Typography style={{ marginLeft: 155 }} display="inline">
                   {values.contract}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Salary:
+                <hr style={{ opacity: 0 }} />
+                <Typography variant="h6" style={{ marginTop: 30, marginLeft: 15 }} display="inline">
+                  Salary
                 </Typography>
                 {values.salary == 'Market rate' ? (
-                  <Typography variant="h4" style={{ marginLeft: 10 }}>
+                  <Typography style={{ marginLeft: 173 }} display="inline">
                     "Market Rate"
                   </Typography>
                 ) : (
-                  <Typography variant="h4" style={{ marginLeft: 10 }}>
+                  <Typography style={{ marginLeft: 173 }} display="inline">
                     $
                     {values.rate}
                     {' '}
                     {values.salary}
                   </Typography>
                 )}
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  About the company:
+                <hr style={{ opacity: 0 }} />
+                <Typography variant="h4" style={{ marginTop: 30, marginLeft: 15 }}>
+                  About the company
                 </Typography>
-                <Typography variant="subtitle1" style={{ marginLeft: 10 }}>
+                <hr style={{ marginBottom: 20 }} />
+                <Typography style={{ marginLeft: 15, whiteSpace: 'pre-line' }}>
                   {values.ATC}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  About the role:
+                <Typography variant="h4" style={{ marginTop: 40, marginLeft: 15 }}>
+                  About the role
                 </Typography>
-                <Typography variant="subtitle1" style={{ marginLeft: 10 }}>
+                <hr style={{ marginBottom: 20 }} />
+                <Typography style={{ marginLeft: 15, whiteSpace: 'pre-line' }}>
                   {values.ATR}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Key Skills:
+                <Typography variant="h4" style={{ marginTop: 40, marginLeft: 15 }}>
+                  Key Skills
                 </Typography>
-                <Typography variant="subtitle1" style={{ marginLeft: 10 }}>
+                <hr style={{ marginBottom: 20 }} />
+                <Typography style={{ marginLeft: 15, whiteSpace: 'pre-line' }}>
                   {values.keySkills}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Contact Details:
+                <Typography variant="h4" style={{ marginTop: 40, marginLeft: 15 }}>
+                  Contact Details
                 </Typography>
-                <Typography variant="subtitle1" style={{ marginLeft: 10 }}>
+                <hr style={{ marginBottom: 20 }} />
+                <Typography style={{ marginLeft: 15, whiteSpace: 'pre-line' }}>
                   {values.contact}
                 </Typography>
-                <Typography variant="h4" style={{ marginTop: 20 }}>
-                  Application:
+                <Typography variant="h4" style={{ marginTop: 40, marginLeft: 15 }}>
+                  Application
                 </Typography>
-                <Typography variant="subtitle1" style={{ marginLeft: 10 }}>
+                <hr style={{ marginBottom: 20 }} />
+                <Typography style={{ marginLeft: 15, whiteSpace: 'pre-line' }}>
                   {values.application}
                 </Typography>
+                <hr style={{ marginBottom: 40, opacity: 0 }} />
                 <Button
                   style={{
                     background: '#169905',

@@ -135,6 +135,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
   const [loading, setLoading] = useState(false);
 
   let logoUrl = `https://logo.clearbit.com/${companyName}.com`;
+  const defaultLogo = 'https://benti-energies.com/asset/images/clients/logo-default.svg';
 
   const isError = (condition) => showErrors && condition;
 
@@ -163,7 +164,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
         setLoading(false);
         setConfirm(false);
         setOpen(false);
-        console.log(response);
+        // console.log(response);
         setHandleEvent(!handleEvent);
         setNotifyType('success');
         setNotifyMessage('Successfully accepted');
@@ -206,11 +207,11 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
           setNotifyMessage('Successfully declined');
           setNotifyIsOpen(true);
           setDecline(false);
-          console.log(response);
+          // console.log(response);
           await timeout(5000);
           // window.location.reload();
         } else {
-          console.log(response);
+          // console.log(response);
           setLoading(false);
           setNotifyType('error');
           setNotifyMessage(response.data.info);
@@ -231,7 +232,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
   const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);
   // console.log(error);
   if (error) {
-    logoUrl = 'https://logo.clearbit.com/hello.com';
+    logoUrl = 'https://benti-energies.com/asset/images/clients/logo-default.svg';
   }
 
   return (
@@ -251,7 +252,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
             </Alert>
           </Snackbar>
           <Box justifyContent="center" alignItems="center" display="flex" sx={{ p: 1 }}>
-            <img src={logoUrl} alt={companyName} />
+            <img src={logoUrl} alt={defaultLogo} style={{ width: '8em' }} />
           </Box>
           <Typography color="textSecondary" gutterBottom>
             {convertFirstCharacterAllWordsToUppercase(companyName)}
@@ -286,6 +287,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
               accept={openConfirm}
               close={handleClose}
               isActive={isActive}
+              logo={logoUrl}
             />
             <Dialog
               className={classes.dialogPaper}

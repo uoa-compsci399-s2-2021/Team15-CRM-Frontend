@@ -78,7 +78,7 @@ export class FirstPage extends Component {
                 <TextField
                   variant="outlined"
                   label="Company"
-                  placeholder="Employer Name"
+                  placeholder="Company Name"
                   fullWidth
                   margin="normal"
                   value={values.company}
@@ -313,7 +313,7 @@ export class FirstPage extends Component {
                     <MenuItem value="Market rate">"Market rate"</MenuItem>
                   </Select>
                 </FormControl>
-                <br />
+                <hr style={{ marginBottom: 40, opacity: 0 }} />
                 <Button
                   style={{
                     background: '#2E3B55',
