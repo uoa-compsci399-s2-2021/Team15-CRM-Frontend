@@ -107,7 +107,7 @@ ShopProductCard.propTypes = {
   product: PropTypes.object
 };
 
-export default function ShopProductCard({ product, isActive }) {
+export default function ShopProductCard({ product, isActive, setHandleEvent, handleEvent }) {
   const {
     positionName,
     companyName,
