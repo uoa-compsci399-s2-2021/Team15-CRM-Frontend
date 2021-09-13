@@ -164,12 +164,13 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
         setLoading(false);
         setConfirm(false);
         setOpen(false);
+        // console.log(response);
+        setHandleEvent(!handleEvent);
         setNotifyType('success');
-        console.log(response);
         setNotifyMessage('Successfully accepted');
         setNotifyIsOpen(true);
         await timeout(5000);
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.log(response);
         setLoading(false);
@@ -201,13 +202,14 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
         if (response.status === 200) {
           setLoading(false);
           setOpen(false);
+          setHandleEvent(!handleEvent);
           setNotifyType('success');
           setNotifyMessage('Successfully declined');
           setNotifyIsOpen(true);
           setDecline(false);
           console.log(response);
           await timeout(5000);
-          window.location.reload();
+          // window.location.reload();
         } else {
           console.log(response);
           setLoading(false);
