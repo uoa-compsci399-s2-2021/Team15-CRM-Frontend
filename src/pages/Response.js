@@ -34,8 +34,9 @@ export default function EcommerceShop() {
   const [openFilter, setOpenFilter] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [sendEmail, setSendEmail] = useState(false);
+  // const [sendEmail, setSendEmail] = useState(false);
   const [value, setValue] = React.useState(0);
+  const [handleEvent, setHandleEvent] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +56,7 @@ export default function EcommerceShop() {
       }
     };
     fetchData();
-  }, [sendEmail]);
+  }, [handleEvent]);
 
   const formik = useFormik({
     initialValues: {
@@ -135,9 +136,9 @@ export default function EcommerceShop() {
         ) : (
           <div>
             {value === 0 ? (
-              <ProductList products={data.filter((job) => !job.isActive)} isActive={false} />
+              <ProductList products={data.filter((job) => !job.isActive)} isActive={false} setHandleEvent={setHandleEvent} handleEvent={handleEvent} />
             ) : (
-              <ProductList products={data.filter((job) => job.isActive)} isActive={true} />
+              <ProductList products={data.filter((job) => job.isActive)} isActive={true} setHandleEvent={setHandleEvent} handleEvent={handleEvent} />
             )}
           </div>
         )}

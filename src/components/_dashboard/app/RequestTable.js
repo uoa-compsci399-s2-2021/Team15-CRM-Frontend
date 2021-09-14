@@ -178,7 +178,7 @@ export default function RequestTable({ data }) {
                               variant="ghost"
                               color={(job.isCompleted !== true && 'error') || 'success'}
                             >
-                              {job.isCompleted ? 'Completed' : 'Not yet'}
+                              {job.isCompleted ? 'Completed' : 'Pending'}
                             </Label>
                           </TableCell>
 

@@ -62,8 +62,8 @@ const useStyles = makeStyles({
     }
   },
   dialogPaper: {
-    minHeight: '600px',
-    maxHeight: '600px',
+    minHeight: '700px',
+    maxHeight: '700px',
     position: 'fixed',
     top: 50
   },

@@ -107,7 +107,7 @@ ShopProductCard.propTypes = {
   product: PropTypes.object
 };
 
-export default function ShopProductCard({ product, isActive }) {
+export default function ShopProductCard({ product, isActive, setHandleEvent, handleEvent }) {
   const {
     positionName,
     companyName,
@@ -164,12 +164,13 @@ export default function ShopProductCard({ product, isActive }) {
         setLoading(false);
         setConfirm(false);
         setOpen(false);
+        // console.log(response);
+        setHandleEvent(!handleEvent);
         setNotifyType('success');
-        console.log(response);
         setNotifyMessage('Successfully accepted');
         setNotifyIsOpen(true);
         await timeout(5000);
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.log(response);
         setLoading(false);
@@ -201,15 +202,16 @@ export default function ShopProductCard({ product, isActive }) {
         if (response.status === 200) {
           setLoading(false);
           setOpen(false);
+          setHandleEvent(!handleEvent);
           setNotifyType('success');
           setNotifyMessage('Successfully declined');
           setNotifyIsOpen(true);
           setDecline(false);
-          console.log(response);
+          // console.log(response);
           await timeout(5000);
-          window.location.reload();
+          // window.location.reload();
         } else {
-          console.log(response);
+          // console.log(response);
           setLoading(false);
           setNotifyType('error');
           setNotifyMessage(response.data.info);
@@ -230,7 +232,7 @@ export default function ShopProductCard({ product, isActive }) {
   const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);
   // console.log(error);
   if (error) {
-    logoUrl = 'https://logo.clearbit.com/hello.com';
+    logoUrl = 'https://benti-energies.com/asset/images/clients/logo-default.svg';
   }
 
   return (
@@ -250,7 +252,7 @@ export default function ShopProductCard({ product, isActive }) {
             </Alert>
           </Snackbar>
           <Box justifyContent="center" alignItems="center" display="flex" sx={{ p: 1 }}>
-            <img src={logoUrl} alt={defaultLogo} />
+            <img src={logoUrl} alt={defaultLogo} style={{ width: '8em' }} />
           </Box>
           <Typography color="textSecondary" gutterBottom>
             {convertFirstCharacterAllWordsToUppercase(companyName)}
