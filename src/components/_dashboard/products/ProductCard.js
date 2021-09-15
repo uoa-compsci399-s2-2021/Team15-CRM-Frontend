@@ -78,10 +78,8 @@ const useStyles = makeStyles({
     }
   },
   dialogPaper: {
-    minHeight: '600px',
-    maxHeight: '600px',
     position: 'fixed',
-    top: 50
+    top: 20
   },
   subtitle: {
     color: 'black',

@@ -180,7 +180,7 @@ export class FirstPage extends Component {
                   label="Start Date"
                   type="date"
                   disabled={values.startTBC}
-                  style={{ marginRight: 20 }}
+                  style={{ marginRight: 20, width: 200 }}
                   value={values.startDate}
                   onChange={handleChange('startDate')}
                   //   helperText="When will the candidate start their role? Approx date or TBC if unsure"
@@ -220,7 +220,7 @@ export class FirstPage extends Component {
                   label="Closing Date"
                   type="date"
                   // fullWidth
-                  style={{ marginRight: 20 }}
+                  style={{ marginRight: 20, width: 200 }}
                   disabled={values.closeTBC}
                   value={values.closingDate}
                   onChange={handleChange('closingDate')}

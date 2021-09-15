@@ -62,10 +62,8 @@ const useStyles = makeStyles({
     }
   },
   dialogPaper: {
-    minHeight: '700px',
-    maxHeight: '700px',
-    position: 'fixed',
-    top: 50
+    height: '100vh',
+    position: 'fixed'
   },
   subtitle: {
     color: 'black',
@@ -178,11 +176,11 @@ export default function Information(props) {
           Salary(NZD)
         </DialogContentText>
         {jobSalary == 'Market rate' ? (
-          <DialogContentText style={{ marginLeft: 64 }} display="inline">
+          <DialogContentText style={{ marginLeft: 65 }} display="inline">
             "Market Rate"
           </DialogContentText>
         ) : (
-          <DialogContentText style={{ marginLeft: 64 }} display="inline">
+          <DialogContentText style={{ marginLeft: 65 }} display="inline">
             $
             {jobSalary}
           </DialogContentText>
