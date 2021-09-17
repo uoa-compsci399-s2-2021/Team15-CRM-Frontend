@@ -149,7 +149,7 @@ export class SecondPage extends Component {
                 </Typography>
                 <TextField
                   variant="outlined"
-                  label="Application"
+                  label="Application Details"
                   margin="normal"
                   value={values.application}
                   onChange={handleChange('application')}
