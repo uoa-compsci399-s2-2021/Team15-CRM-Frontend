@@ -206,7 +206,7 @@ export default function Information(props) {
         <hr style={{ marginBottom: 5 }} />
         <DialogContentText className={classes.body}>{questionContactDetail}</DialogContentText>
         <DialogContentText variant="h6" className={classes.subtitle} style={{ marginTop: 25 }}>
-          Application
+          Application Details
         </DialogContentText>
         <hr style={{ marginBottom: 5 }} />
         <DialogContentText className={classes.body}>

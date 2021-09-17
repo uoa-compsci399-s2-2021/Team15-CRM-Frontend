@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Typography, Container, Grid, Snackbar, Alert } from '@material-ui/core';
+import { Button, Typography, Container, Grid, Snackbar, Alert, TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { submitForm } from '../../apis/index';
+import useFetch from '../../apis/useFetch';
 
 export class Review extends Component {
   constructor() {
@@ -11,6 +17,11 @@ export class Review extends Component {
       notifyMessage: '',
       notifyType: 'error',
       loading: false,
+      logoUrl: '',
+      openDialog: false,
+      openLogo: false,
+      providedUrl: false
+      // error: useFetch(`https://logo.clearbit.com/${this.props.values.company}.com`)
     };
   }
 
@@ -20,7 +31,7 @@ export class Review extends Component {
   };
 
   handleClose = () => {
-    this.setState({ 'notifyIsOpen': false });
+    this.setState({ notifyIsOpen: false });
   };
 
   handleSubmit = async () => {
@@ -40,23 +51,46 @@ export class Review extends Component {
       applicationContactDetail: this.props.values.application
     };
     try {
-      this.setState({ 'loading': true });
+      this.setState({ loading: true });
       const pathname = window.location.pathname;
       const res = await submitForm(pathname.substr(pathname.lastIndexOf('/') + 1), data);
       if (res.status === 200) {
         this.props.nextStep();
       }
     } catch (e) {
-      this.setState({ 'loading': false });
+      this.setState({ loading: false });
       // console.log(e.response.data.error);
-      this.setState({ 'notifyIsOpen': true });
-      this.setState({ 'notifyMessage': e.response.data.error });
+      this.setState({ notifyIsOpen: true });
+      this.setState({ notifyMessage: e.response.data.error });
     }
+  };
+
+  handleLogoUrl = (e) => {
+    this.setState({ logoUrl: e.target.value });
+  };
+
+  handleOpenDialog = (e) => {
+    this.setState({ openDialog: true });
+  };
+
+  closeDialog = () => {
+    this.setState({ openDialog: false });
+  };
+
+  showLogo = () => {
+    this.setState({ openLogo: true });
+  };
+
+  saveLogoUrl = () => {
+    this.setState({ providedUrl: true });
+    this.setState({ openDialog: false });
   };
 
   render() {
     const { values } = this.props;
     const { notifyIsOpen, notifyMessage, notifyType } = this.state;
+    console.log(this.state.logoError);
+    // console.log(error);
 
     return (
       <Grid
@@ -84,6 +118,99 @@ export class Review extends Component {
                 <Typography variant="h2" style={{ marginTop: 30, color: '#595b75' }}>
                   Review
                 </Typography>
+                <hr style={{ margin: 15, opacity: 0 }} />
+                <Typography variant="h6" style={{ marginTop: 50, marginLeft: 15 }} display="inline">
+                  Is this the correct logo of your company ?
+                </Typography>
+                <Button
+                  onClick={this.handleOpenDialog}
+                  style={{
+                    fontSize: 15,
+                    padding: 0,
+                    textDecoration: 'underline'
+                  }}
+                  display="inline"
+                >
+                  No
+                </Button>
+                <br />
+                {this.state.providedUrl ? (
+                  <img
+                    style={{ marginLeft: 60, maxWidth: 100, display: 'inline' }}
+                    src={this.state.logoUrl}
+                    alt="not found"
+                  />
+                ) : (
+                  <img
+                    style={{ marginLeft: 60, maxWidth: 100, display: 'inline' }}
+                    src={`https://logo.clearbit.com/${values.company}.com`}
+                    alt="not found"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        'https://benti-energies.com/asset/images/clients/logo-default.svg';
+                    }}
+                  />
+                )}
+                <Dialog
+                  open={this.state.openDialog}
+                  onClose={this.closeDialog}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  fullWidth
+                >
+                  <DialogContent style={{ margin: 10 }}>
+                    <Typography variant="h6">
+                      Please provide the image url for the correct company logo,
+                      otherwise default company logo will be used.
+                    </Typography>
+                    <TextField
+                      label="Image url"
+                      size="small"
+                      fullWidth
+                      style={{ marginLeft: 0, marginTop: 20 }}
+                      value={this.state.logoUrl}
+                      onChange={this.handleLogoUrl}
+                    />
+                    {this.state.openLogo ? (
+                      <img
+                        style={{
+                          marginTop: 20,
+                          display: 'block',
+                          marginLeft: 'auto',
+                          marginRight: 'auto',
+                          width: '50%'
+                        }}
+                        src={this.state.logoUrl}
+                        alt="not found"
+                      />
+                    ) : null}
+                  </DialogContent>
+                  <DialogActions style={{ marginBottom: 10 }}>
+                    <Button
+                      autoFocus
+                      variant="contained"
+                      style={{
+                        backgroundColor: '#328cdb',
+                        height: 40,
+                      }}
+                      onClick={this.showLogo}
+                    >
+                      Preview
+                    </Button>
+                    <Button
+                      variant="contained"
+                      style={{
+                        height: 40,
+                        marginRight: 16,
+                        background: '#00bd1c'
+                      }}
+                      onClick={this.saveLogoUrl}
+                    >
+                      Save
+                    </Button>
+                  </DialogActions>
+                </Dialog>
                 <Typography variant="h4" style={{ marginTop: 30, marginLeft: 15 }}>
                   Job overview
                 </Typography>
@@ -148,7 +275,6 @@ export class Review extends Component {
                   <Typography style={{ marginLeft: 173 }} display="inline">
                     $
                     {values.rate}
-                    {' '}
                     {values.salary}
                   </Typography>
                 )}
@@ -213,7 +339,7 @@ export class Review extends Component {
                     color: '#FFFFFF',
                     marginTop: 30,
                     marginRight: 5,
-                    marginBottom: 50,
+                    marginBottom: 50
                     // float: 'right'
                   }}
                   label="Back"

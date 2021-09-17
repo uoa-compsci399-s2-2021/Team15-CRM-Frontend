@@ -26,17 +26,16 @@ export class FirstPage extends Component {
       this.props.values.position.length != 0 &&
       this.props.values.location.length != 0 &&
       this.props.values.hours.length != 0 &&
-      this.props.values.contract.length != 0
+      this.props.values.contract.length != 0 &&
+      (this.props.values.startDate != 0 || this.props.values.startTBC) &&
+      (this.props.values.closingDate != 0 || this.props.values.closeTBC) &&
+      (!isNaN(this.props.values.rate) || this.props.values.salary == 'Market rate') &&
+      (this.props.values.rate.length != 0 || this.props.values.salary == 'Market rate') &&
+      ((this.props.values.rate > 20 && this.props.values.rate < 500000) ||
+        this.props.values.salary == 'Market rate')
     ) {
-      if (
-        (this.props.values.startDate != 0 || this.props.values.startTBC) &&
-        (this.props.values.closingDate != 0 || this.props.values.closeTBC) &&
-        (!isNaN(this.props.values.rate) || this.props.values.salary == 'Market rate') &&
-        (this.props.values.rate.length != 0 || this.props.values.salary == 'Market rate')
-      ) {
-        this.props.nextStep();
-        window.scrollTo(0, 0);
-      }
+      this.props.nextStep();
+      window.scrollTo(0, 0);
     } else {
       this.setState({ showErrors: true });
       window.scrollTo(0, 0);
@@ -131,11 +130,11 @@ export class FirstPage extends Component {
                   error={isError(values.position.length === 0)}
                   helperText={isError(values.position.length === 0) && 'Please enter the location'}
                 /> */}
-                <Typography style={{ marginTop: 20, marginBottom: 5 }}>
-                  Location
-                </Typography>
+                <Typography style={{ marginTop: 20, marginBottom: 5 }}>Location</Typography>
                 <FormControl
-                  error={isError(values.location == 'Other') || isError(values.location.length === 0)}
+                  error={
+                    isError(values.location == 'Other') || isError(values.location.length === 0)
+                  }
                   style={{ minWidth: this.state.locationWidth, marginRight: 15 }}
                 >
                   <Select value={values.location} onChange={handleChange('location')}>
@@ -162,11 +161,14 @@ export class FirstPage extends Component {
                     style={{ marginRight: 20 }}
                     value={values.location}
                     onChange={handleChange('location')}
-                    error={isError(values.location.length > 20) || isError(values.location.length === 0)}
-                    helperText={(isError(values.location.length == 0) &&
-                            'Please enter the other location') ||
-                          (isError(values.location.length > 20) &&
-                            'The location cannot be over 20 characters')}
+                    error={
+                      isError(values.location.length > 20) || isError(values.location.length === 0)
+                    }
+                    helperText={
+                      (isError(values.location.length == 0) && 'Please enter the other location') ||
+                      (isError(values.location.length > 20) &&
+                        'The location cannot be over 20 characters')
+                    }
                   />
                 ) : null}
               </Grid>
@@ -286,7 +288,9 @@ export class FirstPage extends Component {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={10} md={7}>
-                <Typography style={{ marginTop: 25, marginBottom: 5 }}>Salary  -  the range must be between $20.00 to $200,000</Typography>
+                <Typography style={{ marginTop: 25, marginBottom: 5 }}>
+                  Salary - the range must be between $20.00 to $500,000
+                </Typography>
                 <FormControl
                   variant="outlined"
                   disabled={values.salary == 'Market rate'}
@@ -299,7 +303,12 @@ export class FirstPage extends Component {
                     onChange={handleChange('rate')}
                     style={{ marginBlockEnd: 20, marginRight: 10 }}
                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                    error={isError(values.rate.length === 0) || isError(isNaN(values.rate)) || isError(values.rate < 20) || isError(values.rate > 200000)}
+                    error={
+                      isError(values.rate.length === 0) ||
+                      isError(isNaN(values.rate)) ||
+                      isError(values.rate < 20) ||
+                      isError(values.rate > 500000)
+                    }
                   />
                 </FormControl>
                 <FormControl>

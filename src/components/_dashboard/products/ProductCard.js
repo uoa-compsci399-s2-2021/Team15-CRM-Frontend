@@ -33,6 +33,7 @@ import Label from '../../Label';
 import { approveJob, declineJob } from '../../../apis/index';
 import useFetch from '../../../apis/useFetch';
 import Information from './Information';
+import DeclineReason from './DeclineReason';
 
 // ----------------------------------------------------------------------
 
@@ -138,7 +139,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
   const isError = (condition) => showErrors && condition;
 
   const handleClickOpen = () => {
-    console.log(product);
+    // console.log(product);
     setOpen(true);
   };
   const handleClose = () => {
@@ -178,6 +179,11 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
       }
     } catch (e) {
       setLoading(false);
+      setConfirm(false);
+      setOpen(false);
+      setNotifyType('error');
+      setNotifyMessage('Server Error');
+      setNotifyIsOpen(true);
       console.log(e);
     }
   }
@@ -287,7 +293,13 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
               isActive={isActive}
               logo={logoUrl}
             />
-            <Dialog
+            <DeclineReason
+              product={product}
+              open={decline}
+              close={closeDecline}
+              logo={logoUrl}
+            />
+            {/* <Dialog
               className={classes.dialogPaper}
               open={decline}
               onClose={closeDecline}
@@ -332,7 +344,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
                   )}
                 </Button>
               </DialogActions>
-            </Dialog>
+            </Dialog> */}
             <Dialog
               className={classes.dialogPaper}
               open={confirm}
@@ -342,7 +354,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
               fullWidth
             >
               <DialogTitle disableTypography justify="center" justifyContent="center">
-                Are you sure you want to accept?
+                Do you want to accept this request?
               </DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
