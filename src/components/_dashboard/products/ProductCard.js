@@ -34,6 +34,7 @@ import { approveJob, declineJob } from '../../../apis/index';
 import useFetch from '../../../apis/useFetch';
 import Information from './Information';
 import DeclineReason from './DeclineReason';
+import EditMode from './EditMode';
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +56,7 @@ const useStyles = makeStyles({
   accept: {
     backgroundColor: 'green',
     fontSize: 20,
-    marginRight: 180,
+    float: 'right',
     width: 300,
     '&:hover': {
       backgroundColor: '#66bb6a'
@@ -107,11 +108,13 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product, isActive, setHandleEvent, handleEvent }) {
+  // console.log(product);
   const {
     positionName,
     companyName,
     jobHours,
     jobSalary,
+    jobSalaryType,
     jobLocation,
     jobContract,
     jobStartTime,
@@ -120,7 +123,8 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
     jobDescription,
     jobSkill,
     questionContactDetail,
-    applicationContactDetail
+    applicationContactDetail,
+    companyLogoURL
   } = product;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -132,9 +136,20 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
   const [declineReason, setDeclineReason] = useState('');
   const [showErrors, setShowErrors] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
-  let logoUrl = `https://logo.clearbit.com/${companyName}.com`;
-  const defaultLogo = 'https://benti-energies.com/asset/images/clients/logo-default.svg';
+  let logoUrl = '';
+  if (companyLogoURL.length != 0) {
+    logoUrl = companyLogoURL;
+  } else {
+    const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);
+    // console.log(error);
+    if (error) {
+      logoUrl = 'https://benti-energies.com/asset/images/clients/logo-default.svg';
+    } else {
+      logoUrl = `https://logo.clearbit.com/${companyName}.com`;
+    }
+  }
 
   const isError = (condition) => showErrors && condition;
 
@@ -148,14 +163,20 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
   const openConfirm = () => {
     setConfirm(true);
   };
+  const openEditMode = () => {
+    setEditMode(true);
+  };
+  const closeEdit = () => {
+    setEditMode(false);
+  };
 
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay));
   }
 
   async function handleAccept() {
-    console.log(product);
-    console.log(product._id);
+    // console.log(product);
+    // console.log(product._id);
     try {
       setLoading(true);
       const response = await approveJob(product._id);
@@ -198,7 +219,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
   };
   async function handleSubmitDecline() {
     if (declineReason.length != 0 && declineReason.length <= 1200) {
-      const data = { '_id': product._id, 'letter': declineReason };
+      const data = { _id: product._id, letter: declineReason };
       try {
         setLoading(true);
         // call api
@@ -233,12 +254,6 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
     setNotifyIsOpen(false);
   };
 
-  const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);
-  // console.log(error);
-  if (error) {
-    logoUrl = 'https://benti-energies.com/asset/images/clients/logo-default.svg';
-  }
-
   return (
     <Card>
       <Stack spacing={2} sx={{ p: 3 }}>
@@ -256,7 +271,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
             </Alert>
           </Snackbar>
           <Box justifyContent="center" alignItems="center" display="flex" sx={{ p: 1 }}>
-            <img src={logoUrl} alt={defaultLogo} style={{ width: '8em' }} />
+            <img src={logoUrl} alt="not found" style={{ width: '8em' }} />
           </Box>
           <Typography color="textSecondary" gutterBottom>
             {convertFirstCharacterAllWordsToUppercase(companyName)}
@@ -264,16 +279,25 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
           <Typography variant="h5" component="h2">
             {convertFirstCharacterAllWordsToUppercase(positionName)}
           </Typography>
-          <Typography color="textSecondary">
+          <Typography color="textSecondary" variant="subtitle1">
             {convertFirstCharacterAllWordsToUppercase(jobHours)}
           </Typography>
           <Typography color="textSecondary">
             {convertFirstCharacterAllWordsToUppercase(jobContract)}
           </Typography>
-          <Typography variant="body2" component="p">
-            NZD $
-            {jobSalary}
-            <br />
+          <Typography variant="subtitle1" component="p">
+            {jobSalaryType != 'Market rate' ? (
+              <>
+                NZD $
+                {jobSalary}
+                {' '}
+                {jobSalaryType}
+              </>
+            ) : (
+              <>Market rate</>
+            )}
+          </Typography>
+          <Typography color="textSecondary">
             {convertFirstCharacterAllWordsToUppercase(jobLocation)}
           </Typography>
         </div>
@@ -292,12 +316,25 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
               close={handleClose}
               isActive={isActive}
               logo={logoUrl}
+              openEditMode={openEditMode}
+            />
+            <EditMode
+              product={product}
+              open={editMode}
+              back={closeEdit}
+              close={closeEdit}
+              logo={logoUrl}
+              setHandleEvent={setHandleEvent}
+              handleEvent={handleEvent}
             />
             <DeclineReason
               product={product}
               open={decline}
               close={closeDecline}
+              closeDialog={handleClose}
               logo={logoUrl}
+              setHandleEvent={setHandleEvent}
+              handleEvent={handleEvent}
             />
             {/* <Dialog
               className={classes.dialogPaper}
@@ -371,11 +408,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
                   className={classes.confirmButton}
                   autoFocus
                 >
-                  {loading ? (
-                    <CircularProgress color="inherit" size="1.5rem" />
-                  ) : (
-                    <>Confirm</>
-                  )}
+                  {loading ? <CircularProgress color="inherit" size="1.5rem" /> : <>Confirm</>}
                 </Button>
               </DialogActions>
             </Dialog>

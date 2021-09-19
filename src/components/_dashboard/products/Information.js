@@ -45,9 +45,9 @@ const useStyles = makeStyles({
   },
   accept: {
     backgroundColor: 'green',
-    marginLeft: 100,
     fontSize: 20,
-    width: 300,
+    width: 150,
+    marginRight: 15,
     '&:hover': {
       backgroundColor: '#66bb6a'
     }
@@ -55,8 +55,7 @@ const useStyles = makeStyles({
   decline: {
     backgroundColor: 'red',
     fontSize: 20,
-    marginRight: 180,
-    width: 300,
+    width: 150,
     '&:hover': {
       backgroundColor: '#ef5350'
     }
@@ -84,6 +83,7 @@ export default function Information(props) {
     companyName,
     jobHours,
     jobSalary,
+    jobSalaryType,
     jobLocation,
     jobContract,
     jobStartTime,
@@ -95,13 +95,6 @@ export default function Information(props) {
     applicationContactDetail
   } = props.product;
   const classes = useStyles();
-  let logoUrl = `https://logo.clearbit.com/${companyName}.com`;
-
-  const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);
-  // console.log(error);
-  if (error) {
-    logoUrl = 'https://logo.clearbit.com/hello.com';
-  }
 
   return (
     <Dialog
@@ -117,7 +110,7 @@ export default function Information(props) {
         <img
           style={{ float: 'right', maxWidth: 50 }}
           src={props.logo}
-          alt="https://benti-energies.com/asset/images/clients/logo-default.svg"
+          alt="not found"
         />
       </DialogTitle>
       <DialogContent>
@@ -175,7 +168,7 @@ export default function Information(props) {
         <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
           Salary(NZD)
         </DialogContentText>
-        {jobSalary == 'Market rate' ? (
+        {jobSalaryType == 'Market rate' ? (
           <DialogContentText style={{ marginLeft: 65 }} display="inline">
             "Market Rate"
           </DialogContentText>
@@ -183,6 +176,8 @@ export default function Information(props) {
           <DialogContentText style={{ marginLeft: 65 }} display="inline">
             $
             {jobSalary}
+            {' '}
+            {jobSalaryType}
           </DialogContentText>
         )}
         <DialogContentText variant="h6" className={classes.subtitle} style={{ marginTop: 25 }}>
@@ -215,6 +210,13 @@ export default function Information(props) {
       </DialogContent>
       {!props.isActive ? (
         <DialogActions>
+          <Button style={{ width: 40, marginLeft: 14, marginRight: '35%' }} onClick={props.openEditMode}>
+            <img
+              style={{ marginLeft: 5, padding: 3, marginRight: '35%' }}
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Simpleicons_Business_pencil-striped-symbol-for-interface-edit-buttons.svg/485px-Simpleicons_Business_pencil-striped-symbol-for-interface-edit-buttons.svg.png"
+              alt="not found"
+            />
+          </Button>
           <Button className={classes.decline} onClick={props.decline} variant="contained" autoFocus>
             Decline
           </Button>
