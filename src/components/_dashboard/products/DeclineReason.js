@@ -158,7 +158,6 @@ export default function DeclineReason(props) {
     contactDetails: false,
     application: false
   });
-
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const [location, setLocation] = useState('');
@@ -178,6 +177,22 @@ export default function DeclineReason(props) {
   const closeNotifyBox = () => {
     setOpenNotifyBox(false);
   };
+  const [comments, setComments] = useState({
+    company: '',
+    position: '',
+    location: '',
+    startDate: '',
+    closingDate: '',
+    hours: '',
+    contract: '',
+    salary: '',
+    ATC: '',
+    ATR: '',
+    keySkills: '',
+    contactDetails: '',
+    application: '',
+    overall: ''
+  });
 
   const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);
   // console.log(error);
@@ -194,6 +209,7 @@ export default function DeclineReason(props) {
   const handleCloseComment = (input) => (e) => {
     setOpenComment({ ...openComment, [input]: false });
   };
+
   const closeMessageBox = () => {
     setOpenMessageBox(false);
   };

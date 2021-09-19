@@ -66,7 +66,6 @@ export class Review extends Component {
       this.setState({ notifyMessage: e.response.data.error });
     }
   };
-
   // handleLogoUrl = (e) => {
   //   this.setState({ logoUrl: e.target.value });
   // };
@@ -277,7 +276,6 @@ export class Review extends Component {
                   <Typography style={{ marginLeft: 173 }} display="inline">
                     $
                     {values.rate}
-                    {' '}
                     {values.salary}
                   </Typography>
                 )}
