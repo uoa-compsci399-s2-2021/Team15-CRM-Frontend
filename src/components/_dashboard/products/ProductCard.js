@@ -139,7 +139,7 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
   const [editMode, setEditMode] = useState(false);
 
   let logoUrl = '';
-  if (companyLogoURL.length != 0) {
+  if (companyLogoURL) {
     logoUrl = companyLogoURL;
   } else {
     const { error } = useFetch(`https://logo.clearbit.com/${companyName}.com`);

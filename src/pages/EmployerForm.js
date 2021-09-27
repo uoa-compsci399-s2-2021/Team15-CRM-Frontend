@@ -27,7 +27,7 @@ export default class EmployerForm extends Component {
       keySkills: '',
       contact: '',
       application: '',
-      logoUrl: '',
+      logoUrl: null,
     };
   }
 

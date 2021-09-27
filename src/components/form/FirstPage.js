@@ -144,7 +144,7 @@ export class FirstPage extends Component {
                     <MenuItem value="Wellington" onClick={() => this.deselectOther()}>
                       Wellington
                     </MenuItem>
-                    <MenuItem value="Chrischurch" onClick={() => this.deselectOther()}>
+                    <MenuItem value="Christchurch" onClick={() => this.deselectOther()}>
                       Chrischurch
                     </MenuItem>
                     <MenuItem value="Remote" onClick={() => this.deselectOther()}>
