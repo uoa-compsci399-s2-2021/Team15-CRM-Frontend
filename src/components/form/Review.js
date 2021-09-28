@@ -17,7 +17,7 @@ export class Review extends Component {
       notifyMessage: '',
       notifyType: 'error',
       loading: false,
-      logoUrl: '',
+      // logoUrl: '',
       openDialog: false,
       openLogo: false,
       providedUrl: false
@@ -44,11 +44,13 @@ export class Review extends Component {
       jobHours: this.props.values.hours,
       jobContract: this.props.values.contract,
       jobSalary: this.props.values.rate,
+      jobSalaryType: this.props.values.salary,
       companyDescription: this.props.values.ATC,
       jobDescription: this.props.values.ATR,
       jobSkill: this.props.values.keySkills,
       questionContactDetail: this.props.values.contact,
-      applicationContactDetail: this.props.values.application
+      applicationContactDetail: this.props.values.application,
+      companyLogoURL: this.props.values.logoUrl,
     };
     try {
       this.setState({ loading: true });
@@ -64,10 +66,9 @@ export class Review extends Component {
       this.setState({ notifyMessage: e.response.data.error });
     }
   };
-
-  handleLogoUrl = (e) => {
-    this.setState({ logoUrl: e.target.value });
-  };
+  // handleLogoUrl = (e) => {
+  //   this.setState({ logoUrl: e.target.value });
+  // };
 
   handleOpenDialog = (e) => {
     this.setState({ openDialog: true });
@@ -87,7 +88,7 @@ export class Review extends Component {
   };
 
   render() {
-    const { values } = this.props;
+    const { values, handleChange } = this.props;
     const { notifyIsOpen, notifyMessage, notifyType } = this.state;
     console.log(this.state.logoError);
     // console.log(error);
@@ -137,7 +138,7 @@ export class Review extends Component {
                 {this.state.providedUrl ? (
                   <img
                     style={{ marginLeft: 60, maxWidth: 100, display: 'inline' }}
-                    src={this.state.logoUrl}
+                    src={values.logoUrl}
                     alt="not found"
                   />
                 ) : (
@@ -161,16 +162,16 @@ export class Review extends Component {
                 >
                   <DialogContent style={{ margin: 10 }}>
                     <Typography variant="h6">
-                      Please provide the image url for the correct company logo,
-                      otherwise default company logo will be used.
+                      Please provide a image url for the correct company logo,
+                      otherwise a default company logo will be used.
                     </Typography>
                     <TextField
                       label="Image url"
                       size="small"
                       fullWidth
-                      style={{ marginLeft: 0, marginTop: 20 }}
-                      value={this.state.logoUrl}
-                      onChange={this.handleLogoUrl}
+                      style={{ marginTop: 20 }}
+                      value={values.logoUrl}
+                      onChange={handleChange('logoUrl')}
                     />
                     {this.state.openLogo ? (
                       <img
@@ -181,7 +182,7 @@ export class Review extends Component {
                           marginRight: 'auto',
                           width: '50%'
                         }}
-                        src={this.state.logoUrl}
+                        src={values.logoUrl}
                         alt="not found"
                       />
                     ) : null}
@@ -202,7 +203,7 @@ export class Review extends Component {
                       variant="contained"
                       style={{
                         height: 40,
-                        marginRight: 16,
+                        marginRight: 25,
                         background: '#00bd1c'
                       }}
                       onClick={this.saveLogoUrl}

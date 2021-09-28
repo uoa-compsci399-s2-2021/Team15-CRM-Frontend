@@ -27,6 +27,7 @@ export default class EmployerForm extends Component {
       keySkills: '',
       contact: '',
       application: '',
+      logoUrl: null,
     };
   }
 
@@ -85,7 +86,8 @@ export default class EmployerForm extends Component {
       ATR,
       keySkills,
       contact,
-      application
+      application,
+      logoUrl
     } = this.state;
     const values = {
       company,
@@ -103,7 +105,8 @@ export default class EmployerForm extends Component {
       ATR,
       keySkills,
       contact,
-      application
+      application,
+      logoUrl
     };
 
     switch (step) {
@@ -136,6 +139,7 @@ export default class EmployerForm extends Component {
           <Review
             nextStep={this.nextStep}
             prevStep={this.prevStep}
+            handleChange={this.handleChange}
             handleShowError={this.handleShowError}
             loadingOff={this.handleLoadingOff}
             values={values}

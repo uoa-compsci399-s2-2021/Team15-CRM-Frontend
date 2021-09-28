@@ -74,4 +74,18 @@ async function declineJob(info) {
   return response;
 }
 
-export { sendEmailRequestToEmployer, getJobInfo, submitForm, approveJob, declineJob };
+async function modifyJob(info) {
+  const response = await axios(
+    'https://cs399-team15.herokuapp.com/api/admin/update-job-info',
+    {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: info,
+      method: 'POST',
+    }
+  );
+  return response;
+}
+
+export { sendEmailRequestToEmployer, getJobInfo, submitForm, approveJob, declineJob, modifyJob };
