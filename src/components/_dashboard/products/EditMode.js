@@ -171,7 +171,7 @@ export default function EditMode(props) {
         setOpenMessageBox(true);
         await timeout(2000);
         setOpenMessageBox(false);
-        setSaved(false);
+        // setSaved(false);
         props.back();
       } else {
         console.log(response);

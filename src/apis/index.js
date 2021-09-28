@@ -74,15 +74,17 @@ async function declineJob(info) {
   return response;
 }
 
+// https://cs399-team15.herokuapp.com/api/admin/update-job-info/${info._id}
+
 async function modifyJob(info) {
   const response = await axios(
-    'https://cs399-team15.herokuapp.com/api/admin/update-job-info',
+    `http://localhost:5000/api/admin/update-job-info/${info._id}`,
     {
       headers: {
         'Content-type': 'application/json',
       },
       data: info,
-      method: 'POST',
+      method: 'PUT',
     }
   );
   return response;
