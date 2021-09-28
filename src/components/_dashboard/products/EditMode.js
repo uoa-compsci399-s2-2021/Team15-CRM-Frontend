@@ -143,7 +143,7 @@ export default function EditMode(props) {
     const data = {
       _id: props.product._id,
       companyName: editCompany,
-      positionName: editCompany,
+      positionName: editPosition,
       jobLocation: editLocation,
       jobStartTime: editStart,
       jobClosingDate: editClose,
@@ -171,7 +171,7 @@ export default function EditMode(props) {
         setOpenMessageBox(true);
         await timeout(2000);
         setOpenMessageBox(false);
-        setSaved(false);
+        // setSaved(false);
         props.back();
       } else {
         console.log(response);
