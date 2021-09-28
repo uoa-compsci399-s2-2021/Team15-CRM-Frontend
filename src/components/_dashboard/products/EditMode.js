@@ -143,7 +143,7 @@ export default function EditMode(props) {
     const data = {
       _id: props.product._id,
       companyName: editCompany,
-      positionName: editCompany,
+      positionName: editPosition,
       jobLocation: editLocation,
       jobStartTime: editStart,
       jobClosingDate: editClose,

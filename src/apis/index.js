@@ -78,7 +78,7 @@ async function declineJob(info) {
 
 async function modifyJob(info) {
   const response = await axios(
-    `http://localhost:5000/api/admin/update-job-info/${info._id}`,
+    `https://cs399-team15.herokuapp.com/api/admin/update-job-info/${info._id}`,
     {
       headers: {
         'Content-type': 'application/json',
