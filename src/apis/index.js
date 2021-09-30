@@ -1,7 +1,38 @@
 import axios from 'axios';
-import useFetch from './useFetch';
 
 // https://cs399-team15.herokuapp.com/api/admin
+
+// Config header
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+  },
+};
+
+// AUTH
+async function login(loginInfo) {
+  const response = await axios(
+    'https://cs399-team15.herokuapp.com/api/auth/login',
+    {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: loginInfo,
+      method: 'POST',
+    }
+  );
+  return response;
+}
+
+async function getUserInfo(registerInfo) {
+  const response = await axios.get(
+    'https://cs399-team15.herokuapp.com/api/private/get-user-info',
+    config
+  );
+
+  return response;
+}
 
 async function sendEmailRequestToEmployer(info) {
   const response = await axios(
@@ -90,4 +121,8 @@ async function modifyJob(info) {
   return response;
 }
 
-export { sendEmailRequestToEmployer, getJobInfo, submitForm, approveJob, declineJob, modifyJob };
+export {
+  sendEmailRequestToEmployer, getJobInfo,
+  submitForm, approveJob, declineJob, modifyJob, login,
+  getUserInfo
+};

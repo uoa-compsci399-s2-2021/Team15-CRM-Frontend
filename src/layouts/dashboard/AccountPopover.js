@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
 import { alpha } from '@material-ui/core/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@material-ui/core';
@@ -34,15 +34,21 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export default function AccountPopover({ User }) {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    window.location.href = '/';
   };
 
   return (
@@ -78,12 +84,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            John Smith
-            {/* {account.displayName} */}
+            {User.firstname}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            xxx@aucklanduni.ac.nz
-            {/* {account.email} */}
+            {User.email}
           </Typography>
         </Box>
 
@@ -112,7 +116,7 @@ export default function AccountPopover() {
         ))} */}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" variant="outlined" onClick={handleLogout}>
             Logout
           </Button>
         </Box>
