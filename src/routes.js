@@ -16,11 +16,13 @@ import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
 
+const isLoggedIn = localStorage.getItem('authToken');
+
 export default function Router() {
   return useRoutes([
     {
-      path: '/app',
-      element: <DashboardLayout />,
+      path: 'app',
+      element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
       children: [
         { path: '/', element: <Navigate to="/app/home" replace /> },
         { path: 'home', element: <DashboardApp /> },
@@ -32,7 +34,7 @@ export default function Router() {
     },
     {
       path: '/',
-      element: <LogoOnlyLayout />,
+      element: !isLoggedIn ? <LogoOnlyLayout /> : <Navigate to="/app" />,
       children: [
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
