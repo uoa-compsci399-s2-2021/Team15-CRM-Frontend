@@ -44,6 +44,16 @@ export default function LoginForm() {
         const response = await login(values);
 
         if (response.status == 200) {
+          if (!response.data.isAdmin) {
+            const errorInfo = {
+              response: {
+                data: {
+                  error: 'You are not admin',
+                }
+              }
+            };
+            throw (errorInfo);
+          }
           localStorage.setItem('authToken', response.data.token);
           window.location.href = '/';
         }

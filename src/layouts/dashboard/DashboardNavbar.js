@@ -59,6 +59,7 @@ export default function DashboardNavbar({ onOpenSidebar, User }) {
           {/* <LanguagePopover />
           <NotificationsPopover /> */}
           <AccountPopover User={User} />
+
         </Stack>
       </ToolbarStyle>
     </RootStyle>
