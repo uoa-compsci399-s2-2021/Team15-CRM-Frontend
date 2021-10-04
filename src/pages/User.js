@@ -1,9 +1,6 @@
 import { filter } from 'lodash';
-import { Icon } from '@iconify/react';
-import { sentenceCase } from 'change-case';
-import { useState } from 'react';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/styles';
 // material
 import {
   Card,
@@ -20,12 +17,20 @@ import {
   TableContainer,
   TablePagination
 } from '@material-ui/core';
+
+import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 // components
+import { getEmpolyerDeleteInfo } from '../apis';
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import { convertFirstCharacterAllWordsToUppercase } from '../utils/formatString';
 //
 import USERLIST from '../_mocks_/user';
 
@@ -34,11 +39,19 @@ import USERLIST from '../_mocks_/user';
 const TABLE_HEAD = [
   { id: 'title', label: 'Job Title', alignRight: false },
   { id: 'company', label: 'Company', alignRight: false },
-  { id: 'type', label: 'Type', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'email', label: 'Contact Email', alignRight: false },
+  { id: 'info', label: 'Message', alignRight: false },
   { id: '' }
 ];
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+}));
 
 // ----------------------------------------------------------------------
 
@@ -72,12 +85,22 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
+  const classes = useStyles();
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [InfoList, setInfoList] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [loading, setloading] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -94,24 +117,6 @@ export default function User() {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -125,123 +130,151 @@ export default function User() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - InfoList.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(InfoList, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
 
+  useEffect(() => {
+    setloading(true);
+    const fetchData = async () => {
+      const response = await getEmpolyerDeleteInfo();
+      try {
+        setInfoList((response.data).reverse());
+        setloading(false);
+        // console.log(response.data);
+      } catch (e) {
+        console.error(e);
+        setloading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const CardInfo = (
+    <Card>
+      <UserListToolbar
+        numSelected={selected.length}
+        filterName={filterName}
+        onFilterName={handleFilterByName}
+      />
+
+      <Scrollbar>
+        <TableContainer sx={{ minWidth: 800 }}>
+          <Table>
+            <UserListHead
+              order={order}
+              orderBy={orderBy}
+              headLabel={TABLE_HEAD}
+              rowCount={USERLIST.length}
+              numSelected={selected.length}
+              onRequestSort={handleRequestSort}
+              onSelectAllClick={handleSelectAllClick}
+            />
+            <TableBody>
+              {InfoList != null && (
+                <>
+                  {InfoList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((job, idx) => (
+                    <TableRow
+                      hover
+                      key={job._id}
+                      tabIndex={-1}
+                      role="checkbox"
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox />
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography variant="subtitle2" noWrap>
+                          {convertFirstCharacterAllWordsToUppercase(job.PositionName)}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell align="left">{convertFirstCharacterAllWordsToUppercase(job.CompanyName)}</TableCell>
+
+                      <TableCell align="left">{(job.RequestedEmail)}</TableCell>
+                      <TableCell align="left">
+                        <Button variant="outlined" onClick={handleClickOpen}>
+                          View
+                        </Button>
+                      </TableCell>
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                        fullWidth
+                      >
+                        <DialogTitle disableTypography justify="center" justifyContent="center">
+                          Reason for deleting this job
+                        </DialogTitle>
+                        <DialogContent dividers>
+                          <DialogContentText id="alert-dialog-description">
+                            {job.DeleteReason}
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button variant="contained" autoFocus onClick={handleClose}>
+                            Back
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+
+                      <TableCell align="right">
+                        <UserMoreMenu />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </>
+              )}
+            </TableBody>
+            {isUserNotFound && (
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                    <SearchNotFound searchQuery={filterName} />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            )}
+          </Table>
+        </TableContainer>
+      </Scrollbar>
+
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={InfoList.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Card>
+  );
+
   return (
-    <Page title="User | Atech+">
+    <Page title="Information | Atech+">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Job Vacancy
+            Information from employers
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            New Job
-          </Button>
         </Stack>
 
-        <Card>
-          <UserListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
+        {loading === true ? (
+          <div className={classes.root}>
+            <img src="/images/waiting.gif" alt="loading" />
+          </div>
+        ) : (
+          <div>
+            {CardInfo}
+          </div>
+        )}
 
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredUsers
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
-
-                      return (
-                        <TableRow
-                          hover
-                          key={id}
-                          tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                        >
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              onChange={(event) => handleClick(event, name)}
-                            />
-                          </TableCell>
-                          <TableCell align="left">
-                            <Typography variant="subtitle2" noWrap>
-                              {name}
-                            </Typography>
-                          </TableCell>
-                          <TableCell align="left">{company}</TableCell>
-                          <TableCell align="left">{role}</TableCell>
-                          <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                          <TableCell align="left">
-                            <Label
-                              variant="ghost"
-                              color={(status === 'banned' && 'error') || 'success'}
-                            >
-                              {sentenceCase(status)}
-                            </Label>
-                          </TableCell>
-
-                          <TableCell align="right">
-                            <UserMoreMenu />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-                {isUserNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterName} />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={USERLIST.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
       </Container>
     </Page>
+
   );
 }
