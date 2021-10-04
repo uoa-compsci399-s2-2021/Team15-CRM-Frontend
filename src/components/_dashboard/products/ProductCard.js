@@ -336,52 +336,6 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
               setHandleEvent={setHandleEvent}
               handleEvent={handleEvent}
             />
-            {/* <Dialog
-              className={classes.dialogPaper}
-              open={decline}
-              onClose={closeDecline}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-              fullWidth
-            >
-              <DialogTitle disableTypography justify="center" justifyContent="center">
-                <Typography variant="h5" display="inline">
-                  Reasons for declining
-                </Typography>
-                <IconButton onClick={closeDecline} style={{ float: 'right' }}>
-                  <CloseIcon />
-                </IconButton>
-              </DialogTitle>
-              <DialogContent>
-                <TextField
-                  value={declineReason}
-                  onChange={(e) => setDeclineReason(e.target.value)}
-                  multiline
-                  rows={8}
-                  fullWidth
-                  error={isError(declineReason.length === 0) || isError(declineReason.length > 1200)}
-                  helperText={
-                    (isError(declineReason.length === 0) && 'Please enter the reasons for declining this request') ||
-                    (isError(declineReason.length > 1200) &&
-                      'The description connot exceed 1200 characters')
-                  }
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  className={classes.submit}
-                  onClick={handleSubmitDecline}
-                  variant="contained"
-                  autoFocus
-                >
-                  {loading ? (
-                    <CircularProgress color="inherit" size="1.5rem" />
-                  ) : (
-                    <>Submit</>
-                  )}
-                </Button>
-              </DialogActions>
-            </Dialog> */}
             <Dialog
               className={classes.dialogPaper}
               open={confirm}

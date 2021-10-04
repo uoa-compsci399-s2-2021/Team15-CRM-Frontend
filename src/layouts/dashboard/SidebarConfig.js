@@ -24,8 +24,8 @@ const sidebarConfig = [
     icon: getIcon(shoppingBagFill)
   },
   {
-    title: 'Job List',
-    path: '/app/job-list',
+    title: 'Information',
+    path: '/app/information',
     icon: getIcon(cubeFill)
   },
 

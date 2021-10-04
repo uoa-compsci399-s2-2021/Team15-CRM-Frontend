@@ -121,8 +121,21 @@ async function modifyJob(info) {
   return response;
 }
 
+async function getEmpolyerDeleteInfo() {
+  const response = await axios(
+    'https://cs399-team15.herokuapp.com/api/admin/get-employer-delete-info',
+    {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      method: 'GET',
+    }
+  );
+  return response;
+}
+
 export {
   sendEmailRequestToEmployer, getJobInfo,
   submitForm, approveJob, declineJob, modifyJob, login,
-  getUserInfo
+  getUserInfo, getEmpolyerDeleteInfo
 };

@@ -20,7 +20,8 @@ import {
   Typography,
   TableContainer,
   TablePagination,
-  CircularProgress
+  CircularProgress,
+  CardHeader
 } from '@material-ui/core';
 // components
 import Page from '../../Page';
@@ -136,11 +137,8 @@ export default function RequestTable({ data }) {
 
         <Card>
 
-          <UserListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
+          <CardHeader title="Requested Table" subheader="" />
+
           <Scrollbar>
             <TableContainer full>
               <Table>
