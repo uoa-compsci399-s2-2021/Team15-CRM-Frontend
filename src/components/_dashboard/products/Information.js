@@ -127,53 +127,53 @@ export default function Information(props) {
           Position
         </DialogContentText>
         <DialogContentText display="inline" style={{ marginLeft: 100 }}>
-          {convertFirstCharacterAllWordsToUppercase(positionName)}
+          {positionName}
         </DialogContentText>
         <br />
         <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
           Location
         </DialogContentText>
         <DialogContentText display="inline" style={{ marginLeft: 96 }}>
-          {convertFirstCharacterAllWordsToUppercase(jobLocation)}
+          {jobLocation}
         </DialogContentText>
         <br />
         <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
           Start date
         </DialogContentText>
-        <DialogContentText display="inline" style={{ marginLeft: 83 }}>
-          {convertFirstCharacterAllWordsToUppercase(jobStartTime)}
+        <DialogContentText display="inline" style={{ marginLeft: 84 }}>
+          {jobStartTime}
         </DialogContentText>
         <br />
         <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
           Closing date
         </DialogContentText>
-        <DialogContentText display="inline" style={{ marginLeft: 65 }}>
-          {convertFirstCharacterAllWordsToUppercase(jobClosingDate)}
+        <DialogContentText display="inline" style={{ marginLeft: 66 }}>
+          {jobClosingDate}
         </DialogContentText>
         <br />
         <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
           Hours
         </DialogContentText>
-        <DialogContentText display="inline" style={{ marginLeft: 114 }}>
-          {convertFirstCharacterAllWordsToUppercase(jobHours)}
+        <DialogContentText display="inline" style={{ marginLeft: 116 }}>
+          {jobHours}
         </DialogContentText>
         <br />
         <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
           Contract
         </DialogContentText>
-        <DialogContentText display="inline" style={{ marginLeft: 93 }}>
-          {convertFirstCharacterAllWordsToUppercase(jobContract)}
+        <DialogContentText display="inline" style={{ marginLeft: 95 }}>
+          {jobContract}
         </DialogContentText>
         <br />
         <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
           Salary(NZD)
         </DialogContentText>
         {jobSalaryType == 'Market rate' ? (
-          <DialogContentText style={{ marginLeft: 65 }} display="inline">
+          <DialogContentText style={{ marginLeft: 66 }} display="inline">
             "Market Rate"
           </DialogContentText>
         ) : (
-          <DialogContentText style={{ marginLeft: 65 }} display="inline">
+          <DialogContentText style={{ marginLeft: 66 }} display="inline">
             $
             {jobSalary}
             {' '}

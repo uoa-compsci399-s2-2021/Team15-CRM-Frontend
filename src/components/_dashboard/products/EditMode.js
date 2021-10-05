@@ -102,31 +102,24 @@ export default function EditMode(props) {
     jobDescription,
     jobSkill,
     questionContactDetail,
-    applicationContactDetail
+    applicationContactDetail,
+    companyLogoURL
   } = props.product;
   const classes = useStyles();
   const [editCompany, setEditCompany] = useState(capitalizeFirstLetter(companyName));
-  const [editPosition, SetEditPosition] = useState(capitalizeFirstLetter(positionName));
-  const [editLocation, SetEditLocation] = useState(capitalizeFirstLetter(jobLocation));
+  const [editPosition, SetEditPosition] = useState(positionName);
+  const [editLocation, SetEditLocation] = useState(jobLocation);
   const [editStart, SetEditStart] = useState(jobStartTime);
   const [editClose, SetEditClose] = useState(jobClosingDate);
   const [editHours, SetEditHours] = useState(jobHours);
-  const [editContract, SetEditContract] = useState(capitalizeFirstLetter(jobContract));
+  const [editContract, SetEditContract] = useState(jobContract);
   const [editSalary, SetEditSalary] = useState(jobSalary);
-  const [editSalaryType, SetEditSalaryType] = useState(capitalizeFirstLetter(jobSalaryType));
-  const [editCompanyDescription, SetEditCompanyDescription] = useState(
-    capitalizeFirstLetter(companyDescription)
-  );
-  const [editJobDescription, SetEditJobDescription] = useState(
-    capitalizeFirstLetter(jobDescription)
-  );
-  const [editJobSkill, SetEditJobSkill] = useState(capitalizeFirstLetter(jobSkill));
-  const [editQuestionContactDetail, SetEditQuestionContactDetail] = useState(
-    capitalizeFirstLetter(questionContactDetail)
-  );
-  const [editApplication, SetEditApplication] = useState(
-    capitalizeFirstLetter(applicationContactDetail)
-  );
+  const [editSalaryType, SetEditSalaryType] = useState(jobSalaryType);
+  const [editCompanyDescription, SetEditCompanyDescription] = useState(companyDescription);
+  const [editJobDescription, SetEditJobDescription] = useState(jobDescription);
+  const [editJobSkill, SetEditJobSkill] = useState(jobSkill);
+  const [editQuestionContactDetail, SetEditQuestionContactDetail] = useState(questionContactDetail);
+  const [editApplication, SetEditApplication] = useState(applicationContactDetail);
 
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay));
@@ -143,7 +136,7 @@ export default function EditMode(props) {
     const data = {
       _id: props.product._id,
       companyName: editCompany,
-      positionName: editCompany,
+      positionName: editPosition,
       jobLocation: editLocation,
       jobStartTime: editStart,
       jobClosingDate: editClose,
@@ -155,7 +148,8 @@ export default function EditMode(props) {
       jobDescription: editJobDescription,
       jobSkill: editJobSkill,
       questionContactDetail: editQuestionContactDetail,
-      applicationContactDetail: editApplication
+      applicationContactDetail: editApplication,
+      companyLogoURL: companyLogoURL,
     };
     console.log(data);
     try {
@@ -211,121 +205,66 @@ export default function EditMode(props) {
           <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
             Company
           </DialogContentText>
-          <TextField
-            size="small"
-            className={classes.textField}
-            display="inline"
-            value={editCompany}
-            onChange={(e) => setEditCompany(e.target.value)}
-            style={{ marginLeft: 90, fontSize: 8 }}
-          />
+          <DialogContentText display="inline" style={{ marginLeft: 90 }}>
+            {convertFirstCharacterAllWordsToUppercase(companyName)}
+          </DialogContentText>
           <hr style={{ margin: 5, opacity: 0 }} />
           <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
             Position
           </DialogContentText>
-          <TextField
-            size="small"
-            className={classes.textField}
-            display="inline"
-            style={{ marginLeft: 101 }}
-            value={editPosition}
-            onChange={(e) => SetEditPosition(e.target.value)}
-          />
+          <DialogContentText display="inline" style={{ marginLeft: 100 }}>
+            {positionName}
+          </DialogContentText>
           <hr style={{ margin: 5, opacity: 0 }} />
           <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
             Location
           </DialogContentText>
-          <TextField
-            size="small"
-            className={classes.textField}
-            display="inline"
-            style={{ marginLeft: 96 }}
-            value={editLocation}
-            onChange={(e) => SetEditLocation(e.target.value)}
-          />
+          <DialogContentText display="inline" style={{ marginLeft: 96 }}>
+            {jobLocation}
+          </DialogContentText>
           <hr style={{ margin: 5, opacity: 0 }} />
           <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
             Start date
           </DialogContentText>
-          <TextField
-            size="small"
-            className={classes.textField}
-            display="inline"
-            style={{ marginLeft: 83 }}
-            value={editStart}
-            onChange={(e) => SetEditStart(e.target.value)}
-          />
+          <DialogContentText display="inline" style={{ marginLeft: 83 }}>
+            {jobStartTime}
+          </DialogContentText>
           <hr style={{ margin: 5, opacity: 0 }} />
           <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
             Closing date
           </DialogContentText>
-          <TextField
-            size="small"
-            className={classes.textField}
-            display="inline"
-            style={{ marginLeft: 62 }}
-            value={editClose}
-            onChange={(e) => SetEditClose(e.target.value)}
-          />
+          <DialogContentText display="inline" style={{ marginLeft: 63 }}>
+            {jobClosingDate}
+          </DialogContentText>
           <hr style={{ margin: 5, opacity: 0 }} />
           <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
             Hours
           </DialogContentText>
-          <TextField
-            size="small"
-            className={classes.textField}
-            display="inline"
-            style={{ marginLeft: 117 }}
-            value={editHours}
-            onChange={(e) => SetEditHours(e.target.value)}
-          />
+          <DialogContentText display="inline" style={{ marginLeft: 118 }}>
+            {jobHours}
+          </DialogContentText>
           <hr style={{ margin: 5, opacity: 0 }} />
           <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
             Contract
           </DialogContentText>
-          <TextField
-            size="small"
-            className={classes.textField}
-            display="inline"
-            style={{ marginLeft: 93 }}
-            value={editContract}
-            onChange={(e) => SetEditContract(e.target.value)}
-          />
+          <DialogContentText display="inline" style={{ marginLeft: 94 }}>
+            {jobContract}
+          </DialogContentText>
           <hr style={{ margin: 5, opacity: 0 }} />
-          {jobSalaryType != 'Market rate' ? (
-            <div>
-              <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
-                Salary(NZD)
-              </DialogContentText>
-              <OutlinedInput
-                size="small"
-                style={{ width: 120, marginLeft: 61 }}
-                value={editSalary}
-                onChange={(e) => SetEditSalary(e.target.value)}
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                display="inline"
-              />
-              <TextField
-                size="small"
-                display="inline"
-                style={{ width: 100, marginLeft: 5 }}
-                value={editSalaryType}
-                onChange={(e) => SetEditSalaryType(e.target.value)}
-              />
-            </div>
+          <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
+            Salary(NZD)
+          </DialogContentText>
+          {jobSalaryType == 'Market rate' ? (
+            <DialogContentText style={{ marginLeft: 62 }} display="inline">
+              "Market Rate"
+            </DialogContentText>
           ) : (
-            <div>
-              <DialogContentText variant="subtitle1" className={classes.subtitle} display="inline">
-                Salary(NZD)
-              </DialogContentText>
-              <TextField
-                size="small"
-                display="inline"
-                style={{ width: 180, marginLeft: 60 }}
-                value={editSalaryType}
-                onChange={(e) => SetEditSalaryType(e.target.value)}
-              />
-            </div>
+            <DialogContentText style={{ marginLeft: 62 }} display="inline">
+              $
+              {jobSalary}
+              {' '}
+              {jobSalaryType}
+            </DialogContentText>
           )}
           <DialogContentText variant="h6" className={classes.subtitle} style={{ marginTop: 40 }}>
             About the company

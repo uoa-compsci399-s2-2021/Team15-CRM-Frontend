@@ -145,7 +145,7 @@ export class FirstPage extends Component {
                       Wellington
                     </MenuItem>
                     <MenuItem value="Christchurch" onClick={() => this.deselectOther()}>
-                      Chrischurch
+                      Christchurch
                     </MenuItem>
                     <MenuItem value="Remote" onClick={() => this.deselectOther()}>
                       Remote
@@ -313,7 +313,11 @@ export class FirstPage extends Component {
                 </FormControl>
                 <FormControl>
                   {/* <InputLabel>Salary</InputLabel> */}
-                  <Select value={values.salary} onChange={handleChange('salary')}>
+                  <Select
+                    value={values.salary}
+                    onChange={handleChange('salary')}
+                    error={isError(values.salary.length === 0)}
+                  >
                     {/* <MenuItem value="None">
                       <em>None</em>
                     </MenuItem> */}
