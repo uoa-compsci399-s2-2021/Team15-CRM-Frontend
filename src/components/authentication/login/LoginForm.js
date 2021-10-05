@@ -13,15 +13,19 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  FormControlLabel
+  FormControlLabel,
+  Typography,
+  Alert
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
+import { login } from '../../../apis';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -35,8 +39,31 @@ export default function LoginForm() {
       remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      navigate('/', { replace: true });
+    onSubmit: async () => {
+      try {
+        const response = await login(values);
+
+        if (response.status == 200) {
+          if (!response.data.isAdmin) {
+            const errorInfo = {
+              response: {
+                data: {
+                  error: 'You are not admin',
+                }
+              }
+            };
+            throw (errorInfo);
+          }
+          localStorage.setItem('authToken', response.data.token);
+          window.location.href = '/';
+        }
+      } catch (err) {
+        console.log(err.response.data.error);
+        setErrorMessage(err.response.data.error);
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 5000);
+      }
     }
   });
 
@@ -50,6 +77,12 @@ export default function LoginForm() {
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
+          {errorMessage ? (
+            <Alert variant="filled" severity="error">
+              {errorMessage}
+            </Alert>
+          ) : null}
+
           <TextField
             fullWidth
             autoComplete="username"
@@ -58,6 +91,8 @@ export default function LoginForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+            onChange={formik.handleChange}
+            value={formik.values.email.toLowerCase()}
           />
 
           <TextField
@@ -77,6 +112,8 @@ export default function LoginForm() {
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
+            onChange={formik.handleChange}
+            value={formik.values.password}
           />
         </Stack>
 

@@ -17,15 +17,17 @@ import WithdrawJob from './pages/WithdrawJob';
 
 // ----------------------------------------------------------------------
 
+const isLoggedIn = localStorage.getItem('authToken');
+
 export default function Router() {
   return useRoutes([
     {
-      path: '/app',
-      element: <DashboardLayout />,
+      path: 'app',
+      element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
       children: [
         { path: '/', element: <Navigate to="/app/home" replace /> },
         { path: 'home', element: <DashboardApp /> },
-        { path: 'job-list', element: <User /> },
+        { path: 'information', element: <User /> },
         { path: 'response', element: <Response /> },
         { path: 'company', element: <Products /> },
         { path: 'blog', element: <Blog /> }
@@ -33,7 +35,7 @@ export default function Router() {
     },
     {
       path: '/',
-      element: <LogoOnlyLayout />,
+      element: !isLoggedIn ? <LogoOnlyLayout /> : <Navigate to="/app" />,
       children: [
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },

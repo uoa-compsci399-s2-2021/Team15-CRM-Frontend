@@ -11,9 +11,11 @@ import {
   Stack,
   Button,
   CardContent,
-  CardActions
+  CardActions,
+  Fab
 } from '@material-ui/core';
 import DialogActions from '@material-ui/core/DialogActions';
+import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -62,7 +64,7 @@ const useStyles = makeStyles({
   },
   dialogPaper: {
     height: '100vh',
-    position: 'fixed'
+    position: 'fixed',
   },
   subtitle: {
     color: 'black',
@@ -72,6 +74,19 @@ const useStyles = makeStyles({
   body: {
     marginLeft: 5,
     whiteSpace: 'pre-line'
+  },
+  confirmButton: {
+    backgroundColor: '#058714',
+    '&:hover': {
+      backgroundColor: '#66bb6a'
+    },
+    marginLeft: 20,
+  },
+  no: {
+    backgroundColor: '#de3521',
+    '&:hover': {
+      backgroundColor: '#ef5350'
+    }
   }
 });
 
@@ -209,27 +224,33 @@ export default function Information(props) {
         </DialogContentText>
       </DialogContent>
       {!props.isActive ? (
-        <DialogActions>
-          <Button style={{ width: 40, marginLeft: 14, marginRight: '35%' }} onClick={props.openEditMode}>
-            <img
-              style={{ marginLeft: 5, padding: 3, marginRight: '35%' }}
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Simpleicons_Business_pencil-striped-symbol-for-interface-edit-buttons.svg/485px-Simpleicons_Business_pencil-striped-symbol-for-interface-edit-buttons.svg.png"
-              alt="not found"
-            />
-          </Button>
-          <Button className={classes.decline} onClick={props.decline} variant="contained" autoFocus>
-            Decline
-          </Button>
-          <Button
-            onClick={props.accept}
-            color="primary"
-            className={classes.accept}
-            disableElevation
-            variant="contained"
-          >
-            Accept
-          </Button>
-        </DialogActions>
+
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="baseline"
+          spacing={{ xs: 1, sm: 2, md: 4 }}
+          style={{ margin: '2vh' }}
+        >
+          <div>
+            <Fab color="primary" aria-label="edit" onClick={props.openEditMode} size="small">
+              <EditIcon />
+            </Fab>
+          </div>
+
+          <div>
+            <Button onClick={props.decline} variant="contained" className={classes.no}>
+              Decline
+            </Button>
+            <Button
+              onClick={props.accept}
+              className={classes.confirmButton}
+              variant="contained"
+            >
+              Accept
+            </Button>
+          </div>
+        </Stack>
       ) : null}
     </Dialog>
   );
