@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Box, Button, Typography, Container, Grid, TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 // components
-import { MotionContainer, varBounceIn } from '../components/animate';
+import { deleteJob } from '../apis/index';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
   textField: {
     paddingLeft: 50,
-    paddingRight: 50,
+    paddingRight: 50
   },
   button: {
     marginTop: 20,
@@ -54,12 +54,29 @@ export default function WithdrawJob() {
     });
   }
   async function handleSubmit() {
+    const id = document.location.pathname.substring(document.location.pathname.lastIndexOf('/') + 1);
+    const info = { text: reason, jobId: id };
+    console.log(info);
     setShowError(true);
     if (reason.length != 0) {
-      setLoading(true);
-      await wait(2000);
-      setLoading(false);
-      setSubmited(true);
+      try {
+        setLoading(true);
+        const response = await deleteJob(info);
+        if (response.status === 200) {
+          setLoading(false);
+          setSubmited(true);
+        } else {
+          console.log('2');
+          console.log(response);
+          setErrorMessage('error');
+          setLoading(false);
+        }
+      } catch (e) {
+        console.log('1');
+        setLoading(false);
+        console.log(e.response.data);
+        setErrorMessage(e.response.data.error);
+      }
     }
   }
   return (
@@ -81,8 +98,12 @@ export default function WithdrawJob() {
                 rows={4}
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                error = {reason.length === 0 && showError}
-                helperText={(reason.length === 0 && showError) && 'Please enter the reason for withdrawing this position'}
+                error={reason.length === 0 && showError}
+                helperText={
+                  reason.length === 0 &&
+                  showError &&
+                  'Please enter the reason for withdrawing this position'
+                }
               />
               <br />
               <Button className={classes.button} variant="contained" onClick={handleSubmit}>

@@ -134,8 +134,23 @@ async function getEmpolyerDeleteInfo() {
   return response;
 }
 
+async function deleteJob(info) {
+  const response = await axios(
+    'https://cs399-team15.herokuapp.com/api/admin/employer-delete-job',
+    {
+      headers: {
+        'Content-type': 'application/json',
+        'Access-Control-Allow-Credentials': true
+      },
+      data: info,
+      method: 'POST',
+    }
+  );
+  return response;
+}
+
 export {
   sendEmailRequestToEmployer, getJobInfo,
   submitForm, approveJob, declineJob, modifyJob, login,
-  getUserInfo, getEmpolyerDeleteInfo
+  getUserInfo, getEmpolyerDeleteInfo, deleteJob
 };

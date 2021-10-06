@@ -224,7 +224,6 @@ export default function Information(props) {
         </DialogContentText>
       </DialogContent>
       {!props.isActive ? (
-
         <Stack
           direction="row"
           justifyContent="space-between"

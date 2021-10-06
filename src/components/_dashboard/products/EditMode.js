@@ -151,7 +151,7 @@ export default function EditMode(props) {
       applicationContactDetail: editApplication,
       companyLogoURL: companyLogoURL,
     };
-    console.log(data);
+    // console.log(data);
     try {
       setLoading(true);
       // call api
