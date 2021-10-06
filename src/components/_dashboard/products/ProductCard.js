@@ -137,7 +137,6 @@ export default function ShopProductCard({ product, isActive, setHandleEvent, han
   const [showErrors, setShowErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
-
   let logoUrl = '';
   if (companyLogoURL) {
     logoUrl = companyLogoURL;

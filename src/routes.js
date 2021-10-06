@@ -13,6 +13,7 @@ import EmployerForm from './pages/EmployerForm';
 import User from './pages/User';
 import Response from './pages/Response';
 import NotFound from './pages/Page404';
+import WithdrawJob from './pages/WithdrawJob';
 
 // ----------------------------------------------------------------------
 
@@ -51,7 +52,13 @@ export default function Router() {
         { path: '/:token', element: <EmployerForm /> },
       ]
     },
-
+    {
+      path: '/withdrawJob',
+      element: <LogoOnlyLayout />,
+      children: [
+        { path: '/:token', element: <WithdrawJob /> },
+      ]
+    },
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
