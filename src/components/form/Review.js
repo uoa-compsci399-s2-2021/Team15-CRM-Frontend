@@ -120,13 +120,18 @@ export class Review extends Component {
                   Review
                 </Typography>
                 <hr style={{ margin: 15, opacity: 0 }} />
+                <Typography variant="h4" style={{ marginTop: 30, marginLeft: 15 }}>
+                  Company Logo
+                </Typography>
+                <hr style={{ marginBottom: 20 }} />
                 <Typography variant="h6" style={{ marginTop: 50, marginLeft: 15 }} display="inline">
                   Is this the correct logo of your company ?
                 </Typography>
                 <Button
                   onClick={this.handleOpenDialog}
                   style={{
-                    fontSize: 15,
+                    fontSize: 18,
+                    marginLeft: 10,
                     padding: 0,
                     textDecoration: 'underline'
                   }}
