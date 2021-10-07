@@ -94,9 +94,11 @@ export default function User() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [InfoList, setInfoList] = useState([]);
   const [open, setOpen] = useState(false);
+  const [DeleteReason, setDeleteReason] = useState('');
   const [loading, setloading] = useState(false);
-  const handleClickOpen = () => {
+  const handleClickOpen = (DeleteReason) => {
     setOpen(true);
+    setDeleteReason(DeleteReason);
   };
   const handleClose = () => {
     setOpen(false);
@@ -178,7 +180,7 @@ export default function User() {
                   {InfoList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((job, idx) => (
                     <TableRow
                       hover
-                      key={job._id}
+                      key={job.idx}
                       tabIndex={-1}
                       role="checkbox"
                     >
@@ -195,7 +197,7 @@ export default function User() {
 
                       <TableCell align="left">{(job.RequestedEmail)}</TableCell>
                       <TableCell align="left">
-                        <Button variant="outlined" onClick={handleClickOpen}>
+                        <Button variant="outlined" onClick={() => handleClickOpen(job.DeleteReason)}>
                           View
                         </Button>
                       </TableCell>
@@ -211,7 +213,7 @@ export default function User() {
                         </DialogTitle>
                         <DialogContent dividers>
                           <DialogContentText id="alert-dialog-description">
-                            {job.DeleteReason}
+                            {DeleteReason}
                           </DialogContentText>
                         </DialogContent>
                         <DialogActions>

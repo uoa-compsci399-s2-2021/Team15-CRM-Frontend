@@ -3,20 +3,15 @@ import * as Yup from 'yup';
 import Box from '@material-ui/core/Box';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { Icon } from '@iconify/react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+
 // material
 import {
   Link,
   Stack,
-  Checkbox,
-  TextField,
-  IconButton,
-  InputAdornment,
   FormControlLabel,
   Typography,
-  Alert,
+  Card,
+  CardContent,
   Button,
   Radio,
   RadioGroup,
@@ -25,48 +20,29 @@ import {
   Select,
   InputLabel,
   Grid,
+  CircularProgress
 } from '@material-ui/core';
-
-// ----------------------------------------------------------------------
-const currencies = [
-  {
-    value: 'realTime',
-    label: 'Real Time',
-  },
-  {
-    value: 'EUR',
-    label: 'Daily Digest',
-  },
-  {
-    value: 'Smart Digest ',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 export default function Setting() {
-  const [currency, setCurrency] = React.useState('EUR');
-  const [showPassword, setShowPassword] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
-
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
-  });
+  const [loading, setloading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
-      remember: true
+      picked: 'real',
+      time: ''
     },
-    validationSchema: LoginSchema,
-    onSubmit: async () => {
+    onSubmit: async (values) => {
+      setloading(true);
       try {
-        console.log(1);
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+          setloading(false);
+        }, 3000);
+        console.log(values.picked);
       } catch (err) {
         console.log(err.response.data.error);
         setErrorMessage(err.response.data.error);
@@ -77,7 +53,7 @@ export default function Setting() {
     }
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, values, isSubmitting, handleSubmit, setFieldValue } = formik;
 
   const [age, setAge] = React.useState('');
 
@@ -86,78 +62,92 @@ export default function Setting() {
   };
 
   return (
-    <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
-          {errorMessage ? (
-            <Alert variant="filled" severity="error">
-              {errorMessage}
-            </Alert>
-          ) : null}
-          <Typography variant="h4" gutterBottom component="div">
-            Edit Email Notification
-          </Typography>
+    <Card sx={{ minWidth: 275 }}>
+      <CardContent>
+        <FormikProvider value={formik}>
+          <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+            <Stack spacing={3}>
+              <Typography variant="h4" gutterBottom component="div">
+                Edit Email Notification
+              </Typography>
+              <FormControl component="fieldset" fullWidth>
+                <FormLabel component="legend">For new Job vacancies:</FormLabel>
+                <RadioGroup aria-label="gender" name="row-radio-buttons-group" defaultValue="real">
+                  <FormControlLabel value="real" control={<Radio />} onChange={() => setFieldValue('picked', 'real')} label="Real Time" />
+                  <FormControlLabel value="dailyDigest" control={<Radio />} onChange={() => setFieldValue('picked', 'daily')} label="Daily Digest" />
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid item xs={3}>
+                      <FormControlLabel value="smartDigest" onChange={() => setFieldValue('picked', 'smart')} control={<Radio />} label="Smart Digest" />
+                    </Grid>
+                    <Grid item xs={9}>
+                      <div>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={age}
+                          defaultValue={10}
+                          displayEmpty
+                          onChange={handleChange}
+                          disabled={values.picked !== 'smart'}
+                          style={{ width: '20vh' }}
+                        // error={
+                        //   (values.time == '')
+                        // }
+                        >
+                          <MenuItem value={1}>1 hour</MenuItem>
+                          <MenuItem value={2}>2 hours</MenuItem>
+                          <MenuItem value={3}>3 hours</MenuItem>
+                          <MenuItem value={4}>4 hours</MenuItem>
+                          <MenuItem value={5}>5 hours</MenuItem>
+                          <MenuItem value={6}>6 hours</MenuItem>
+                        </Select>
+                      </div>
+                    </Grid>
+                  </Grid>
 
-          <FormControl component="fieldset" fullWidth>
-            <FormLabel component="legend">For new Job vacancies:</FormLabel>
-            <RadioGroup aria-label="gender" name="row-radio-buttons-group">
-              <FormControlLabel value="female" control={<Radio />} label="Real Time" />
-              <FormControlLabel value="female" control={<Radio />} label="Daily Digest" />
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={3}>
-                  <FormControlLabel value="male" control={<Radio />} label="Smart Digest" />
-                </Grid>
-                <Grid item xs={9}>
-                  <div>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={age}
-                      label="Age"
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </div>
-                </Grid>
+                  <FormControlLabel name="picked" value="noEmails" type="radio" control={<Radio />} onChange={() => setFieldValue('picked', 'no')} label="No Emails" />
+                </RadioGroup>
+              </FormControl>
+            </Stack>
+
+            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }} />
+
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+              <Grid item xs={9}>
+                <Button
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  loading={isSubmitting}
+                >
+                  {loading ? (
+                    success ? (
+                      <DoneAllIcon color="inherit" size="2rem" />
+                    ) : (
+                      <CircularProgress color="inherit" size="2rem" />
+                    )
+                  ) : (
+                    <>Save Settings</>
+                  )}
+                </Button>
               </Grid>
+              <Grid item xs={3}>
+                <Button
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="outlined"
+                  color="error"
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </Grid>
 
-              <FormControlLabel value="other" control={<Radio />} label="No Emails" />
-            </RadioGroup>
-          </FormControl>
-        </Stack>
-
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }} />
-
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={9}>
-            <Button
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-            >
-              Save Settings
-            </Button>
-          </Grid>
-          <Grid item xs={3}>
-            <Button
-              fullWidth
-              size="large"
-              type="submit"
-              variant="outlined"
-              loading={isSubmitting}
-              color="error"
-            >
-              Cancel
-            </Button>
-          </Grid>
-        </Grid>
-
-      </Form>
-    </FormikProvider>
+          </Form>
+        </FormikProvider>
+      </CardContent>
+    </Card>
   );
 }
