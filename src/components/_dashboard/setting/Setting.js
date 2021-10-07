@@ -1,6 +1,4 @@
 import * as React from 'react';
-import * as Yup from 'yup';
-import Box from '@material-ui/core/Box';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useFormik, Form, FormikProvider } from 'formik';
 
