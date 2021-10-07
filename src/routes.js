@@ -30,7 +30,7 @@ export default function Router() {
         { path: 'information', element: <User /> },
         { path: 'response', element: <Response /> },
         { path: 'company', element: <Products /> },
-        { path: 'blog', element: <Blog /> }
+        { path: 'setting', element: <Blog /> }
       ]
     },
     {

@@ -60,5 +60,7 @@ module.exports = {
     'prefer-destructuring': 'off',
     'react/jsx-boolean-value': 'off',
     'object-shorthand': 'off',
+    'react/jsx-indent': 'off',
+    'indent': 'off'
   },
 };

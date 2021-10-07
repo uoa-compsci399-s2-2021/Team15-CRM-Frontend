@@ -3,7 +3,7 @@ import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
 import peopleFill from '@iconify/icons-eva/people-fill';
 import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
 import fileTextFill from '@iconify/icons-eva/file-text-fill';
-import lockFill from '@iconify/icons-eva/lock-fill';
+import settingFill from '@iconify/icons-eva/settings-2-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import cubeFill from '@iconify/icons-eva/cube-fill';
@@ -29,11 +29,11 @@ const sidebarConfig = [
     icon: getIcon(cubeFill)
   },
 
-  // {
-  //   title: 'blog',
-  //   path: '/app/blog',
-  //   icon: getIcon(fileTextFill)
-  // },
+  {
+    title: 'Setting',
+    path: '/app/setting',
+    icon: getIcon(settingFill)
+  },
   // {
   //   title: 'login',
   //   path: '/login',
