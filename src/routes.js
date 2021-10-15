@@ -14,6 +14,7 @@ import User from './pages/User';
 import Response from './pages/Response';
 import NotFound from './pages/Page404';
 import WithdrawJob from './pages/WithdrawJob';
+import Analytics from './pages/Analytics';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +31,8 @@ export default function Router() {
         { path: 'information', element: <User /> },
         { path: 'response', element: <Response /> },
         { path: 'company', element: <Products /> },
-        { path: 'setting', element: <Blog /> }
+        { path: 'setting', element: <Blog /> },
+        { path: 'Analytics', element: <Analytics /> }
       ]
     },
     {
@@ -48,16 +50,12 @@ export default function Router() {
     {
       path: '/form',
       element: <FormLayout />,
-      children: [
-        { path: '/:token', element: <EmployerForm /> },
-      ]
+      children: [{ path: '/:token', element: <EmployerForm /> }]
     },
     {
       path: '/withdrawJob',
       element: <LogoOnlyLayout />,
-      children: [
-        { path: '/:token', element: <WithdrawJob /> },
-      ]
+      children: [{ path: '/:token', element: <WithdrawJob /> }]
     },
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
