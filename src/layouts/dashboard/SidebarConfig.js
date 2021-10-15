@@ -5,6 +5,7 @@ import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
 import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import settingFill from '@iconify/icons-eva/settings-2-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
+import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import cubeFill from '@iconify/icons-eva/cube-fill';
 
@@ -34,6 +35,11 @@ const sidebarConfig = [
     path: '/app/setting',
     icon: getIcon(settingFill)
   },
+  {
+    title: 'Analytics',
+    path: '/app/analytics',
+    icon: getIcon(trendingUpFill)
+  }
   // {
   //   title: 'login',
   //   path: '/login',
