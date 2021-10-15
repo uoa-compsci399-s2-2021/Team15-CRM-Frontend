@@ -1,6 +1,6 @@
 // material
-import { alpha, useTheme } from '@mui/material/styles';
-import { GlobalStyles } from '@mui/material';
+import { alpha, useTheme } from '@material-ui/styles';
+import { GlobalStyles } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
