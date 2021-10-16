@@ -11,10 +11,7 @@ import { BaseOptionChart } from '../charts';
 
 export default function TotalJobsChart(props) {
   // Get Dates
-  const datesList = props.items
-    .map((item) => item.requestedEmailTime.substring(0, 10))
-    .reverse()
-    .splice(0, 7);
+  const datesList = props.items.map((item) => item.requestedEmailTime.substring(0, 10)).reverse();
   // Make a list of unique Dates
   const datesLabel = [...new Set(datesList)].splice(0, 7);
   let freqObjectList = [];
@@ -47,7 +44,7 @@ export default function TotalJobsChart(props) {
 
   return (
     <Card>
-      <CardHeader title="Jobs Inflow by Day" />
+      <CardHeader title="Jobs Inflow last 7 Days" />
       <Box sx={{ mx: 3 }} dir="ltr">
         <ReactApexChart type="bar" series={CHART_DATA} options={chartOptions} height={364} />
       </Box>
