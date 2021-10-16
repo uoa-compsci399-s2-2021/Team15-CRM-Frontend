@@ -1,23 +1,18 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2021: true
   },
-  extends: [
-    'plugin:react/recommended',
-    'airbnb',
-  ],
+  extends: ['plugin:react/recommended', 'airbnb'],
   parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: 'module'
   },
-  plugins: [
-    'react',
-  ],
+  plugins: ['react'],
   rules: {
     'comma-dangle': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
@@ -37,7 +32,7 @@ module.exports = {
     'no-shadow': 'off',
     'prefer-const': 'off',
     'quote-props': 'off',
-    'camelcase': 'off',
+    camelcase: 'off',
     'operator-linebreak': 'off',
     'react/jsx-wrap-multilines': 'off',
     'implicit-arrow-linebreak': 'off',
@@ -45,7 +40,7 @@ module.exports = {
     'react/destructuring-assignment': 'off',
     'prefer-template': 'off',
     'function-paren-newline': 'off',
-    'eqeqeq': 'off',
+    eqeqeq: 'off',
     'linebreak-style': 'off',
     'new-cap': 'off',
     'no-use-before-define': 'off',
@@ -61,6 +56,7 @@ module.exports = {
     'react/jsx-boolean-value': 'off',
     'object-shorthand': 'off',
     'react/jsx-indent': 'off',
-    'indent': 'off'
-  },
+    indent: 'off',
+    'no-param-reassign': 'off'
+  }
 };

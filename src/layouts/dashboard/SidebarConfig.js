@@ -15,17 +15,22 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig = [
   {
-    title: 'dashboard',
-    path: '/app/home',
+    title: 'Dashboard',
+    path: '/app/Dashboard',
+    icon: getIcon(trendingUpFill)
+  },
+  {
+    title: 'Send Form',
+    path: '/app/sendForm',
     icon: getIcon(pieChart2Fill)
   },
   {
-    title: 'Response',
+    title: 'Moderate Listings',
     path: '/app/response',
     icon: getIcon(shoppingBagFill)
   },
   {
-    title: 'Information',
+    title: 'Deleted listings',
     path: '/app/information',
     icon: getIcon(cubeFill)
   },
@@ -34,12 +39,8 @@ const sidebarConfig = [
     title: 'Setting',
     path: '/app/setting',
     icon: getIcon(settingFill)
-  },
-  {
-    title: 'Analytics',
-    path: '/app/analytics',
-    icon: getIcon(trendingUpFill)
   }
+
   // {
   //   title: 'login',
   //   path: '/login',

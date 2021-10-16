@@ -7,6 +7,7 @@ import DistinctCompanies from '../components/Analytics/DistinctCompanies';
 import ActiveJobs from '../components/Analytics/ActiveJobs';
 import NonActiveJobs from '../components/Analytics/NonActiveJobs';
 import TotalJobsChart from '../components/Analytics/TotalJobsChart';
+import JobByLocationPie from '../components/Analytics/JobsByLocationPie';
 
 const useStyles = makeStyles((theme) => ({
   root: { flexGrow: 1 }
@@ -35,6 +36,7 @@ export default function component(props) {
 
   return (
     <>
+      <h2>Hello, Welcome Back to your Dashboard!</h2>
       <Grid container spacing={3} sx={{ width: '90%', margin: 'auto', justifyContent: 'center' }}>
         <Grid item xs={12} sm={6} md={3}>
           <ActiveJobs items={items} />
@@ -52,7 +54,7 @@ export default function component(props) {
           <TotalJobsChart items={items} />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <PositionNameCommonPie items={items} />
+          <JobByLocationPie items={items} />
         </Grid>
       </Grid>
     </>

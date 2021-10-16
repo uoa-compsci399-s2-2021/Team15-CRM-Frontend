@@ -50,7 +50,7 @@ export class Review extends Component {
       jobSkill: this.props.values.keySkills,
       questionContactDetail: this.props.values.contact,
       applicationContactDetail: this.props.values.application,
-      companyLogoURL: this.props.values.logoUrl,
+      companyLogoURL: this.props.values.logoUrl
     };
     try {
       this.setState({ loading: true });
@@ -167,8 +167,8 @@ export class Review extends Component {
                 >
                   <DialogContent style={{ margin: 10 }}>
                     <Typography variant="h6">
-                      Please provide a image url for the correct company logo,
-                      otherwise a default company logo will be used.
+                      Please provide a image url for the correct company logo, otherwise a default
+                      company logo will be used.
                     </Typography>
                     <TextField
                       label="Image url"
@@ -198,7 +198,7 @@ export class Review extends Component {
                       variant="contained"
                       style={{
                         backgroundColor: '#328cdb',
-                        height: 40,
+                        height: 40
                       }}
                       onClick={this.showLogo}
                     >
@@ -279,9 +279,7 @@ export class Review extends Component {
                   </Typography>
                 ) : (
                   <Typography style={{ marginLeft: 173 }} display="inline">
-                    $
-                    {values.rate}
-                    {values.salary}
+                    {`$${values.rate} ${values.salary}`}
                   </Typography>
                 )}
                 <hr style={{ opacity: 0 }} />

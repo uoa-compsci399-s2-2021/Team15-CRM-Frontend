@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Box, Grid, Container, Typography, Button, TextField, Card, CardHeader } from '@material-ui/core';
+import {
+  Box,
+  Grid,
+  Container,
+  Typography,
+  Button,
+  TextField,
+  Card,
+  CardHeader
+} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import SendIcon from '@material-ui/icons/Send';
 import Alert from '@material-ui/lab/Alert';
@@ -16,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
+      marginTop: theme.spacing(2)
+    }
   },
   button: {
-    width: '50%',
+    width: '50%'
   }
 }));
 
@@ -70,10 +79,14 @@ export default function AppWebsiteVisits({ sendEmail, setSendEmail }) {
   return (
     <Container maxWidth={false}>
       <Card>
-        <CardHeader title="Send a email to employer" subheader="Enter email below" />
-        <Box sx={{ p: 3, pb: 3, }} dir="ltr">
+        <CardHeader title="Send a email form to employer" subheader="Enter email below" />
+        <Box sx={{ p: 3, pb: 3 }} dir="ltr">
           <div className={classes.root}>
-            {error !== '' ? <Alert color="error" severity="error">{error}</Alert> : null}
+            {error !== '' ? (
+              <Alert color="error" severity="error">
+                {error}
+              </Alert>
+            ) : null}
             <TextField
               fullWidth
               value={email}
@@ -106,7 +119,6 @@ export default function AppWebsiteVisits({ sendEmail, setSendEmail }) {
                 </Button>
               </Box>
             </Grid>
-
           </div>
         </Box>
       </Card>

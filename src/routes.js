@@ -26,13 +26,13 @@ export default function Router() {
       path: 'app',
       element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
       children: [
-        { path: '/', element: <Navigate to="/app/home" replace /> },
-        { path: 'home', element: <DashboardApp /> },
+        { path: '/', element: <Navigate to="/app/dashboard" replace /> },
+        { path: 'dashboard', element: <Analytics /> },
+        { path: 'sendForm', element: <DashboardApp /> },
         { path: 'information', element: <User /> },
         { path: 'response', element: <Response /> },
         { path: 'company', element: <Products /> },
-        { path: 'setting', element: <Blog /> },
-        { path: 'Analytics', element: <Analytics /> }
+        { path: 'setting', element: <Blog /> }
       ]
     },
     {

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexFlow: 'column wrap',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   }
 }));
 
@@ -43,7 +43,7 @@ export default function DashboardApp() {
     const fetchData = async () => {
       const response = await getJobInfo();
       try {
-        setData((response.data).reverse());
+        setData(response.data.reverse());
       } catch (e) {
         setError(e);
       }
@@ -54,9 +54,6 @@ export default function DashboardApp() {
   return (
     <Page title="Dashboard | Atech+">
       <Container maxWidth="xl">
-        <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">Hi, Welcome back</Typography>
-        </Box>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12} lg={12}>
             <RequestEmail sendEmail={sendEmail} setSendEmail={setSendEmail} />
@@ -70,7 +67,7 @@ export default function DashboardApp() {
               <RequestTable data={data} />
             )}
           </Grid>
-          { /*
+          {/*
           <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
           </Grid>
@@ -116,8 +113,7 @@ export default function DashboardApp() {
           <Grid item xs={12} md={6} lg={8}>
             <AppTasks />
           </Grid>
-          */ }
-
+          */}
         </Grid>
       </Container>
     </Page>
