@@ -143,7 +143,7 @@ export default function User() {
     const fetchData = async () => {
       const response = await getEmpolyerDeleteInfo();
       try {
-        setInfoList((response.data).reverse());
+        setInfoList(response.data.reverse());
         setloading(false);
         // console.log(response.data);
       } catch (e) {
@@ -177,57 +177,63 @@ export default function User() {
             <TableBody>
               {InfoList != null && (
                 <>
-                  {InfoList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((job, idx) => (
-                    <TableRow
-                      hover
-                      key={job.idx}
-                      tabIndex={-1}
-                      role="checkbox"
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell align="left">
-                        <Typography variant="subtitle2" noWrap>
-                          {convertFirstCharacterAllWordsToUppercase(job.PositionName)}
-                        </Typography>
-                      </TableCell>
+                  {InfoList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
+                    (job, idx) => (
+                      <TableRow hover key={job.idx} tabIndex={-1} role="checkbox">
+                        <TableCell padding="checkbox">
+                          <Checkbox />
+                        </TableCell>
+                        <TableCell align="left">
+                          <Typography variant="subtitle2" noWrap>
+                            {convertFirstCharacterAllWordsToUppercase(job.CompanyName)}
+                          </Typography>
+                        </TableCell>
 
-                      <TableCell align="left">{convertFirstCharacterAllWordsToUppercase(job.CompanyName)}</TableCell>
+                        <TableCell align="left">
+                          {convertFirstCharacterAllWordsToUppercase(job.RequestedEmail)}
+                        </TableCell>
 
-                      <TableCell align="left">{(job.RequestedEmail)}</TableCell>
-                      <TableCell align="left">
-                        <Button variant="outlined" onClick={() => handleClickOpen(job.DeleteReason)}>
-                          View
-                        </Button>
-                      </TableCell>
-                      <Dialog
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                        fullWidth
-                      >
-                        <DialogTitle disableTypography justify="center" justifyContent="center">
-                          Reason for deleting this job
-                        </DialogTitle>
-                        <DialogContent dividers>
-                          <DialogContentText id="alert-dialog-description">
-                            {DeleteReason}
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button variant="contained" autoFocus onClick={handleClose}>
-                            Back
+                        <TableCell align="left">
+                          {job.DeleteReason.length > 30
+                            ? job.DeleteReason.substring(0, 30) + '...'
+                            : job.DeleteReason}
+                        </TableCell>
+                        <TableCell align="left">
+                          <Button
+                            variant="outlined"
+                            onClick={() => handleClickOpen(job.DeleteReason)}
+                          >
+                            View
                           </Button>
-                        </DialogActions>
-                      </Dialog>
+                        </TableCell>
+                        <Dialog
+                          open={open}
+                          onClose={handleClose}
+                          aria-labelledby="alert-dialog-title"
+                          aria-describedby="alert-dialog-description"
+                          fullWidth
+                        >
+                          <DialogTitle disableTypography justify="center" justifyContent="center">
+                            Reason for deleting this job
+                          </DialogTitle>
+                          <DialogContent dividers>
+                            <DialogContentText id="alert-dialog-description">
+                              {DeleteReason}
+                            </DialogContentText>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button variant="contained" autoFocus onClick={handleClose}>
+                              Back
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
 
-                      <TableCell align="right">
-                        <UserMoreMenu />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                        <TableCell align="right">
+                          <UserMoreMenu />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  )}
                 </>
               )}
             </TableBody>
@@ -270,13 +276,9 @@ export default function User() {
             <img src="/images/waiting.gif" alt="loading" />
           </div>
         ) : (
-          <div>
-            {CardInfo}
-          </div>
+          <div>{CardInfo}</div>
         )}
-
       </Container>
     </Page>
-
   );
 }
