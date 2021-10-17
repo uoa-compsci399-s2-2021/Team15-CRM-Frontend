@@ -37,7 +37,7 @@ const TABLE_HEAD = [
   { id: 'email', label: 'Email Address', alignRight: false },
   { id: 'time', label: 'Sent Time', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
-  { id: '' }
+  // { id: '' }
 ];
 
 // ----------------------------------------------------------------------
@@ -137,9 +137,9 @@ export default function RequestTable({ data }) {
 
         <Card>
 
-          <CardHeader title="Requested Table" subheader="" />
+          {/* <CardHeader title="Requested Table" subheader="" /> */}
 
-          <Scrollbar>
+          <Scrollbar style={{ padding: 10 }}>
             <TableContainer full>
               <Table>
                 <UserListHead
@@ -161,9 +161,9 @@ export default function RequestTable({ data }) {
                           tabIndex={-1}
                           role="checkbox"
                         >
-                          <TableCell padding="checkbox">
+                          {/* <TableCell padding="checkbox">
                             <Checkbox />
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell align="left">
                             <Typography variant="subtitle2" noWrap>
                               {job.requestedEmail}
@@ -180,9 +180,9 @@ export default function RequestTable({ data }) {
                             </Label>
                           </TableCell>
 
-                          <TableCell align="right">
+                          {/* <TableCell align="right">
                             <UserMoreMenu />
-                          </TableCell>
+                          </TableCell> */}
                         </TableRow>
                       ))}
                     </>
