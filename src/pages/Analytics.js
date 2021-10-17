@@ -36,7 +36,6 @@ export default function component(props) {
 
   return (
     <>
-      <h2>Hello, Welcome Back to your Dashboard!</h2>
       <Grid container spacing={3} sx={{ width: '90%', margin: 'auto', justifyContent: 'center' }}>
         <Grid item xs={12} sm={6} md={3}>
           <ActiveJobs items={items} />
