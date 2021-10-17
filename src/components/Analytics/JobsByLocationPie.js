@@ -82,7 +82,7 @@ export default function JobByLocationPie(props) {
 
   return (
     <Card>
-      <CardHeader title="Jobs By Location All Job listings" />
+      <CardHeader title="Jobs By Location All Jobs" />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
       </ChartWrapperStyle>
