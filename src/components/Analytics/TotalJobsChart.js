@@ -44,7 +44,7 @@ export default function TotalJobsChart(props) {
 
   return (
     <Card>
-      <CardHeader title="Jobs Inflow last 7 Days" />
+      <CardHeader title="Jobs Inflow 7 Days" />
       <Box sx={{ mx: 3 }} dir="ltr">
         <ReactApexChart type="bar" series={CHART_DATA} options={chartOptions} height={364} />
       </Box>
