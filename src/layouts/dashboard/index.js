@@ -53,7 +53,7 @@ export default function DashboardLayout() {
     <RootStyle>
       {user ? (<DashboardNavbar onOpenSidebar={() => setOpen(true)} User={user} />) : null}
 
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} userInfo={user} />
       <MainStyle>
         <Outlet />
       </MainStyle>

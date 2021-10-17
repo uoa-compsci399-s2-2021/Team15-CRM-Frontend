@@ -40,14 +40,17 @@ DashboardSidebar.propTypes = {
   onCloseSidebar: PropTypes.func
 };
 
-export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, userInfo }) {
   const { pathname } = useLocation();
-
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
   }, [pathname]);
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   const renderContent = (
     <Scrollbar
@@ -67,10 +70,14 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           <AccountStyle>
             <Avatar alt="photoURL" />
             <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Hello world
-                {/* {account.displayName} */}
-              </Typography>
+              {userInfo && (
+                <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                  {capitalizeFirstLetter(userInfo.firstname)}
+                  {' '}
+                  {capitalizeFirstLetter(userInfo.lastname)}
+                  {/* {account.displayName} */}
+                </Typography>
+              )}
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 Admin
               </Typography>

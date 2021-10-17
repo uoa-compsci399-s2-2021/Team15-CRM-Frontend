@@ -44,7 +44,8 @@ export default function ApplicationStatus(props) {
       </IconWrapperStyle>
       <Typography variant="h3">{`${nonComplete} / ${nonActive}`}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Inactive Applications are Not Completed
+        {/* Inactive Applications are Not Completed */}
+        Applications In Progress
       </Typography>
     </RootStyle>
   );

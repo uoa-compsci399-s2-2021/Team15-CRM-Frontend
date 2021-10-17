@@ -93,9 +93,9 @@ export default function EcommerceShop() {
   return (
     <Page title="Dashboard: Products | Atech+">
       <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
+        {/* <Typography variant="h4" sx={{ mb: 5 }}>
           Response
-        </Typography>
+        </Typography> */}
         <Grid item xs={12}>
           <Paper className={classes.tab}>
             <Tabs
