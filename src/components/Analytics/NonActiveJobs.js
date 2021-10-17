@@ -31,7 +31,10 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ActiveJobs(props) {
-  const TOTAL = props.items.filter((e) => !e.isActive).length;
+  const eventDate = new Date(Date.now());
+  const TOTAL = props.items.filter(
+    (e) => !e.isActive && new Date(e.autoExpireDate) <= eventDate
+  ).length;
 
   return (
     <RootStyle>
@@ -40,7 +43,7 @@ export default function ActiveJobs(props) {
       </IconWrapperStyle>
       <Typography variant="h3">{TOTAL}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Jobs Seeking Approval
+        Jobs Expired
       </Typography>
     </RootStyle>
   );

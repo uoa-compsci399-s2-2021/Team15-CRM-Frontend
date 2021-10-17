@@ -31,21 +31,22 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ApplicationStatus(props) {
-  const eventDate = new Date(Date.now()).toISOString();
+  const eventDate = new Date(Date.now());
   const nonActive = props.items.filter(
-    (e) => !e.isActive && Date(e.autoExpireDate) >= eventDate
+    (e) => !e.isActive && new Date(e.autoExpireDate) >= eventDate
   ).length;
-  const nonComplete = props.items.filter((e) => !e.isCompleted).length;
+  const complete = props.items.filter(
+    (e) => e.isCompleted && !e.isActive && new Date(e.autoExpireDate) >= eventDate
+  ).length;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Icon icon={activityFill} width="100%" height="100%" />
       </IconWrapperStyle>
-      <Typography variant="h3">{`${nonComplete} / ${nonActive}`}</Typography>
+      <Typography variant="h3">{`${complete} / ${nonActive}`}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        {/* Inactive Applications are Not Completed */}
-        Applications In Progress
+        New Jobs needs Action
       </Typography>
     </RootStyle>
   );
