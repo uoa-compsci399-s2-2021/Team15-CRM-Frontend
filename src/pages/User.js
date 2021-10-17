@@ -143,7 +143,7 @@ export default function User() {
     const fetchData = async () => {
       const response = await getEmpolyerDeleteInfo();
       try {
-        setInfoList((response.data).reverse());
+        setInfoList(response.data.reverse());
         setloading(false);
         // console.log(response.data);
       } catch (e) {
@@ -156,15 +156,15 @@ export default function User() {
 
   const CardInfo = (
     <Card>
-      <UserListToolbar
+      {/* <UserListToolbar
         numSelected={selected.length}
         filterName={filterName}
         onFilterName={handleFilterByName}
-      />
+      /> */}
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 800 }}>
-          <Table>
+          <Table style={{ margin: 10 }}>
             <UserListHead
               order={order}
               orderBy={orderBy}
@@ -177,57 +177,66 @@ export default function User() {
             <TableBody>
               {InfoList != null && (
                 <>
-                  {InfoList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((job, idx) => (
-                    <TableRow
-                      hover
-                      key={job.idx}
-                      tabIndex={-1}
-                      role="checkbox"
-                    >
-                      <TableCell padding="checkbox">
+                  {InfoList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
+                    (job, idx) => (
+                      <TableRow hover key={job.idx} tabIndex={-1} role="checkbox">
+                        {/* <TableCell padding="checkbox">
                         <Checkbox />
-                      </TableCell>
-                      <TableCell align="left">
-                        <Typography variant="subtitle2" noWrap>
-                          {convertFirstCharacterAllWordsToUppercase(job.PositionName)}
-                        </Typography>
-                      </TableCell>
+                      </TableCell> */}
+                        <TableCell align="left">
+                          <Typography variant="subtitle2" noWrap>
+                            {convertFirstCharacterAllWordsToUppercase(job.PositionName)}
+                          </Typography>
+                        </TableCell>
 
-                      <TableCell align="left">{convertFirstCharacterAllWordsToUppercase(job.CompanyName)}</TableCell>
+                        <TableCell align="left">
+                          {convertFirstCharacterAllWordsToUppercase(job.CompanyName)}
+                        </TableCell>
 
-                      <TableCell align="left">{(job.RequestedEmail)}</TableCell>
-                      <TableCell align="left">
-                        <Button variant="outlined" onClick={() => handleClickOpen(job.DeleteReason)}>
-                          View
-                        </Button>
-                      </TableCell>
-                      <Dialog
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                        fullWidth
-                      >
-                        <DialogTitle disableTypography justify="center" justifyContent="center">
-                          Reason for deleting this job
-                        </DialogTitle>
-                        <DialogContent dividers>
-                          <DialogContentText id="alert-dialog-description">
-                            {DeleteReason}
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button variant="contained" autoFocus onClick={handleClose}>
-                            Back
+                        <TableCell align="left">{job.RequestedEmail}</TableCell>
+                        <TableCell align="left">
+                          <Button
+                            variant="outlined"
+                            onClick={() => handleClickOpen(job.DeleteReason)}
+                          >
+                            View
                           </Button>
-                        </DialogActions>
-                      </Dialog>
+                        </TableCell>
+                        <Dialog
+                          open={open}
+                          onClose={handleClose}
+                          aria-labelledby="alert-dialog-title"
+                          aria-describedby="alert-dialog-description"
+                          fullWidth
+                        >
+                          <DialogTitle disableTypography justify="center" justifyContent="center">
+                            Reason for deleting this job
+                          </DialogTitle>
+                          <DialogContent dividers>
+                            <DialogContentText id="alert-dialog-description">
+                              {DeleteReason}
+                            </DialogContentText>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button
+                              variant="contained"
+                              style={{
+                                backgroundColor: '#4099e3',
+                              }}
+                              autoFocus
+                              onClick={handleClose}
+                            >
+                              Back
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
 
-                      <TableCell align="right">
+                        {/* <TableCell align="right">
                         <UserMoreMenu />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                      </TableCell> */}
+                      </TableRow>
+                    )
+                  )}
                 </>
               )}
             </TableBody>
@@ -270,13 +279,9 @@ export default function User() {
             <img src="/images/waiting.gif" alt="loading" />
           </div>
         ) : (
-          <div>
-            {CardInfo}
-          </div>
+          <div>{CardInfo}</div>
         )}
-
       </Container>
     </Page>
-
   );
 }
