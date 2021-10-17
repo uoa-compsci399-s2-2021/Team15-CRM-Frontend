@@ -42,13 +42,13 @@ export default function component(props) {
           <ActiveJobs items={items} />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <NonActiveJobs items={items} />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
           <ApplicationStatus items={items} />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <DistinctCompanies items={items} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <NonActiveJobs items={items} />
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <TotalJobsChart items={items} />
