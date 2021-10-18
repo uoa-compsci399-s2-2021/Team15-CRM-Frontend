@@ -156,15 +156,15 @@ export default function User() {
 
   const CardInfo = (
     <Card>
-      <UserListToolbar
+      {/* <UserListToolbar
         numSelected={selected.length}
         filterName={filterName}
         onFilterName={handleFilterByName}
-      />
+      /> */}
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 800 }}>
-          <Table>
+          <Table style={{ margin: 10 }}>
             <UserListHead
               order={order}
               orderBy={orderBy}
@@ -180,24 +180,20 @@ export default function User() {
                   {InfoList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
                     (job, idx) => (
                       <TableRow hover key={job.idx} tabIndex={-1} role="checkbox">
-                        <TableCell padding="checkbox">
-                          <Checkbox />
-                        </TableCell>
+                        {/* <TableCell padding="checkbox">
+                        <Checkbox />
+                      </TableCell> */}
                         <TableCell align="left">
                           <Typography variant="subtitle2" noWrap>
-                            {convertFirstCharacterAllWordsToUppercase(job.CompanyName)}
+                            {convertFirstCharacterAllWordsToUppercase(job.PositionName)}
                           </Typography>
                         </TableCell>
 
                         <TableCell align="left">
-                          {convertFirstCharacterAllWordsToUppercase(job.RequestedEmail)}
+                          {convertFirstCharacterAllWordsToUppercase(job.CompanyName)}
                         </TableCell>
 
-                        <TableCell align="left">
-                          {job.DeleteReason.length > 30
-                            ? job.DeleteReason.substring(0, 30) + '...'
-                            : job.DeleteReason}
-                        </TableCell>
+                        <TableCell align="left">{job.RequestedEmail}</TableCell>
                         <TableCell align="left">
                           <Button
                             variant="outlined"
@@ -222,15 +218,22 @@ export default function User() {
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>
-                            <Button variant="contained" autoFocus onClick={handleClose}>
+                            <Button
+                              variant="contained"
+                              style={{
+                                backgroundColor: '#4099e3',
+                              }}
+                              autoFocus
+                              onClick={handleClose}
+                            >
                               Back
                             </Button>
                           </DialogActions>
                         </Dialog>
 
-                        <TableCell align="right">
-                          <UserMoreMenu />
-                        </TableCell>
+                        {/* <TableCell align="right">
+                        <UserMoreMenu />
+                      </TableCell> */}
                       </TableRow>
                     )
                   )}

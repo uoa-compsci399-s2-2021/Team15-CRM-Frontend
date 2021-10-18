@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Products from './pages/Products';
-import Blog from './pages/Blog';
+import NotificationSettings from './pages/NotificationSettings';
 import EmployerForm from './pages/EmployerForm';
 import User from './pages/User';
 import Response from './pages/Response';
@@ -32,7 +32,7 @@ export default function Router() {
         { path: 'information', element: <User /> },
         { path: 'response', element: <Response /> },
         { path: 'company', element: <Products /> },
-        { path: 'setting', element: <Blog /> }
+        { path: 'setting', element: <NotificationSettings /> }
       ]
     },
     {

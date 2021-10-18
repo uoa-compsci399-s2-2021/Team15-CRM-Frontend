@@ -48,11 +48,11 @@ export default function LoginForm() {
             const errorInfo = {
               response: {
                 data: {
-                  error: 'You are not admin',
+                  error: 'You are not admin'
                 }
               }
             };
-            throw (errorInfo);
+            throw errorInfo;
           }
           localStorage.setItem('authToken', response.data.token);
           window.location.href = '/';
