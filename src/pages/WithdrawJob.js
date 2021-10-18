@@ -54,7 +54,9 @@ export default function WithdrawJob() {
     });
   }
   async function handleSubmit() {
-    const id = document.location.pathname.substring(document.location.pathname.lastIndexOf('/') + 1);
+    const id = document.location.pathname.substring(
+      document.location.pathname.lastIndexOf('/') + 1
+    );
     const info = { text: reason, jobId: id };
     console.log(info);
     setShowError(true);
@@ -107,7 +109,7 @@ export default function WithdrawJob() {
               />
               <br />
               <Button className={classes.button} variant="contained" onClick={handleSubmit}>
-                {loading ? <CircularProgress color="inherit" size="1.5rem" /> : <>Submit</>}
+                {loading ? <CircularProgress color="inherit" size="1.5rem" /> : <>Remove Listing</>}
               </Button>
             </Grid>
           </Grid>
