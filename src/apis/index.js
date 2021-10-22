@@ -149,8 +149,23 @@ async function deleteJob(info) {
   return response;
 }
 
+async function setEmailNotification(info) {
+  const response = await axios(
+    'https://cs399-team15.herokuapp.com/api/admin/set-email-notification',
+    {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+      data: info,
+      method: 'POST',
+    }
+  );
+  return response;
+}
+
 export {
   sendEmailRequestToEmployer, getJobInfo,
   submitForm, approveJob, declineJob, modifyJob, login,
-  getUserInfo, getEmpolyerDeleteInfo, deleteJob
+  getUserInfo, getEmpolyerDeleteInfo, deleteJob, setEmailNotification
 };

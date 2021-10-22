@@ -23,6 +23,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
+import { setEmailNotification } from '../../../apis';
 
 export default function Setting() {
   const [errorMessage, setErrorMessage] = React.useState('');
@@ -37,12 +38,14 @@ export default function Setting() {
     onSubmit: async (values) => {
       setloading(true);
       try {
+        const info = { 'message': values.picked };
+        const res = await setEmailNotification(info);
+        console.log(res);
         setSuccess(true);
         setTimeout(() => {
           setSuccess(false);
           setloading(false);
         }, 3000);
-        console.log(values.picked);
       } catch (err) {
         console.log(err.response.data.error);
         setErrorMessage(err.response.data.error);
@@ -73,39 +76,8 @@ export default function Setting() {
               <FormControl component="fieldset" fullWidth>
                 <FormLabel component="legend">For new Job vacancies:</FormLabel>
                 <RadioGroup aria-label="gender" name="row-radio-buttons-group" defaultValue="real">
-                  <FormControlLabel value="real" control={<Radio />} onChange={() => setFieldValue('picked', 'real')} label="Real Time" />
-                  <FormControlLabel value="dailyDigest" control={<Radio />} onChange={() => setFieldValue('picked', 'daily')} label="Daily Digest" />
-                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid item xs={3}>
-                      <FormControlLabel value="smartDigest" onChange={() => setFieldValue('picked', 'smart')} control={<Radio />} label="Smart Digest" />
-                    </Grid>
-                    <Grid item xs={9}>
-                      <div>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={age}
-                          defaultValue={10}
-                          displayEmpty
-                          onChange={handleChange}
-                          disabled={values.picked !== 'smart'}
-                          style={{ width: '20vh' }}
-                        // error={
-                        //   (values.time == '')
-                        // }
-                        >
-                          <MenuItem value={1}>1 hour</MenuItem>
-                          <MenuItem value={2}>2 hours</MenuItem>
-                          <MenuItem value={3}>3 hours</MenuItem>
-                          <MenuItem value={4}>4 hours</MenuItem>
-                          <MenuItem value={5}>5 hours</MenuItem>
-                          <MenuItem value={6}>6 hours</MenuItem>
-                        </Select>
-                      </div>
-                    </Grid>
-                  </Grid>
-
-                  <FormControlLabel name="picked" value="noEmails" type="radio" control={<Radio />} onChange={() => setFieldValue('picked', 'no')} label="No Emails" />
+                  <FormControlLabel value="real" control={<Radio />} onChange={() => setFieldValue('picked', true)} label="Real Time" />
+                  <FormControlLabel name="picked" value="noEmails" type="radio" control={<Radio />} onChange={() => setFieldValue('picked', false)} label="No Emails" />
                 </RadioGroup>
               </FormControl>
             </Stack>
@@ -113,7 +85,7 @@ export default function Setting() {
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }} />
 
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-              <Grid item xs={9}>
+              <Grid item xs={12}>
                 <Button
                   fullWidth
                   size="large"
@@ -130,17 +102,6 @@ export default function Setting() {
                   ) : (
                     <>Save Settings</>
                   )}
-                </Button>
-              </Grid>
-              <Grid item xs={3}>
-                <Button
-                  fullWidth
-                  size="large"
-                  type="submit"
-                  variant="outlined"
-                  color="error"
-                >
-                  Cancel
                 </Button>
               </Grid>
             </Grid>
