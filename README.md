@@ -1,4 +1,4 @@
-# Frontend Client Side of Online Job Board
+# Frontend Admin Side of Online Job Board
 
 ## Product Link
 https://team15-crm.vercel.app/app
